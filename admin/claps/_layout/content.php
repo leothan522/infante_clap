@@ -1,18 +1,20 @@
 <div class="row">
     <div class="col-12">
-        <?php
-        use app\model\Jefe;
-       $listarClap = $controller->listarClaps();
-
-       function getJefe($id)
-        {
-            $model = new Jefe();
-            $jefe = $model->first('claps_id', '=', $id);
-            return $jefe;
-        }
+        <div class="dataContainerClap">
+            <?php
+            use app\model\Jefe;
+            function getJefe($id)
+            {
+                $model = new Jefe();
+                $jefe = $model->first('claps_id', '=', $id);
+                return $jefe;
+            }
+            $listarClap = $controller->listarClaps();
             $i = 0;
+            $links = $controller->linksPaginate;
             require "table_claps.php";
             ?>
+        </div>
     </div>
 
 

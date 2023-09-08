@@ -20,9 +20,35 @@ if ($_POST) {
 
         try {
             $model = new Clap();
+
+            function getJefe($id)
+            {
+                $model = new Jefe();
+                $jefe = $model->first('claps_id', '=', $id);
+                return $jefe;
+            }
+
             switch ($opcion) {
 
                 //definimos las opciones a procesar
+
+                case 'paginate_clap':
+
+                    $paginate = true;
+
+                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
+                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
+                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
+                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
+                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+
+                    $listarClap = $model->paginate($limit, $offset, 'nombre', 'DESC', 1);
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerClap')->createLinks();
+                    $i = $offset;
+                    echo '<div id="dataContainerClap">';
+                    require_once "_layout/table_claps.php";
+                    echo '</div>';
+                    break;
 
                 case 'get_municipios_select':
                     $modelMunicipio = new Municipio();
@@ -168,11 +194,12 @@ if ($_POST) {
                                 'Guardado Exitosamente.',
                                 'El Clap se ha guardado Exitosamente.'
                             );
-                            $response['nombre_clap'] = $clapNuevo['nombre'];
-                            $response['nombre_jefe'] = $jefeNuevo['nombre'];
-                            $response['cedula'] = $jefeNuevo['cedula'];
-                            $response['telefono'] = $jefeNuevo['telefono'];
-                            $response['familias'] = $clapNuevo['familias'];
+                            $response['nombre_clap'] = '<p class="text-uppercase">'. $clapNuevo['nombre'] .'</p>';
+                            $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefeNuevo['nombre'] .'</p>';
+                            $response['cedula'] = '<p class="text-right">'. $jefeNuevo['cedula'] .'</p>';
+                            $response['telefono'] = '<p class="text-center">'. $jefeNuevo['telefono'] .'</p>';
+                            $response['familias'] = '<p class="text-right">' .$clapNuevo['familias']. '</p>';
+                            $response['item'] = '<p class="text-center"> ' . $model->count() . '. </p>';
                             $response['nuevo'] = true;
 
                         } else {

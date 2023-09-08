@@ -151,6 +151,35 @@ $('#form_create_clap').submit(function (e) {
 
             if (data.result){
                 cerrarModal('#modal-claps');
+                let table = $('#tabla_claps').DataTable();
+
+                if (data. nuevo){
+                    let buttons = ' <div class="btn-group btn-group-sm">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="">\n' +
+                        '                                    <i class="fas fa-eye"></i>\n' +
+                        '                                </button>\n' +
+                        '                            </div>';
+
+
+                    table.row.add([
+                        data.item,
+                        data.nombre_clap,
+                        data.nombre_jefe,
+                        data.cedula,
+                        data.telefono,
+                        data.familias,
+                        buttons
+                    ]).draw();
+
+                    let nuevo = $('#tabla_claps tr:last');
+                    nuevo.attr('id', 'tr_item_clap_' + data.id);
+                    nuevo.find("td:eq(0)").addClass('nombre_clap');
+                    nuevo.find("td:eq(1)").addClass('nombre_jefe');
+                    nuevo.find("td:eq(2)").addClass('cedula');
+                    nuevo.find("td:eq(3)").addClass('telefono');
+                    nuevo.find("td:eq(4)").addClass('familias');
+
+                }
 
             }else{
                 //errores
@@ -525,4 +554,4 @@ function destroyClap(id) {
     });
 }
 
-console.log('clap rrrr');
+console.log('clap66666');

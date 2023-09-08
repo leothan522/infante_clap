@@ -11,8 +11,8 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table-responsive mt-3">
-            <table class="table" id="tabla_claps">
+        <div class="">
+            <table class="table table-sm" id="tabla_claps">
                 <thead>
                 <tr>
                     <th style="width: 5%; text-align: center">#</th>
@@ -28,10 +28,11 @@
                 <?php
                 foreach ($listarClap as $clap) {
                     $i++;
-                    $jefe = getJefe($clap['id']);
+
+                   $jefe = getJefe($clap['id']);
                     ?>
-                    <tr id="tr_item_claps_<?php ?>">
-                        <td class="text-center item"><?php echo $i; ?></td>
+                    <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
+                        <td class="text-center item"><?php echo $i; ?>.</td>
                         <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
                         <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
                         <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
@@ -42,18 +43,18 @@
                                 <button type="button" class="btn btn-info" onclick="">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" data-toggle="modal" onclick="editClap(<?php echo $clap['id']; ?>)" data-target="#editar-clap">
+                                <!--<button type="button" class="btn btn-info" data-toggle="modal" onclick="editClap(<?php /*echo $clap['id']; */?>)" data-target="#editar-clap">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" data-toggle="modal" onclick="editJefe(<?php echo $jefe['id']; ?>)" data-target="#editar-jefe">
+                                <button type="button" class="btn btn-info" data-toggle="modal" onclick="editJefe(<?php /*echo $jefe['id']; */?>)" data-target="#editar-jefe">
                                     <i class="fas fa-user-edit"></i>
                                 </button>
 
                                 <button type="button" class="btn btn-info"
-                                        onclick="destroyClap(<?php echo $clap['id'] ?>)"
-                                        id="btn_eliminar_<?php echo $clap['id']; ?>">
+                                        onclick="destroyClap(<?php /*echo $clap['id'] */?>)"
+                                        id="btn_eliminar_<?php /*echo $clap['id']; */?>">
                                     <i class="far fa-trash-alt"></i>
-                                </button>
+                                </button>-->
                             </div>
                         </td>
                     </tr>
@@ -64,12 +65,8 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>
+        <?php echo $links; ?>
+
     </div>
+    <?php verCargando(); ?>
 </div>
