@@ -57,9 +57,9 @@ function editParametros() {
                     .cell(tr.find('.tabla_id')).data(data.tabla_id)
                     .cell(tr.find('.valor')).data(data.valor)
                     .draw();
-            }
-            $('#btn_cancelar').click();
 
+        }
+        $('#btn_cancelar').click();
     });
 }
 
@@ -67,9 +67,11 @@ function guardarParametro() {
 
     ajaxRequest({ url: '_request/ParametrosRequest.php', data: $('#form_parametros'). serialize(), html: 'si' }, function (data) {
 
-        $('#dataContainerParametros').html(data);
-        datatable('table_parametros');
-        $('#btn_cancelar').click();
+        if (!data.is_json){
+            $('#dataContainerParametros').html(data.html);
+            datatable('table_parametros');
+            $('#btn_cancelar').click();
+        }
 
     });
 }
@@ -146,14 +148,16 @@ $('#navbar_form_buscar').submit(function (e) {
     e.preventDefault();
     let keyword = $('#navbar_input_buscar').val();
     ajaxRequest({ url: '_request/ParametrosRequest.php', data: {opcion: 'search', keyword: keyword}, html: 'si' }, function (data) {
-        $('#dataContainerParametros').html(data);
+        $('#dataContainerParametros').html(data.html);
+        datatable('table_parametros');
     });
 
 });
 
 function reconstruirTabla() {
     ajaxRequest({ url: '_request/ParametrosRequest.php', data: { opcion: 'index'}, html: 'si' }, function (data) {
-        $('#dataContainerParametros').html(data);
+        $('#dataContainerParametros').html(data.html);
+        datatable('table_parametros');
     });
 }
 

@@ -1,6 +1,5 @@
 <?php
 $permisos = verPermisos();
-
 echo $permisos[0];
 
 /*if ($_POST){

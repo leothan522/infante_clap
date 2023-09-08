@@ -21,14 +21,14 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <?php require_once "permisos.php"; ?>
+                    <div class="row" id="html_permisos_usuario">
+                        <!--JS-->
                     </div>
 
                 </div>
                 <div class="modal-footer justify-content-between">
                     <input type="hidden" placeholder="input_permisos_id" name="id" id="input_permisos_id">
-                    <input type="hidden" name="opcion" value="guarda_permisos">
+                    <input type="hidden" name="opcion" value="set_permisos">
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>

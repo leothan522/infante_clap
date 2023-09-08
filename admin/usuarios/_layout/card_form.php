@@ -68,12 +68,15 @@
 
             <label for="telefono">Tipo</label>
             <div class="input-group mb-3">
-
-                <select class="custom-select rounded-0" name="tipo" id="tipo">
+                <?php $controller->getRoles(); ?>
+                <select class="custom-select rounded-0 select_roles_usuarios" name="tipo" id="tipo">
                     <option value="">Seleccione</option>
-                    <option value="0">Usuario Público</option>
-                    <option value="1">Usuario Estandar</option>
-                    <option value="99">Usuario Administrador</option>
+                    <option value="0">Público</option>
+                    <option value="1">Estandar</option>
+                    <?php foreach ($controller->roles as $role) { ?>
+                        <option value="<?php echo $role['id'] ?>"><?php echo ucfirst($role['nombre']); ?></option>
+                    <?php } ?>
+                    <option value="99">Administrador</option>
                 </select>
 
                 <div class="input-group-append">
@@ -89,7 +92,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <input type="hidden" name="opcion" value="guardar" id="opcion">
+            <input type="hidden" name="opcion" value="store" id="opcion">
             <button type="submit" class="btn btn-primary">Crear Usuario</button>
             <button type="reset" class="btn btn-default float-right" onclick="resetForm()" id="btn_reset_create_user">Cancelar</button>
         </div>

@@ -11,15 +11,13 @@
     <div class="col-md-8">
         <div id="dataContainer">
             <?php
-            $listarUsuarios = $controller->listarUsuarios();
-            $links = $controller->linksPaginate;
-			$user_role = $controller->USER_ROLE;
-            $i = 0;
+            $controller->index();
             require_once 'card_table.php';
             ?>
         </div>
         <?php require_once "modal_edit.php"; ?>
         <?php require_once "modal_permisos.php"; ?>
+        <?php require_once "modal_roles.php"; ?>
         <?php require_once "modal_acceso.php"; ?>
     </div>
 </div>

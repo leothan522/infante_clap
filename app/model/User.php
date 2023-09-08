@@ -12,6 +12,8 @@ class User extends Model
             'password',
             'telefono',
             'role',
+            'role_id',
+            'permisos',
             'created_at'
         ];
     }
