@@ -739,7 +739,7 @@ if ($_POST) {
                         echo '</div>';
                         echo '<div class="card-body" >';
                         echo      'Seleccione un <strong>Municipio</strong> para empezar...';
-                        echo '</div>;';
+                        echo '</div>';
                         echo '<div class="card-footer clearfix" id="claps_listar_footer">';
                         echo '</div>';
                         echo verCargando();
