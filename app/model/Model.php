@@ -70,14 +70,24 @@ class Model
         return $rows;
     }
 
-    public function count($band = null): mixed
+    public function count($band = null, $campo = null, $operador = null, $valor = null): mixed
     {
         $extra = null;
         if (!is_null($band)) {
             $extra = "WHERE `band`= $band";
         }
+        $contar = null;
+        if (!is_null($campo) && !is_null($operador) && !is_null($campo)){
+            $contar ="WHERE `$campo` $operador $valor";
+        }
+
+        if (!is_null($extra) && !is_null($contar)){
+            $extra = "WHERE ";
+            $contar = "`$campo` $operador $valor AND `band`= $band";
+        }
+
         $query = new Query();
-        $sql = "SELECT COUNT(*) FROM `$this->TABLA` $extra ;";
+        $sql = "SELECT COUNT(*) FROM `$this->TABLA` $extra $contar ;";
         $rows = $query->count($sql);
         return $rows;
     }

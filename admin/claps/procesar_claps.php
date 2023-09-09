@@ -709,7 +709,7 @@ if ($_POST) {
                         $municipio = $modelMunicipio->find($id);
                         $limit = 30;
                         $i = 0;
-                        $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
+                        $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1, 'municipios_id', '=', $id), null, 'paginate', 'dataContainerClap')->createLinks();
                         $listarClap = $model->paginate($limit, null, 'id', 'DESC', 1, 'municipios_id', '=', $id);
 
                         echo '<div class="card-header">';
