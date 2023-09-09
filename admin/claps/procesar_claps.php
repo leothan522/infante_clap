@@ -726,7 +726,7 @@ if ($_POST) {
                         echo '<div class="card-footer clearfix" id="claps_listar_footer">';
                         echo      $links;
                         echo '</div>';
-                        echo verCargando();
+                        verCargando();
                         
                     } else {
                         echo '<div class="card-header">';
@@ -742,7 +742,7 @@ if ($_POST) {
                         echo '</div>';
                         echo '<div class="card-footer clearfix" id="claps_listar_footer">';
                         echo '</div>';
-                        echo verCargando();
+                        verCargando();
 
                     }
 
