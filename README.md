@@ -1,6 +1,5 @@
-# AdminLTE Bootstrap 
-## Admin Dashboard Template
-### Utilizando **PHP y Mysql**
+# Validacion Pagos CLAP
+### Originalmente para Infante
 ## Tecnologías
 Lista de tecnologías utilizadas en el proyecto:
 * [AdminLTE](https://adminlte.io/): v3.2.0 
