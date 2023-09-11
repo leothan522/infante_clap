@@ -27,6 +27,13 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => [
                 [
+                    'permiso' => validarPermisos('territorio.index'),
+                    'url' => public_url('admin/territorio'),
+                    'active' => $modulo == 'territorio.index',
+                    'icono' => '<i class="fas fa-globe-americas nav-icon"></i>',
+                    'titulo' => 'Territorio'
+                ],
+                [
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',

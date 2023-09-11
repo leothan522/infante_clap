@@ -29,7 +29,7 @@ $controller = new GuestController();
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
-    <title>AdminLTE 3 | Inicia sesión</title>
+    <title>Alguarisa CLAPS | Inicia sesión</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

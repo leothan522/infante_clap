@@ -7,7 +7,7 @@ use app\model\Parametros;
 
 class ParametrosController extends Admin
 {
-    public $TITTLE = "AdminLTE | Parametros";
+    public $TITTLE = "Alguarisa CLAPS | Parametros";
     public $MODULO = "parametros.index";
 
     public $links;
