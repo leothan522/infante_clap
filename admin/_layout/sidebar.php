@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="<?php asset('admin'); ?>" class="brand-link">
         <img src="<?php asset('app/resources/adminlte/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">ALGUARISA CLAPS</span>
     </a>
 
     <!-- Sidebar -->

@@ -19,9 +19,9 @@ function sidebar($modulo = null): ?string
         ],
 
         [
-            'permiso' => validarPermisos('usuarios.index') || validarPermisos('root'),
+            'permiso' => validarPermisos('territorio.index') || validarPermisos('usuarios.index') || validarPermisos('root'),
             'url' => '#',
-            'active' => ($modulo == 'usuarios.index') || ($modulo == 'parametros.index'),
+            'active' => ($modulo == 'territorio.index') || ($modulo == 'usuarios.index') || ($modulo == 'parametros.index'),
             'icono' => '<i class="nav-icon fas fa-cogs"></i>',
             'titulo' => 'Configuración',
             'badge' => null,
