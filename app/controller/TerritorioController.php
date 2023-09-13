@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\middleware\Admin;
+use app\model\Municipio;
 
 class TerritorioController extends Admin
 {
@@ -16,5 +17,14 @@ class TerritorioController extends Admin
             header('location: '. ROOT_PATH.'admin\\');
         }
     }
+
+    public function listarMunicipios(): array
+    {
+        $model = new Municipio();
+        return $model->getAll(1);
+    }
+
+
+
 
 }

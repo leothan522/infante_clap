@@ -3,7 +3,7 @@
         <h3 class="card-title">Municipios</h3>
 
         <div class="card-tools">
-            <button class="btn btn-tool" data-toggle="modal" data-target="#modal-municipios">
+            <button class="btn btn-tool" onclick="resetMunicipio()" data-toggle="modal" data-target="#modal-municipios">
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>
@@ -22,27 +22,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1.</td>
-                    <td>Leonardo Infante</td>
-                    <td class="text-center">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-success">
-                                3
-                            </button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-municipios">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-info">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <?php
+                $i = 0;
+                foreach ($controller->listarMunicipios() as $municipio){
+                    $i++;
+                ?>
+                    <tr>
+                        <td><?php echo $i; ?>.</td>
+                        <td><?php echo $municipio['nombre']; ?></td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-success">
+                                    <?php echo formatoMillares($municipio['parroquias'], 0); ?>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-info" onclick="editMunicipio(<?php echo $municipio['id']; ?>)" data-toggle="modal" data-target="#modal-municipios">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-info" onclick="destroyMunicipio(<?php echo $municipio['id'] ?>)">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -57,4 +63,5 @@
             <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
         </ul>
     </div>
+    <?php verCargando(); ?>
 </div>

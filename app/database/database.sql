@@ -15,22 +15,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Volcando estructura de base de datos para adminlte
+-- Volcando estructura de base de datos para pagos_clap
 CREATE DATABASE IF NOT EXISTS `pagos_clap` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `pagos_clap`;
 
--- Volcando estructura para tabla adminlte.parametros
+-- Volcando estructura para tabla pagos_clap.municipios
+CREATE TABLE IF NOT EXISTS `municipios` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `parroquias` int unsigned DEFAULT NULL,
+  `band` int unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `tabla_id` int DEFAULT NULL,
   `valor` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla adminlte.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.parametros: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla adminlte.users
+-- Volcando estructura para tabla pagos_clap.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -50,12 +61,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `deleted_at` date DEFAULT NULL,
   `dispositivo` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla adminlte.users: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$q8sJLX5XG0nhyXybQn0wHej7Q7DdquAPy5da8tbANngGhk.SwXnFu', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-12', NULL, NULL, 0),
-	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$XibWahOwcjxTdM.YWlhrTuA8gJZeyK7fLe9Ge5yrI5loizvfE2sea', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', NULL, NULL, 0);
+	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$XibWahOwcjxTdM.YWlhrTuA8gJZeyK7fLe9Ge5yrI5loizvfE2sea', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', NULL, NULL, 0),
+	(3, 'Ggfgrg', 'saasasa@gmail.com', '$2y$10$49P3kBF7RKjUw8mdIaxaYeYMB3FjUX8Bj9KtlfRqQqsEz8JdVDaIu', '(2145) 781-24.18', NULL, NULL, NULL, 0, 0, NULL, 1, 1, '2023-09-12', NULL, NULL, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

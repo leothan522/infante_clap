@@ -105,6 +105,12 @@ function verRoleUsuario($role)
     return $verRole;
 }
 
+function formatoMillares($cantidad, $decimales = 0): string
+{
+    if (is_null($cantidad)){ $cantidad = 0; }
+    return number_format($cantidad, $decimales, ',', '.');
+}
+
 
 //**************************************************************** */
 
@@ -164,11 +170,6 @@ function compararFechas($fechaInicial, $fechaFinal): float
 *   La diferencia entre la fecha : 2022-01-01 y 2023-01-01 es de: 365 dias.
 */
     return round($dias, 0, PHP_ROUND_HALF_UP);
-}
-
-function formatoMillares($cantidad, $decimales = 0): string
-{
-    return number_format($cantidad, $decimales, ',', '.');
 }
 
 function validateJSON(string $json): bool
