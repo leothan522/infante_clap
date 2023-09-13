@@ -38,7 +38,7 @@
                         </div>
                         <div class="invalid-feedback" id="error_name"></div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
