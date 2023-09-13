@@ -5,7 +5,7 @@ require_once "../../vendor/autoload.php";
 use app\model\Municipio;
 
 $response = array();
-
+$paginate = false;
 if ($_POST) {
 
     try {
@@ -16,6 +16,27 @@ if ($_POST) {
             switch ($opcion) {
 
                 //definimos las opciones a procesar
+
+                case 'paginate_municipio':
+                    $paginate = true;
+
+                    $model = new Municipio();
+
+                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
+                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
+                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
+                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
+                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+
+                    $listarMunicipios = $model->paginate($limit, $offset, 'nombre', 'DESC', 1);
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerMunicipio')->createLinks();
+                    $i = $offset;
+                    echo '<div id="dataContainerMunicipio">';
+                    require_once "_layout/card_table_municipios.php";
+                    echo '</div>';
+
+                    break;
+
                 case 'guardar_municipio':
                     $model = new Municipio();
 
@@ -209,5 +230,7 @@ if ($_POST) {
     $response['title'] = "Error Method.";
     $response['message'] = "Deben enviarse los datos por el method POST.";
 }
-echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
+if (!$paginate) {
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}

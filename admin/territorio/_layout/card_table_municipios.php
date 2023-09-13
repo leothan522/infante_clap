@@ -12,7 +12,7 @@
     <!-- /.card-header -->
     <div class="card-body p-0">
         <div class="table-responsive mt-3">
-            <table class="table" id="example1">
+            <table class="table" id="tabla_municipios">
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
@@ -23,8 +23,7 @@
                 </thead>
                 <tbody>
                 <?php
-                $i = 0;
-                foreach ($controller->listarMunicipios() as $municipio){
+                foreach ($listarMunicipios as $municipio){
                     $i++;
                 ?>
                     <tr>
@@ -55,13 +54,14 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
+        <?php echo $links; ?>
+        <!--<ul class="pagination pagination-sm m-0 float-right">
             <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>
+        </ul>-->
     </div>
     <?php verCargando(); ?>
 </div>

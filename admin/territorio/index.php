@@ -1,14 +1,16 @@
 <?php
 session_start();
 require_once "../../vendor/autoload.php";
+
 use app\controller\TerritorioController;
+
 $controller = new TerritorioController();
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?php asset('app/favicon/apple-icon-57x57.png') ?>">
@@ -29,16 +31,30 @@ $controller = new TerritorioController();
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
 
-  <title><?php if (isset($controller->TITTLE)) { echo $controller->TITTLE; } else { echo 'AdminLTE 3 | Dashboard'; } ?></title>
+    <title><?php if (isset($controller->TITTLE)) {
+            echo $controller->TITTLE;
+        } else {
+            echo 'AdminLTE 3 | Dashboard';
+        } ?></title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/fontawesome-free/css/all.min.css'); ?>">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css'); ?>">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+    <link rel="stylesheet"
+          href="<?php asset('app/resources/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css'); ?>">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="<?php asset('app/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet"
+          href="<?php asset('app/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet"
+          href="<?php asset('app/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
@@ -47,38 +63,38 @@ $controller = new TerritorioController();
 
 <!-- Site wrapper -->
 <div class="wrapper">
-  <!-- Navbar -->
-  <?php require_once "../_layout/navbar.php"?>
-  <!-- /.navbar -->
+    <!-- Navbar -->
+    <?php require_once "../_layout/navbar.php" ?>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <?php require_once  "../_layout/sidebar.php"?>
+    <!-- Main Sidebar Container -->
+    <?php require_once "../_layout/sidebar.php" ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <?php require_once "_layout/header.php"; ?>
-    </section>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <?php require_once "_layout/header.php"; ?>
+        </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <?php require_once "_layout/content.php"?>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <?php require_once "_layout/content.php" ?>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
-  <?php require_once "../_layout/footer.php"?>
+    <?php require_once "../_layout/footer.php" ?>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-      <?php require_once "_layout/right-sidebar.php" ?>
-  </aside>
-  <!-- /.control-sidebar -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <?php require_once "_layout/right-sidebar.php" ?>
+    </aside>
+    <!-- /.control-sidebar -->
 
 </div>
 <!-- ./wrapper -->
@@ -97,9 +113,23 @@ $controller = new TerritorioController();
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
-<script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
+<script src="<?php asset('public/js/sweetalert-app.js'); ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
+<!-- DataTables  & Plugins -->
+<script src="<?php asset('app/resources/adminlte/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/jszip/jszip.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
+<script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 
 <script src="_app/territorio.js"></script>
 </body>

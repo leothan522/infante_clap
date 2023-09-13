@@ -228,8 +228,9 @@ public function listarUsuarios()
     </div>
 </div>
 
- * En la Solicitud AJAX
+ * En la Solicitud AJAX en (procesar.php)
  -- Ejemplo
+ -- case 'paginate':
 
 $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
 $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;

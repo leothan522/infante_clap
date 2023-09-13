@@ -1,6 +1,9 @@
 //validamos campos para los municpios
 $('#municipio_nombre').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}");
 
+//Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
+datatable('tabla_municipios');
+
 $('#form_territorio_municipio').submit(function (e) {
     e.preventDefault();
     let municipio = $('#municipio_nombre');

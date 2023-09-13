@@ -2,7 +2,7 @@
 // Include pagination library file
 use app\controller\PaginationController;
 
-function paginate($baseURL, $tableID, $limit, $rowCount, $offset = null)
+function paginate($baseURL, $tableID, $limit, $rowCount, $offset = null, $opcion = 'paginate', $contentDiv = 'dataContainer')
 {
     // Set some useful configuration
     //$baseURL = 'getData.php';
@@ -15,7 +15,8 @@ function paginate($baseURL, $tableID, $limit, $rowCount, $offset = null)
         'totalRows' => $rowCount,
         'perPage' => $limit,
         'currentPage' => $offset,
-        'contentDiv' => 'dataContainer'
+        'contentDiv' => $contentDiv,
+        'opcion' => $opcion
     );
     $pagination = new PaginationController($pagConfig);
     return $pagination;
