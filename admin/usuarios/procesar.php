@@ -3,9 +3,11 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\model\User;
+use app\controller\UsersController;
 
 $response = array();
 $paginate = false;
+$controller = new UsersController();
 
 if ($_POST) {
 
