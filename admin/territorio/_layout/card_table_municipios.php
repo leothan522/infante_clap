@@ -26,11 +26,11 @@
                 foreach ($listarMunicipios as $municipio){
                     $i++;
                 ?>
-                    <tr>
-                        <td><?php echo $i; ?>.</td>
-                        <td><?php echo $municipio['nombre']; ?></td>
+                    <tr id="tr_item_<?php echo $municipio['id']; ?>">
+                        <td class="text-center item"><?php echo $i; ?>.</td>
+                        <td class="nombre"><?php echo $municipio['nombre']; ?></td>
                         <td class="text-center">
-                            <div class="btn-group btn-group-sm">
+                            <div class="btn-group btn-group-sm parroquia">
                                 <button type="button" class="btn btn-success">
                                     <?php echo formatoMillares($municipio['parroquias'], 0); ?>
                                 </button>
@@ -41,7 +41,7 @@
                                 <button type="button" class="btn btn-info" onclick="editMunicipio(<?php echo $municipio['id']; ?>)" data-toggle="modal" data-target="#modal-municipios">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="destroyMunicipio(<?php echo $municipio['id'] ?>)">
+                                <button type="button" class="btn btn-info" onclick="destroyMunicipio(<?php echo $municipio['id'] ?>)" id="btn_eliminar_<?php echo $municipio['id']; ?>">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>

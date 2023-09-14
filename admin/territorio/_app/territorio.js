@@ -4,6 +4,7 @@ $('#municipio_nombre').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('tabla_municipios');
 
+//Aqui se hace la solicitud ajax para registrar un nuevo municipio o editar uno existente
 $('#form_territorio_municipio').submit(function (e) {
     e.preventDefault();
     let municipio = $('#municipio_nombre');
@@ -28,8 +29,51 @@ $('#form_territorio_municipio').submit(function (e) {
                 let data = JSON.parse(response);
 
                 if (data.result){
+
+                    let table = $('#tabla_municipios').DataTable();
+
+                    if (data.nuevo){
+                        //es nuevo registro
+                        let button_parroquia = '<div class="btn-group btn-group-sm text-center">\n' +
+                            '                                <button type="button" class="btn btn-success">\n' +
+                            '                                    '+ data.parroquias +'\n' +
+                            '                                </button>\n' +
+                            '                            </div>';
+
+                        let buttons = '<div class="btn-group btn-group-sm">\n' +
+                            '                                <button type="button" class="btn btn-info" onclick="editMunicipio('+ data.id +')" data-toggle="modal" data-target="#modal-municipios">\n' +
+                            '                                    <i class="fas fa-edit"></i>\n' +
+                            '                                </button>\n' +
+                            '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ data.id +')">\n' +
+                            '                                    <i class="far fa-trash-alt"></i>\n' +
+                            '                                </button>\n' +
+                            '                            </div>';
+                        table.row.add([
+                            data.item,
+                            data.nombre,
+                            button_parroquia,
+                            buttons
+                        ]).draw();
+
+                        let nuevo = $('#tabla_municipios tr:last');
+                        nuevo.attr('id', 'tr_item' + data.id);
+                        nuevo.find("td:eq(1)").addClass('nombre');
+                        nuevo.find("td:eq(2)").addClass('parroquias');
+                    }else {
+                        //estoy editando
+                        let tr = $('#tr_item_' + data.id);
+                        table
+                            .cell(tr.find('.nombre')).data(data.nombre)
+                            .draw();
+                    }
+
                     resetMunicipio();
                     $('#municipio_btn_reset').click();
+                    $('#paginate_leyenda').text(data.total);
+
+
+
+
                 }else{
                     if (data.error === 'nombre_duplicado'){
                         municipio.addClass('is-invalid');
@@ -55,6 +99,8 @@ $('#form_territorio_municipio').submit(function (e) {
     }
 });
 
+
+//esta funsion sirve para resetear los datos del modal
 function resetMunicipio() {
     $('#municipio_nombre').val('');
     $('#municipio_nombre').removeClass('is-valid');
@@ -64,6 +110,8 @@ function resetMunicipio() {
     $('#municipio_title').text('Crear Municipio');
 }
 
+
+//aqui se cambia el modal para editan los municipios segun el id que se pasa
 function editMunicipio(id) {
     verSpinner(true);
     resetMunicipio();
@@ -105,7 +153,7 @@ function editMunicipio(id) {
     });
 }
 
-
+//esta es la funcion para eliminar un municipio
 function destroyMunicipio(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
@@ -120,6 +168,16 @@ function destroyMunicipio(id) {
                 success: function (response) {
                     let data = JSON.parse(response);
 
+                    if (data.result){
+                        let table = $('#tabla_municipios').DataTable();
+                        let item = $('#btn_eliminar_' + id).closest('tr');
+                        table
+                            .row(item)
+                            .remove()
+                            .draw();
+
+                        $('#paginate_leyenda').text(data.total);
+                    }
 
                     if (data.alerta) {
                         Alerta.fire({
@@ -140,4 +198,5 @@ function destroyMunicipio(id) {
         }
     });
 }
-console.log('hi!');
+
+console.log('hi elminar!');

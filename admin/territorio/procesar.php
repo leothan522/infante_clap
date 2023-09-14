@@ -52,12 +52,19 @@ if ($_POST) {
                             ];
 
                             $model->save($data);
+                            $municipios = $model->first('nombre', '=', $nombre);
                             $response['result'] = true;
                             $response['alerta'] = false;
                             $response['error'] = false;
                             $response['icon'] = "success";
                             $response['title'] = "Municipio Creado Exitosamente.";
                             $response['message'] = "Municipio Creado " . $nombre;
+                            $response['id'] = $municipios['id'];
+                            $response['item'] = '<p> '.$model->count(1).'. </p>';
+                            $response['nombre'] = $municipios['nombre'];
+                            $response['parroquias'] = '<p class="text-center">'.formatoMillares($municipios['parroquias'], 0).'</p>';
+                            $response['nuevo'] = true;
+
                         }else{
                             $response['result'] = false;
                             $response['alerta'] = false;
@@ -130,6 +137,10 @@ if ($_POST) {
                                 $response['icon'] = "success";
                                 $response['title'] = "Municipio Actualizado.";
                                 $response['message'] = "Municipio Creado " . $nombre;
+                                $response['id'] = $id;
+                                $response['nombre'] = $nombre;
+                                $response['total'] = $model->count(1);
+                                $response['nuevo'] = false;
                             }else{
                                 $response['result'] = false;
                                 $response['alerta'] = true;
