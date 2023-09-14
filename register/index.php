@@ -49,8 +49,10 @@ $controller = new GuestController();
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-            <a href="./" class="h1"><b>Admin</b>LTE</a>
+        <div class="card-header text-center p-0">
+            <a href="./">
+                <img class="img-thumbnail border-transparent" src="<?php asset('public/img/logo_alguarisa.jpg'); ?>" alt="Alimentos del Guárico">
+            </a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Registrarse</p>
