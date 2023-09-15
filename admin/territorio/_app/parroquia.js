@@ -161,7 +161,7 @@ function elimParroquia(id) {
 
                     if (data.result){
                         let table = $('#tabla_parroquias').DataTable();
-                        let item = $('#btn_eliminar_' + id).closest('tr');
+                        let item = $('#btn_eliminar_p_' + id).closest('tr');
                         table
                             .row(item)
                             .remove()

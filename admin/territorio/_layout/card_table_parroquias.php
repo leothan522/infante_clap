@@ -39,7 +39,7 @@
                                         data-target="#modal-parroquias">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="elimParroquia(<?php echo $parroquia['id']; ?>)" id="btn_eliminar_<?php echo $parroquia['id']; ?>">
+                                <button type="button" class="btn btn-info" onclick="elimParroquia(<?php echo $parroquia['id']; ?>)" id="btn_eliminar_p_<?php echo $parroquia['id']; ?>">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
