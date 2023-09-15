@@ -12,7 +12,15 @@
         <?php require_once "modal_municipios.php" ?>
     </div>
     <div class="col-6">
-        <?php require_once "card_table_parroquias.php" ?>
+        <div id="dataContainerParroquia">
+            <?php
+            $listarParroquias = $controller->listarParroquias();
+            $links = $controller->linksPaginate;
+            $i = 0;
+            require_once "card_table_parroquias.php"
+            ?>
+        </div>
+
         <?php require_once "modal_parroquias.php" ?>
     </div>
 </div>

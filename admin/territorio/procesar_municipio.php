@@ -40,13 +40,13 @@ if ($_POST) {
                 case 'guardar_municipio':
                     $model = new Municipio();
 
-                    if (!empty($_POST['mun_municipio'])){
+                    if (!empty($_POST['mun_municipio'])) {
                         //proceso
                         $nombre = ucwords($_POST['mun_municipio']);
 
                         $existe = $model->existe('nombre', '=', $nombre, null, 1);
 
-                        if (!$existe){
+                        if (!$existe) {
                             $data = [
                                 $nombre
                             ];
@@ -60,12 +60,12 @@ if ($_POST) {
                             $response['title'] = "Municipio Creado Exitosamente.";
                             $response['message'] = "Municipio Creado " . $nombre;
                             $response['id'] = $municipios['id'];
-                            $response['item'] = '<p> '.$model->count(1).'. </p>';
+                            $response['item'] = '<p> ' . $model->count(1) . '. </p>';
                             $response['nombre'] = $municipios['nombre'];
-                            $response['parroquias'] = '<p class="text-center">'.formatoMillares($municipios['parroquias'], 0).'</p>';
+                            $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;
 
-                        }else{
+                        } else {
                             $response['result'] = false;
                             $response['alerta'] = false;
                             $response['error'] = "nombre_duplicado";
@@ -73,7 +73,7 @@ if ($_POST) {
                             $response['title'] = "Nombre Duplicado.";
                             $response['message'] = "El nombre ya esta registrado.";
                         }
-                    }else{
+                    } else {
                         $response['result'] = false;
                         $response['alerta'] = true;
                         $response['error'] = "faltan_datos";
@@ -87,7 +87,7 @@ if ($_POST) {
                 case 'get_municipio':
                     $model = new Municipio();
 
-                    if (!empty($_POST['id'])){
+                    if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
                         $municipio = $model->find($id);
                         $response['result'] = true;
@@ -99,7 +99,7 @@ if ($_POST) {
                         $response['id'] = $municipio['id'];
                         $response['nombre'] = $municipio['nombre'];
 
-                    }else{
+                    } else {
                         $response['result'] = false;
                         $response['alerta'] = true;
                         $response['error'] = "faltan_datos";
@@ -117,19 +117,19 @@ if ($_POST) {
                     if (
                         !empty($_POST['mun_municipio']) &&
                         !empty($_POST['id'])
-                    ){
+                    ) {
                         //proceso
                         $id = $_POST['id'];
                         $nombre = ucwords($_POST['mun_municipio']);
 
                         $existe = $model->existe('nombre', '=', $nombre, $id, 1);
 
-                        if (!$existe){
+                        if (!$existe) {
 
                             $municipio = $model->find($id);
                             $db_nombre = $municipio['nombre'];
 
-                            if ($db_nombre != $nombre){
+                            if ($db_nombre != $nombre) {
                                 $model->update($id, 'nombre', $nombre);
                                 $response['result'] = true;
                                 $response['alerta'] = false;
@@ -141,7 +141,7 @@ if ($_POST) {
                                 $response['nombre'] = $nombre;
                                 $response['total'] = $model->count(1);
                                 $response['nuevo'] = false;
-                            }else{
+                            } else {
                                 $response['result'] = false;
                                 $response['alerta'] = true;
                                 $response['error'] = "no_cambios";
@@ -150,7 +150,7 @@ if ($_POST) {
                                 $response['message'] = "No se realizaron Cambios.";
                             }
 
-                        }else{
+                        } else {
                             $response['result'] = false;
                             $response['alerta'] = false;
                             $response['error'] = "nombre_duplicado";
@@ -158,7 +158,7 @@ if ($_POST) {
                             $response['title'] = "Nombre Duplicado.";
                             $response['message'] = "El nombre ya esta registrado.";
                         }
-                    }else{
+                    } else {
                         $response['result'] = false;
                         $response['alerta'] = true;
                         $response['error'] = "faltan_datos";
@@ -174,7 +174,7 @@ if ($_POST) {
 
                     if (
                         !empty($_POST['id'])
-                    ){
+                    ) {
                         //proceso
                         $id = $_POST['id'];
                         $model->update($id, 'band', 0);
@@ -185,7 +185,7 @@ if ($_POST) {
                         $response['title'] = "Municipio Eliminado.";
                         $response['message'] = "Municipio Eliminado.";
 
-                    }else{
+                    } else {
                         $response['result'] = false;
                         $response['alerta'] = true;
                         $response['error'] = "faltan_datos";
@@ -195,7 +195,7 @@ if ($_POST) {
                     }
 
                     break;
-                    
+
 
                 //Por defecto
                 default:
