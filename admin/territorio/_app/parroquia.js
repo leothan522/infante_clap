@@ -50,7 +50,7 @@ $('#form_parroquias').submit(function (e) {
                             '                                        data-target="#modal-parroquias">\n' +
                             '                                    <i class="fas fa-edit"></i>\n' +
                             '                                </button>\n' +
-                            '                                <button type="button" class="btn btn-info" onclick="elimParroquia('+ data.id +')">\n' +
+                            '                                <button type="button" class="btn btn-info" onclick="elimParroquia('+ data.id +')" id="btn_eliminar_p_'+ data.id +'">\n' +
                             '                                    <i class="far fa-trash-alt"></i>\n' +
                             '                                </button>\n' +
                             '                            </div>';
