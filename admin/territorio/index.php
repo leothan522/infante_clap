@@ -55,11 +55,12 @@ $controller = new TerritorioController();
           href="<?php asset('app/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
     <link rel="stylesheet"
           href="<?php asset('app/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
+
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
 <!-- Preloader -->
-<?php require_once "../_layout/preloader.php" ?>
+
 
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -131,6 +132,8 @@ $controller = new TerritorioController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 
-<script src="_app/territorio.js"></script>
+<script src="_app/municipio.js"></script>
+<script src="_app/parroquia.js"></script>
+
 </body>
 </html>

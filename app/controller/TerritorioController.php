@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\middleware\Admin;
 use app\model\Municipio;
+use app\model\Parroquia;
 
 class TerritorioController extends Admin
 {
@@ -25,8 +26,24 @@ class TerritorioController extends Admin
     {
         $model = new Municipio();
         $limit = 15;
-        $this->linksPaginate = paginate('procesar.php', 'tabla_municipios', $limit, $model->count(1), null, 'paginate_municipio', 'dataContainerMunicipio')->createLinks();
+        $this->linksPaginate = paginate('procesar_municipio.php', 'tabla_municipios', $limit, $model->count(1), null, 'paginate_municipio', 'dataContainerMunicipio')->createLinks();
         return $model->paginate($limit, null, 'nombre', 'ASC', 1);
+    }
+
+    public function listarParroquias()
+    {
+        $model = new Parroquia();
+        $limit = 15;
+        $this->linksPaginate = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(1), null, 'paginate_parroquia', 'dataContainerParroquia')->createLinks();
+        return $model->paginate($limit, null, 'nombre', 'ASC', 1);
+    }
+
+    public function getMunicipio($id)
+    {
+        $model = new Municipio();
+        $municipio = $model->find($id);
+        return $municipio['nombre'];
+
     }
 
 

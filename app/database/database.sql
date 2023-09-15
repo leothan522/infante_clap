@@ -26,9 +26,16 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   `parroquias` int unsigned DEFAULT NULL,
   `band` int unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
+INSERT INTO `municipios` (`id`, `nombre`, `parroquias`, `band`) VALUES
+	(1, 'Nuevo Municipio 266', NULL, 1),
+	(2, 'Prueba', NULL, 1),
+	(3, 'Prueba 456', NULL, 1),
+	(4, 'Antonny', NULL, 1),
+	(5, 'Antonny Maluenga', NULL, 1),
+	(6, 'Aaaa', NULL, 1);
 
 -- Volcando estructura para tabla pagos_clap.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
@@ -40,6 +47,17 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Volcando datos para la tabla pagos_clap.parametros: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.parroquias
+CREATE TABLE IF NOT EXISTS `parroquias` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `municipios_id` int unsigned NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `band` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.parroquias: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -66,8 +84,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Volcando datos para la tabla pagos_clap.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$q8sJLX5XG0nhyXybQn0wHej7Q7DdquAPy5da8tbANngGhk.SwXnFu', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-12', NULL, NULL, 0),
-	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$XibWahOwcjxTdM.YWlhrTuA8gJZeyK7fLe9Ge5yrI5loizvfE2sea', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', NULL, NULL, 0),
-	(3, 'Ggfgrg', 'saasasa@gmail.com', '$2y$10$49P3kBF7RKjUw8mdIaxaYeYMB3FjUX8Bj9KtlfRqQqsEz8JdVDaIu', '(2145) 781-24.18', NULL, NULL, NULL, 0, 0, NULL, 1, 1, '2023-09-12', NULL, NULL, 0);
+	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$XibWahOwcjxTdM.YWlhrTuA8gJZeyK7fLe9Ge5yrI5loizvfE2sea', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', NULL, NULL, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
