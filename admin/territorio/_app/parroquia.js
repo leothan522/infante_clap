@@ -63,13 +63,13 @@ $('#form_parroquias').submit(function (e) {
                         ]).draw();
 
                         let nuevo = $('#tabla_parroquias tr:last');
-                        nuevo.attr('id', 'tr_item_' + data.id);
+                        nuevo.attr('id', 'tr_item_p_' + data.id);
                         nuevo.find("td:eq(1)").addClass('parroquia');
                         nuevo.find("td:eq(2)").addClass('municipio');
 
                     }else {
                         //estoy editando
-                        let tr = $('#tr_item_' + data.id);
+                        let tr = $('#tr_item_p_' + data.id);
                         table
                             .cell(tr.find('.parroquia')).data(data.parroquia)
                             .cell(tr.find('.municipio')).data(data.municipio)

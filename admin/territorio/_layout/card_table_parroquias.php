@@ -27,7 +27,7 @@
                 foreach ($listarParroquias as $parroquia) {
                     $i++;
                     ?>
-                    <tr id="tr_item_<?php echo $parroquia['id']; ?>">
+                    <tr id="tr_item_p_<?php echo $parroquia['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>. </td>
                         <td class="parroquia"><?php echo $parroquia['nombre']; ?></td>
                         <td class="municipio">
