@@ -32,7 +32,7 @@ if ($_POST) {
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
                     $listarParroquias = $model->paginate($limit, $offset, 'nombre', 'ASC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerParroquia')->createLinks();
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerParroquia', '_parroquia')->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerParroquia">';
                     require_once "_layout/card_table_parroquias.php";
@@ -63,6 +63,11 @@ if ($_POST) {
                             $model->save($data);
                             $parroquias = $model->existe('nombre', '=', $parroquia, null, 1);
                             $municipio = $modelMunicipio->find($parroquias['municipios_id']);
+
+                            //incremento contador de parroquis al municipio
+                            $count = $municipio['parroquias'] + 1;
+                            $modelMunicipio->update($municipio['id'], 'parroquias', $count);
+
                             $response['result'] = true;
                             $response['alerta'] = false;
                             $response['error'] = false;
@@ -72,8 +77,11 @@ if ($_POST) {
                             $response['id'] = $parroquias['id'];
                             $response['item'] = '<p class="text-center">'.$model->count(1).'.</p>';
                             $response['municipio'] = $municipio['nombre'];
+                            $response['municipios_id'] = $municipio['id'];
+                            $response['municipio_parroquias'] = $count;
                             $response['parroquia'] = $parroquias['nombre'];
                             $response['nuevo'] = true;
+                            $response['total'] = $model->count(1);
 
 
 
@@ -143,10 +151,22 @@ if ($_POST) {
                             $parroquias = $model->find($id);
                             $db_municipio = $parroquias['municipios_id'];
                             $db_parroquia = $parroquias['nombre'];
+                            $response['edit_municipio'] = false;
 
                             if ($db_municipio != $municipio){
                                 $procesar = true;
                                 $model->update($id, 'municipios_id', $municipio);
+                                $municipio_anterior = $modelMunicipio->find($db_municipio);
+                                $restar = $municipio_anterior['parroquias'] - 1;
+                                $modelMunicipio->update($municipio_anterior['id'], 'parroquias', $restar);
+                                $municipio_actual = $modelMunicipio->find($municipio);
+                                $sumar = $municipio_actual['parroquias'] + 1;
+                                $modelMunicipio->update($municipio_actual['id'], 'parroquias', $sumar);
+                                $response['anterior_id'] = $municipio_anterior['id'];
+                                $response['anterior_cantidad'] = $restar;
+                                $response['actual_id'] = $municipio_actual['id'];
+                                $response['actual_cantidad'] = $sumar;
+                                $response['edit_municipio'] = true;
                             }
 
                             if ($db_parroquia != $parroquia_nombre){
@@ -202,12 +222,24 @@ if ($_POST) {
                     if (!empty($_POST['id'])){
                         $id = $_POST['id'];
                         $model->update($id,'band', 0);
+
+                        //resto al contador de parroquias
+                        $parroquia = $model->find($id);
+                        $modelMunicipio = new Municipio();
+                        $municipio = $modelMunicipio->find($parroquia['municipios_id']);
+                        $count = $municipio['parroquias'] - 1 ;
+                        $modelMunicipio->update($municipio['id'], 'parroquias', $count);
+
                         $response['result'] = true;
                         $response['alerta'] = false;
                         $response['error'] = false;
                         $response['icon'] = "success";
                         $response['title'] = "Parroquia Eliminada.";
                         $response['message'] = "Parroquia Eliminada Exitosamente.";
+                        $response['total'] = $model->count(1);
+                        $response['municipios_id'] = $municipio['id'];
+                        $response['municipio_parroquias'] = $count;
+
                     }else {
                         $response['result'] = false;
                         $response['alerta'] = true;
@@ -218,6 +250,18 @@ if ($_POST) {
                     }
                     break;
 
+                case 'get_municipios_select':
+
+                    $model = new Municipio();
+                    $response['result'] = true;
+                    $response['municipios'] = array();
+                    foreach ($model->getAll(1) as $municipio){
+                        $id = $municipio['id'];
+                        $nombre = $municipio['nombre'];
+                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                    }
+
+                    break;
 
                 //Por defecto
                 default:

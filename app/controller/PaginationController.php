@@ -37,6 +37,7 @@ class PaginationController
     var $currentOffset	= 0;
     var $contentDiv     = '';
     var $opcion         = '';
+    var $leyenda         = '';
     var $additionalParam= '';
 
     function __construct($params = array()){
@@ -74,7 +75,7 @@ class PaginationController
         // Is there only one page? will not need to continue
         if ($numPages == 1){
             if ($this->showCount){
-                $info = 'Mostrando : <span id="paginate_leyenda">' . $this->totalRows . '</span>';
+                $info = 'Mostrando : <span id="paginate_leyenda'.$this->leyenda.'">' . $this->totalRows . '</span>';
                 return $info;
             }else{
                 return '';
@@ -100,7 +101,7 @@ class PaginationController
             else
                 $info .= $this->totalRows;
 
-            $info .= ' de <span id="paginate_leyenda">' . $this->totalRows . '</span>  registros.';
+            $info .= ' de <span id="paginate_leyenda'.$this->leyenda.'">' . $this->totalRows . '</span>  registros.';
             $info .= $this->textTagClose;
 
             $output .= $info;

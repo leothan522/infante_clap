@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.municipios: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (

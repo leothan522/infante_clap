@@ -29,7 +29,7 @@
                     <tr id="tr_item_<?php echo $municipio['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>.</td>
                         <td class="nombre"><?php echo $municipio['nombre']; ?></td>
-                        <td class="text-center">
+                        <td class="text-center parroquias">
                             <div class="btn-group btn-group-sm parroquia">
                                 <button type="button" class="btn btn-success">
                                     <?php echo formatoMillares($municipio['parroquias'], 0); ?>

@@ -5,7 +5,7 @@
             <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h4 class="modal-title" id="title_parroquia">Parroquia</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="resetParroquia()" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,10 +15,7 @@
                     <div class="input-group mb-3">
 
                         <select class="custom-select rounded-0" name="parroquia_municipio" id="parroquia_municipio">
-                            <option value="">Seleccione</option>
-                            <?php foreach ($listarMunicipios as $municipio){ ?>
-                                <option value="<?php echo $municipio['id'] ?>"><?php echo $municipio['nombre']; ?></option>
-                           <?php } ?>
+                            <!--Option con JS-->
                         </select>
 
                         <div class="input-group-append">
@@ -47,7 +44,7 @@
                 <input type="hidden" name="id" id="parroquia_id">
                 <input type="hidden" name="opcion" value="guardar_parroquia" id="parroquia_opcion">
                 <button type="submit" class="btn btn-primary" id="parroquia_btn_guardar">Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetParroquia()" id="parroquia_btn_cancelar">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="parroquia_btn_cancelar">Cancelar</button>
             </div>
                 <?php verCargando(); ?>
         </div>

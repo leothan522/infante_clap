@@ -3,6 +3,7 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\model\Municipio;
+use app\model\Parroquia;
 
 $response = array();
 $paginate = false;
@@ -29,7 +30,7 @@ if ($_POST) {
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
                     $listarMunicipios = $model->paginate($limit, $offset, 'nombre', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerMunicipio')->createLinks();
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerMunicipio', '_municipio')->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerMunicipio">';
                     require_once "_layout/card_table_municipios.php";
@@ -64,6 +65,7 @@ if ($_POST) {
                             $response['nombre'] = $municipios['nombre'];
                             $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;
+                            $response['total'] = $model->count(1);
 
                         } else {
                             $response['result'] = false;
@@ -130,6 +132,7 @@ if ($_POST) {
                             $db_nombre = $municipio['nombre'];
 
                             if ($db_nombre != $nombre) {
+
                                 $model->update($id, 'nombre', $nombre);
                                 $response['result'] = true;
                                 $response['alerta'] = false;
@@ -141,6 +144,14 @@ if ($_POST) {
                                 $response['nombre'] = $nombre;
                                 $response['total'] = $model->count(1);
                                 $response['nuevo'] = false;
+
+                                //busco las parroquias vinculadas al municipio
+                                $modelParroquia = new Parroquia();
+                                $response['parroquias'] = array();
+                                foreach ($modelParroquia->getList('municipios_id', '=', $id, 1) as $parroquia){
+                                    $response['parroquias'][] = array('id' => $parroquia['id']);
+                                }
+
                             } else {
                                 $response['result'] = false;
                                 $response['alerta'] = true;
@@ -175,6 +186,7 @@ if ($_POST) {
                     if (
                         !empty($_POST['id'])
                     ) {
+
                         //proceso
                         $id = $_POST['id'];
                         $model->update($id, 'band', 0);
@@ -184,6 +196,17 @@ if ($_POST) {
                         $response['icon'] = "success";
                         $response['title'] = "Municipio Eliminado.";
                         $response['message'] = "Municipio Eliminado.";
+                        $response['total'] = $model->count(1);
+
+                        //chequeo las parroquias vinculadas a ese municipio
+                        $modelParroquia = new Parroquia();
+                        $response['parroquias'] = array();
+                        foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia){
+                            $response['parroquias'][] = array("id" => $parroquia['id']);
+                            //elimino las parroquias
+                            $modelParroquia->update($parroquia['id'], 'band', 0);
+                        }
+                        $response['total_parroquias'] = $modelParroquia->count(1);
 
                     } else {
                         $response['result'] = false;

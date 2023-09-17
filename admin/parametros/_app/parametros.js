@@ -81,10 +81,7 @@ $('#form_parametros').submit(function (e){
                            .cell(tr.find('.valor')).data(data.valor)
                            .draw();
                    }
-
-
                    $('#btn_cancelar').click();
-                   reset();
                }
 
                if (data.alerta) {
@@ -171,6 +168,7 @@ function borrar(id) {
                             .draw();
 
                         $('#paginate_leyenda').text(data.total);
+                        $('#btn_cancelar').click();
 
                     }
 
@@ -209,6 +207,6 @@ function ocultarForm() {
     $('#col_form').addClass('d-none');
 }
 
-console.log('hi! mundo');
+console.log('hi!');
 
 

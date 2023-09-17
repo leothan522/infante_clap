@@ -45,7 +45,7 @@ $('#form_territorio_municipio').submit(function (e) {
                             '                                <button type="button" class="btn btn-info" onclick="editMunicipio('+ data.id +')" data-toggle="modal" data-target="#modal-municipios">\n' +
                             '                                    <i class="fas fa-edit"></i>\n' +
                             '                                </button>\n' +
-                            '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ data.id +')">\n' +
+                            '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
                             '                                    <i class="far fa-trash-alt"></i>\n' +
                             '                                </button>\n' +
                             '                            </div>';
@@ -66,11 +66,22 @@ $('#form_territorio_municipio').submit(function (e) {
                         table
                             .cell(tr.find('.nombre')).data(data.nombre)
                             .draw();
+                        //modifico el nombre municipio en parroquias vinculadas
+                        let table_parroquias = $('#tabla_parroquias').DataTable();
+                        let parroquias = data.parroquias.length;
+                        let tr_parroquia;
+                        for (let i = 0; i < parroquias; i++) {
+                            tr_parroquia = $('#tr_item_p_' + data.parroquias[i]['id']);
+                            table_parroquias
+                                .cell(tr_parroquia.find('.municipio')).data(data.nombre)
+                                .draw()
+                        }
+
                     }
 
                     resetMunicipio();
                     $('#municipio_btn_reset').click();
-                    $('#paginate_leyenda').text(data.total);
+                    $('#paginate_leyenda_municipio').text(data.total);
 
 
                 }else {
@@ -172,8 +183,22 @@ function destroyMunicipio(id) {
                             .row(item)
                             .remove()
                             .draw();
+                        $('#paginate_leyenda_municipio').text(data.total);
 
-                        $('#paginate_leyenda').text(data.total);
+                        //elimno las parroquias
+                        let tabla_prroquias = $('#tabla_parroquias').DataTable();
+                        let parroquias = data.parroquias.length;
+                        let item_parroquia;
+                        for (let i = 0; i < parroquias; i++) {
+                            item_parroquia = $('#btn_eliminar_p_' + data.parroquias[i]['id']).closest('tr');
+                            tabla_prroquias
+                                .row(item_parroquia)
+                                .remove()
+                                .draw();
+                        }
+
+                        $('#paginate_leyenda_parroquia').text(data.total_parroquias);
+
                     }
 
                     if (data.alerta) {

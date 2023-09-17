@@ -67,6 +67,9 @@ $('#form_parroquias').submit(function (e) {
                         nuevo.find("td:eq(1)").addClass('parroquia');
                         nuevo.find("td:eq(2)").addClass('municipio');
 
+                        //incremento el numero de parroquias en el municipio
+                        municipioParroquias(data.municipios_id, data.municipio_parroquias);
+
                     }else {
                         //estoy editando
                         let tr = $('#tr_item_p_' + data.id);
@@ -74,11 +77,14 @@ $('#form_parroquias').submit(function (e) {
                             .cell(tr.find('.parroquia')).data(data.parroquia)
                             .cell(tr.find('.municipio')).data(data.municipio)
                             .draw();
+                        if (data.edit_municipio){
+                            municipioParroquias(data.anterior_id, data.anterior_cantidad);
+                            municipioParroquias(data.actual_id, data.actual_cantidad);
+                        }
                     }
 
-
-                    resetParroquia();
                     $('#parroquia_btn_cancelar').click();
+                    $('#paginate_leyenda_parroquia').text(data.total);
                 }else {
 
                     if (data.error === 'nombre_duplicado'){
@@ -122,7 +128,9 @@ function editParroquia(id) {
             let data = JSON.parse(response)
 
             if (data.result){
-                $('#parroquia_municipio').val(data.municipios);
+                $('#parroquia_municipio')
+                    .val(data.municipios)
+                    .trigger('change');
                 $('#parroquia_nombre').val(data.parroquia);
                 $('#parroquia_opcion').val('editar_parroquia');
                 $('#parroquia_id').val(data.id);
@@ -167,7 +175,11 @@ function elimParroquia(id) {
                             .remove()
                             .draw();
 
-                        $('#paginate_leyenda').text(data.total);
+                        $('#paginate_leyenda_parroquia').text(data.total);
+
+                        //disminuir el numero de parroquias en el municipio
+                        municipioParroquias(data.municipios_id, data.municipio_parroquias);
+
                     }
 
                     if (data.alerta) {
@@ -191,10 +203,48 @@ function elimParroquia(id) {
 
 //esta funsion sirve para resetear los datos del modal de parroquia
 function resetParroquia(){
+    verSpinner(true);
+    $.ajax({
+        type: 'POST',
+        url: 'procesar_parroquia.php',
+        data:{
+            opcion: 'get_municipios_select'
+        },
+        success: function (response) {
+
+            let data = JSON.parse(response);
+
+            if (data.result){
+                let select = $('#parroquia_municipio');
+                let municipios = data.municipios.length;
+                select.empty();
+                select.append('<option value="">Seleccione</option>');
+                for (let i = 0; i < municipios; i++) {
+                    let id = data.municipios[i]['id'];
+                    let nombre = data.municipios[i]['nombre'];
+                    select.append('<option value="' + id + '">' + nombre + '</option>');
+                }
+            }
+
+            if (data.alerta) {
+                Alerta.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: data.message
+                });
+            } else {
+                /*Toast.fire({
+                    icon: data.icon,
+                    text: data.title
+                });*/
+            }
+            verSpinner(false);
+        }
+    });
     $('#parroquia_municipio')
         .val('')
         .removeClass('is-valid')
-        .removeClass('is-valid');
+        .removeClass('is-invalid');
     $('#parroquia_nombre')
         .val('')
         .removeClass('is-valid')
@@ -204,4 +254,17 @@ function resetParroquia(){
     $('#title_parroquia').text('Crear Parroquia')
 }
 
-console.log('hi!');
+function municipioParroquias(id, parroquias) {
+    let table_municipio = $('#tabla_municipios').DataTable();
+    let tr = $('#tr_item_' + id);
+    let html = '<div class="text-center"><div class="btn-group btn-group-sm">\n' +
+        '                                <button type="button" class="btn btn-success">\n' +
+                                            parroquias +
+        '                                </button>\n' +
+        '                            </div></div>';
+    table_municipio
+        .cell(tr.find('.parroquias')).data(html)
+        .draw();
+}
+
+console.log('hi Parroquia!');
