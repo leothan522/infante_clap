@@ -22,17 +22,34 @@ class Model
         return $rows;
     }
 
-    public function paginate($limit, $offset = null, $orderBy = 'id', $opt = 'ASC', $band = null): array
+    public function paginate($limit, $offset = null, $orderBy = 'id', $opt = 'ASC', $band = null, $campo = null, $operador = null, $valor = null): array
     {
         $extra = null;
+        $where = null;
+        $columna = null;
         if (!is_null($band)) {
-            $extra = "WHERE `band`= $band";
+            $where = true;
+            $extra = "`band`= $band";
         }
         if (!is_null($offset)){
             $offset = $offset.",";
         }
+
+        if (!is_null($campo) && !is_null($operador) && !is_null($valor)){
+            $where = true;
+            if (!is_null($extra)){
+                $columna = "`$campo` $operador '$valor' AND";
+            }else{
+                $columna = "`$campo` $operador '$valor'";
+            }
+        }
+
+        if (!is_null($where)){
+            $where = 'WHERE ';
+        }
+
         $query = new Query();
-        $sql = "SELECT * FROM `$this->TABLA` $extra ORDER BY `$orderBy` $opt LIMIT $offset $limit;";
+        $sql = "SELECT * FROM `$this->TABLA`  $where $columna $extra ORDER BY `$orderBy` $opt LIMIT $offset $limit;";
         $rows = $query->getAll($sql);
         return $rows;
     }

@@ -16,13 +16,13 @@
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <li class="nav-item">
-            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+            <a class="nav-link d-none" data-widget="navbar-search" href="#" role="button" id="navbar_buscar">
                 <i class="fas fa-search"></i>
             </a>
             <div class="navbar-search-block">
-                <form class="form-inline">
+                <form class="form-inline" id="navbar_form_buscar">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search" name="buscar" id="navbar_input_buscar">
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>

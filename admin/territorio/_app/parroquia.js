@@ -267,4 +267,22 @@ function municipioParroquias(id, parroquias) {
         .draw();
 }
 
+function filtrarParroquias(id) {
+    verSpinner(true);
+    $.ajax({
+        type: 'POST',
+        url: 'procesar_parroquia.php',
+        data: {
+            opcion: 'filtrar_parroquias',
+            id: id
+        },
+        success: function (response) {
+            let data = response;
+            $('#dataContainerParroquia').html(data); datatable('tabla_parroquias');
+            $('#parroquias_btn_restablecer').removeClass('d-none');
+            verSpinner(false);
+        }
+    });
+}
+
 console.log('hi Parroquia!');

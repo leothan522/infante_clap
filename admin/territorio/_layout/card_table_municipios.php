@@ -31,7 +31,7 @@
                         <td class="nombre"><?php echo $municipio['nombre']; ?></td>
                         <td class="text-center parroquias">
                             <div class="btn-group btn-group-sm parroquia">
-                                <button type="button" class="btn btn-success">
+                                <button type="button" class="btn btn-success" onclick="filtrarParroquias(<?php echo $municipio['id'] ?>)">
                                     <?php echo formatoMillares($municipio['parroquias'], 0); ?>
                                 </button>
                             </div>

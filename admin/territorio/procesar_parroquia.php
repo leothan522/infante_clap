@@ -263,6 +263,21 @@ if ($_POST) {
 
                     break;
 
+                case 'filtrar_parroquias':
+                    $paginate = true;
+
+                    $model = new Parroquia();
+                    $limit = 100;
+                    $cantidadParroquias = count($model->getList('municipios_id', '=', $_POST['id'], 1));
+                    $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC', 1, 'municipios_id', '=', $_POST['id']);
+                    $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $cantidadParroquias, null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
+                    $i = 0;
+                    echo '<div id="dataContainerParroquia">';
+                    require_once "_layout/card_table_parroquias.php";
+                    echo '</div>';
+
+                    break;
+
                 //Por defecto
                 default:
                     $response['result'] = false;
