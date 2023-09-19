@@ -258,7 +258,7 @@ function municipioParroquias(id, parroquias) {
     let table_municipio = $('#tabla_municipios').DataTable();
     let tr = $('#tr_item_' + id);
     let html = '<div class="text-center"><div class="btn-group btn-group-sm">\n' +
-        '                                <button type="button" class="btn btn-success">\n' +
+        '                                <button type="button" class="btn btn-success" onclick="filtrarParroquias('+ id +')">\n' +
                                             parroquias +
         '                                </button>\n' +
         '                            </div></div>';

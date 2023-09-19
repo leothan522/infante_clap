@@ -36,7 +36,7 @@ $('#form_territorio_municipio').submit(function (e) {
                     if (data.nuevo){
                         //es nuevo registro
                         let button_parroquia = '<div class="text-center"><div class="btn-group btn-group-sm text-center">\n' +
-                            '                                <button type="button" class="btn btn-success">\n' +
+                            '                                <button type="button" class="btn btn-success" onclick="filtrarParroquias('+ data.id +')">\n' +
                             '                                    '+ data.parroquias +'\n' +
                             '                                </button>\n' +
                             '                            </div></div>';
