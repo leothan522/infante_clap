@@ -8,7 +8,7 @@ use app\model\Parroquia;
 
 class TerritorioController extends Admin
 {
-    public string $TITTLE = 'Alguarisa CLAPS | Territorio';
+    public string $TITTLE = 'Territorio';
     public string $MODULO = 'territorio.index';
 
     public $linksPaginate;

@@ -7,7 +7,7 @@ use app\model\User;
 
 class UsersController extends Admin
 {
-    public string $TITTLE = 'Alguarisa CLAPS | Usuarios';
+    public string $TITTLE = 'Usuarios';
     public string $MODULO = 'usuarios.index';
 
     public $linksPaginate;

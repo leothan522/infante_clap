@@ -6,6 +6,6 @@ use app\middleware\Admin;
 
 class DashboardController extends Admin
 {
-    public string $TITTLE = 'Alguarisa CLAPS | Dashboard';
+    public string $TITTLE = 'Dashboard';
     public string $MODULO = 'dashboard';
 }

@@ -29,7 +29,7 @@ $controller = new RecoverController();
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Alguarisa CLAPS | Recuperar contraseña</title>
+    <title><?php echo config('app_name'); ?> | Recuperar contraseña</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

@@ -27,7 +27,7 @@ require_once "../../vendor/autoload.php";
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
 
-  <title><?php if (isset($controller->TITTLE)) { echo $controller->TITTLE; } else { echo 'AdminLTE 3 | Dashboard'; } ?></title>
+  <title><?php if (isset($controller->TITTLE)) { echo config('app_name').' | '.$controller->TITTLE; } else { echo config('app_name').'| Dashboard'; } ?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

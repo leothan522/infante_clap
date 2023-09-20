@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="<?php asset('admin'); ?>" class="brand-link">
         <img src="<?php asset('public/img/logo_alguarisa_600x600.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">ALGUARISA CLAPS</span>
+        <span class="brand-text font-weight-light"><?php echo strtoupper(config('app_name')) ?></span>
     </a>
 
     <!-- Sidebar -->

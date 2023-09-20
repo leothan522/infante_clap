@@ -16,6 +16,11 @@ function public_url($url): string
     return ROOT_PATH . $url;
 }
 
+function config($env)
+{
+    return $_ENV[strtoupper($env)];
+}
+
 function generar_string_aleatorio($largo = 10, $espacio = false): string
 {
     $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

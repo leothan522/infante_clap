@@ -30,7 +30,7 @@ $controller = new GuestController();
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Alguarisa CLAPS | Registro</title>
+    <title><?php echo config('app_name'); ?> | Registro</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

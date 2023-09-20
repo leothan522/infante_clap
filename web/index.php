@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="<?php asset('app\\favicon\\ms-icon-144x144.png') ?>">
     <meta name="theme-color" content="#ffffff">
-  <title>Alguarisa CLAPS | Inicio</title>
+  <title><?php echo config('app_name'); ?> | Inicio</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
