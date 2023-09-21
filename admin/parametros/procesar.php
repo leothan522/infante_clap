@@ -3,12 +3,12 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\database\Query;
-use app\model\Parametros;
+use app\model\Parametro;
 
 $response = array();
 
 if ($_POST) {
-    $model = new Parametros();
+    $model = new Parametro();
     $paginate = false;
     try {
         if (!empty($_POST['opcion'])) {

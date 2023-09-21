@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\middleware\Admin;
-use app\model\Parametros;
+use app\model\Parametro;
 
 class ParametrosController extends Admin
 {
@@ -23,7 +23,7 @@ class ParametrosController extends Admin
 
     public function listarParametros(): array
     {
-        $model = new Parametros();
+        $model = new Parametro();
         $limit = 30;
         $totalRows = $model->count();
         $this->links = paginate('procesar.php','table_parametros', $limit, $totalRows)->createLinks();
