@@ -19,6 +19,66 @@
 CREATE DATABASE IF NOT EXISTS `pagos_clap` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `pagos_clap`;
 
+-- Volcando estructura para tabla pagos_clap.bloques
+CREATE TABLE IF NOT EXISTS `bloques` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `numero` int NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.bloques: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.claps
+CREATE TABLE IF NOT EXISTS `claps` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `estracto` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `familias` int NOT NULL,
+  `municipios_id` int unsigned NOT NULL,
+  `parroquias_id` int unsigned NOT NULL,
+  `bloques_id` int unsigned NOT NULL,
+  `entes_id` int unsigned NOT NULL,
+  `band` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.claps: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.despachos
+CREATE TABLE IF NOT EXISTS `despachos` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` date NOT NULL,
+  `nota` text COLLATE utf8mb4_spanish_ci,
+  `band` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.despachos: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.entes
+CREATE TABLE IF NOT EXISTS `entes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.entes: ~0 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.jefes
+CREATE TABLE IF NOT EXISTS `jefes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `cedula` int NOT NULL,
+  `nombre` int NOT NULL,
+  `telefono` int NOT NULL,
+  `genero` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `claps_id` int NOT NULL,
+  `band` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.jefes: ~0 rows (aproximadamente)
+
 -- Volcando estructura para tabla pagos_clap.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -28,7 +88,18 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.municipios: ~9 rows (aproximadamente)
+
+-- Volcando estructura para tabla pagos_clap.pagos
+CREATE TABLE IF NOT EXISTS `pagos` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `monto` decimal(12,2) NOT NULL,
+  `referencia` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `despachos_id` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla pagos_clap.pagos: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
@@ -50,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.parroquias: ~14 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.users
 CREATE TABLE IF NOT EXISTS `users` (
