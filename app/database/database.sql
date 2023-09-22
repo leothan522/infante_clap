@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `numero` int NOT NULL,
   `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `minicipios_id` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.municipios: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.pagos
 CREATE TABLE IF NOT EXISTS `pagos` (
@@ -121,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.parroquias: ~14 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.parroquias: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.users
 CREATE TABLE IF NOT EXISTS `users` (

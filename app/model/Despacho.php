@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-class despacho extends Model
+class Despacho extends Model
 {
 
     public function __construct()

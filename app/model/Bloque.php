@@ -10,7 +10,8 @@ class Bloque extends Model
         $this->TABLA = "bloques";
         $this->DATA = [
             'numero',
-            'nombre'
+            'nombre',
+            'municipios_id'
         ];
     }
 }
