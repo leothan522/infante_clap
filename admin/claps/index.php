@@ -39,6 +39,11 @@ $controller = new ClapsController();
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
@@ -99,6 +104,21 @@ $controller = new ClapsController();
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+
+<!-- DataTables  & Plugins -->
+<script src="<?php asset('app/resources/adminlte/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/jszip/jszip.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
+<script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 
 <script src="_app/bloques.js"></script>
 </body>

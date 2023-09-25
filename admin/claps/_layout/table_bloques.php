@@ -22,13 +22,14 @@
                 <option value="1">Infante</option>
                 <option value="2">Camaguan</option>
             </select>
+            <div class="invalid-feedback" id="error_bloques_municipio"></div>
         </div>
 
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
         <div class="table-responsive mt-3">
-            <table class="table" id="example1">
+            <table class="table" id="bloques_tabla">
                 <thead>
                 <tr>
                     <th style="width: 10px">ID</th>
@@ -43,16 +44,16 @@
                 foreach ($controller->listarBloques() as $bloque){
                     $i++;
                     ?>
-                    <tr>
-                        <td> <?php echo $i; ?> </td>
-                        <td> <?php echo $bloque['numero']; ?></td>
-                        <td> <?php echo $bloque['nombre']; ?> </td>
+                    <tr id="tr_item_<?php echo $bloque['id']; ?>">
+                        <td class="text-center item"> <?php echo $i; ?> .</td>
+                        <td class="numero"> <?php echo $bloque['numero']; ?></td>
+                        <td class="nombre"> <?php echo $bloque['nombre']; ?> </td>
                         <td>
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-info" onclick="editBloque(<?php echo $bloque['id']; ?>)">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" >
+                                <button type="button" class="btn btn-info" onclick="eliminarBloque(<?php echo $bloque['id']; ?>)" id="btn_eliminar_<?php echo $bloque['id']; ?>">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -74,4 +75,5 @@
             <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
         </ul>
     </div>-->
+
 </div>
