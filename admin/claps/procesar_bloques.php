@@ -28,8 +28,18 @@ if ($_POST) {
                         $bloques = $model->first('municipios_id', '=', $municipios_id);
 
 
-                        if ($bloques['numero'] != $numero || $bloques['municipios_id'] != $municipios_id) {
 
+                        $getBloques = $model->getList('municipios_id', '=', $municipios_id);
+                        $existe = false;
+                        foreach ($getBloques as $bloque){
+                            $db_nombre = $bloque['nombre'];
+                            $db_numero = $bloque['numero'];
+                            if ($db_nombre == $nombre || $db_numero == $numero){
+                                $existe = true;
+                            }
+                        }
+
+                        if (!$existe){
                             $data = [
                                 $numero,
                                 $nombre,
@@ -51,16 +61,16 @@ if ($_POST) {
                             $response['municipios_id'] = $bloque['municipios_id'];
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
-
-                        } else {
-                            //manejo el error
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = "no_municipio";
+                        }else{
+                            $response['result'] = false;
+                            $response['alerta'] = true;
+                            $response['error'] = "registro_dulicado";
                             $response['icon'] = "warning";
-                            $response['title'] = "El numero de bloque esta repetido.";
-                            $response['message'] = "Deben seleccionar un  municipio";
+                            $response['title'] = "Registro Duplicado.";
+                            $response['message'] = "El nombre ó el municipio ya estan registrados.";
                         }
+
+
                     } else {
                         //manejo el error
                         $response['result'] = false;

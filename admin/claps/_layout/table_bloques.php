@@ -32,7 +32,6 @@
             <table class="table" id="bloques_tabla">
                 <thead>
                 <tr>
-                    <th style="width: 10px">ID</th>
                     <th>Número</th>
                     <th>Nombre</th>
                     <th style="width: 5%">&nbsp;</th>
@@ -40,12 +39,9 @@
                 </thead>
                 <tbody>
                 <?php
-                $i = 0;
                 foreach ($controller->listarBloques() as $bloque){
-                    $i++;
                     ?>
                     <tr id="tr_item_<?php echo $bloque['id']; ?>">
-                        <td class="text-center item"> <?php echo $i; ?> .</td>
                         <td class="numero"> <?php echo $bloque['numero']; ?></td>
                         <td class="nombre"> <?php echo $bloque['nombre']; ?> </td>
                         <td>

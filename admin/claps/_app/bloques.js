@@ -61,7 +61,6 @@ $('#bloques_form').submit(function (e) {
                           '                            </div>';
 
                       table.row.add([
-                          data.item,
                           data.numero,
                           data.nombre,
                           buttons

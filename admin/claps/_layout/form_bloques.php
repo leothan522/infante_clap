@@ -35,9 +35,9 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <input type="text" placeholder="id" name="id" id="id">
-            <input type="text" placeholder="municipios_id" name="municipios_id" id="bloques_municipios_id">
-            <input type="text"  name="opcion" value="guardar_bloque" id="opcion_id">
+            <input type="hidden" placeholder="id" name="id" id="id">
+            <input type="hidden" placeholder="municipios_id" name="municipios_id" id="bloques_municipios_id">
+            <input type="hidden"  name="opcion" value="guardar_bloque" id="opcion_id">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" class="btn btn-default float-right">Cancel</button>
         </div>
