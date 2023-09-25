@@ -3,6 +3,9 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\model\Bloque;
+use app\model\Municipio;
+use app\controller\ClapsController;
+$controller = new ClapsController();
 
 $response = array();
 $paginate = false;
@@ -31,11 +34,18 @@ if ($_POST) {
 
                         $getBloques = $model->getList('municipios_id', '=', $municipios_id);
                         $existe = false;
+                        $error_numero = false;
+                        $error_nombre = false;
                         foreach ($getBloques as $bloque){
                             $db_nombre = $bloque['nombre'];
                             $db_numero = $bloque['numero'];
-                            if ($db_nombre == $nombre || $db_numero == $numero){
+                            if ($db_nombre == $nombre){
                                 $existe = true;
+                                $error_nombre = true;
+                            }
+                            if ($db_numero == $numero){
+                                $existe = true;
+                                $error_numero = true;
                             }
                         }
 
@@ -68,6 +78,8 @@ if ($_POST) {
                             $response['icon'] = "warning";
                             $response['title'] = "Registro Duplicado.";
                             $response['message'] = "El nombre ó el municipio ya estan registrados.";
+                            $response['error_nombre'] = $error_nombre;
+                            $response['error_numero'] = $error_numero;
                         }
 
 
@@ -147,6 +159,7 @@ if ($_POST) {
                             $response['nombre'] = $bloque['nombre'];
                             $response['total'] = $model->count();
                             $response['nuevo'] = false;
+                            $response['municipios_id'] = $bloque['municipios_id'];
                         } else {
                             $response['result'] = false;
                             $response['alerta'] = true;
@@ -188,6 +201,31 @@ if ($_POST) {
                         $response['icon'] = "warning";
                         $response['title'] = "No POST.";
                         $response['message'] = "Deben enviarse los datod por el metodo post";
+                    }
+                    break;
+
+                case 'get_municipios':
+                    $model = new Municipio();
+                    $response['result'] = true;
+                    $response['municipios'] = array();
+                    foreach ($model->getAll(1) as $municipio){
+                        $id = $municipio['id'];
+                        $nombre = $municipio['nombre'];
+                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                    }
+                    break;
+
+                case 'get_bloques_municipios':
+                    $paginate = true;
+                    if (!empty($_POST['id'])){
+                        $id = $_POST['id'];
+                        echo '<div id="dataContainerParroquia">';
+                        require_once "_layout/table_bloques.php";
+                        echo '</div>';
+                    }else{
+                        echo '<div id="dataContainerParroquia">';
+                        echo '<span>Seleccione un Municipio para empezar</span>';
+                        echo '</div>';
                     }
                     break;
 

@@ -19,9 +19,9 @@ class ClapsController extends Admin
         }
     }
 
-   public function listarBloques(){
+   public function listarBloques($municipio){
         $model = new Bloque();
-        $listarBloques = $model->getAll();
+        $listarBloques = $model->getList('municipios_id', '=', $municipio);
         return $listarBloques;
     }
 

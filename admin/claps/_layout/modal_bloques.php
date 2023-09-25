@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Gestionar Bloques</h4>
-                <button type="button" class="close" onclick="resetBloque()" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -14,7 +14,7 @@
                         <?php require_once "form_bloques.php" ?>
                     </div>
                     <div class="col-md-8">
-                        <?php require_once "table_bloques.php" ?>
+                        <?php require_once "card_bloques.php" ?>
                     </div>
                 </div>
             </div>
