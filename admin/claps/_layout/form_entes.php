@@ -30,7 +30,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <input type="text" placeholder="id" name="id" id="entes_id">
+            <input type="hidden" placeholder="id" name="id" id="entes_id">
             <input type="hidden"  name="opcion" value="guardar_ente" id="entes_opcion">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" onclick="limpiarBloques(false)" class="btn btn-default float-right">Cancel</button>

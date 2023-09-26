@@ -166,11 +166,7 @@ function cambiarMunicipio() {
             let data = response;
             $('#dataContainerBloques')
                 .html(data);
-            if (municipio.val().length > 0){
-                $('#dataContainerBloques').addClass('p-0');
-            }else {
-                $('#dataContainerBloques').removeClass('p-0');
-            }
+
             datatable('bloques_tabla');
             verSpinner(false);
         }
@@ -183,8 +179,7 @@ function getMunicipios(municipio = true) {
     limpiarBloques(true);
     let html = '<span>Seleccione un Municipio para empezar</span>';
     $('#dataContainerBloques')
-        .html(html)
-        .removeClass('p-0');
+        .html(html);
     $('#bloques_municipios_id').val('');
 
     $.ajax({
@@ -292,4 +287,4 @@ function eliminarBloque(id) {
     });
 }
 
-console.log('Hi!');
+console.log('Hi r!');

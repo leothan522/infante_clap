@@ -35,10 +35,13 @@ if ($_POST) try {
                         $response['icon'] = "success";
                         $response['title'] = "Ente registrado.";
                         $response['message'] = "El nombre se registro perfectamente.";
-                        $response['nombre'] = $entes['nombre'];
+                        $response['id'] = $entes['id'];
+                        $response['item'] = '<p class="text-center"> ' . $model->count() . ' </p>';
+                        $response['nombre'] = '<p class="text-uppercase"> ' . $entes['nombre'] . ' </p>';
                         $response['nuevo'] = true;
+                        $response['total'] = $model->count();
                     }else{
-                        $response['result'] = true;
+                        $response['result'] = false;
                         $response['alerta'] = false;
                         $response['error'] = "nombre_duplicado";
                         $response['icon'] = "warning";
@@ -82,22 +85,35 @@ if ($_POST) try {
                     $nombre = $_POST['entes_nombre'];
                     $id = $_POST['id'];
 
-                    $existe = $model->existe('nombre', '=', $nombre);
+                    $existe = $model->existe('nombre', '=', $nombre, $id);
 
                     if (!$existe){
-                        $model->update($id,'nombre', $nombre);
-                        $ente = $model->first('nombre', '=', $nombre);
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = "se_guardo";
-                        $response['icon'] = "success";
-                        $response['title'] = "Ente Actualizado Exitosamente.";
-                        $response['message'] = "El nombre se actualizo perfectamente.";
-                        $response['id'] = $ente['id'];
-                        $response['nombre'] = $ente['nombre'];
-                        $response['nuevo'] = true;
+                       $bloques = $model->find($id);
+                       if ($bloques['nombre'] != $nombre){
+                           $model->update($id,'nombre', $nombre);
+                           $ente = $model->first('nombre', '=', $nombre);
+                           $response['result'] = true;
+                           $response['alerta'] = false;
+                           $response['error'] = "se_guardo";
+                           $response['icon'] = "success";
+                           $response['title'] = "Ente Actualizado Exitosamente.";
+                           $response['message'] = "El nombre se actualizo perfectamente.";
+                           $response['id'] = $ente['id'];
+                           $response['nombre'] = '<p class="text-uppercase"> ' . $ente['nombre'] . ' </p>';
+                           $response['total'] = $model->count();
+                           $response['item'] = '<p class="text-center"> ' . $model->count() . ' </p>';
+                           $response['nuevo'] = false;
+                       }else{
+                           $response['result'] = false;
+                           $response['alerta'] = true;
+                           $response['error'] = "sin_cambios";
+                           $response['icon'] = "info";
+                           $response['title'] = "Sin cambios.";
+                           $response['message'] = "No se realizo ningun cambio.";
+                           $response['item'] = $model->count();
+                       }
                     }else{
-                        $response['result'] = true;
+                        $response['result'] = false;
                         $response['alerta'] = false;
                         $response['error'] = "nombre_duplicado";
                         $response['icon'] = "warning";

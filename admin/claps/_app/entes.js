@@ -28,9 +28,38 @@ $('#entes_form').submit(function (e) {
                let data = JSON.parse(response);
 
                if (data.result){
-                   nombre.removeClass('is-valid');
-               }
+                   let table = $('#entes_tabla').DataTable();
 
+                   if (data.nuevo){
+                       //estoy guardando
+                       let buttons = '<div class="btn-group btn-group-sm">\n' +
+                           '                                <button type="button" class="btn btn-info" onclick="editEnte('+ data.id +')">\n' +
+                           '                                    <i class="fas fa-edit"></i>\n' +
+                           '                                </button>\n' +
+                           '                                <button type="button" class="btn btn-info" onclick="eliminarEnte('+ data.id +')" id="btn_eliminar_ente_'+ data.id +'">\n' +
+                           '                                    <i class="far fa-trash-alt"></i>\n' +
+                           '                                </button>\n' +
+                           '                            </div>';
+                       table.row.add([
+                          data.item,
+                          data.nombre,
+                          buttons
+                       ]).draw();
+                       let nuevo = $('#entes_tabla tr:last')
+                       nuevo.attr('id', 'tr_item_ente_' + data.id);
+                       nuevo.find("td:eq(0)").addClass('item');
+                       nuevo.find("td:eq(1)").addClass('nombre');
+                   }else {
+                       //estoy editando
+                       let tr = $('#tr_item_ente_' + data.id);
+                       table
+                           .cell(tr.find('.item')).data(data.item)
+                           .cell(tr.find('.nombre')).data(data.nombre)
+                           .draw();
+                   }
+                   resetEnte();
+               }
+               quitarClass();
                if (data.alerta) {
                    Alerta.fire({
                        icon: data.icon,
@@ -65,7 +94,7 @@ function editEnte(id){
                 $('#entes_input_nombre').val(data.nombre);
                 $('#entes_id').val(data.id);
                 $('#entes_opcion').val('editar_ente');
-                $('#title_form_ente').text('Editar Ente')
+                $('#title_form_ente').text('Editar Ente');
             }
 
             if (data.alerta) {
@@ -131,4 +160,18 @@ function eliminarEnte(id) {
     });
 }
 
-console.log('entes d');
+function resetEnte() {
+    $('#entes_input_nombre')
+        .val('')
+        .removeClass('is-invalid')
+        .removeClass('is-valid');
+    $('#entes_id').val('');
+    $('#error_entes_nombre').text('');
+}
+
+function quitarClass() {
+    $('#entes_input_nombre')
+        .removeClass('is-valid');
+}
+
+console.log('entes');

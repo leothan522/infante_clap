@@ -22,11 +22,11 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body" id="dataContainerEntes">
-        <div class="table-responsive mt-3">
+        <div class="table">
             <table class="table" id="entes_tabla">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="text-center">#</th>
                     <th>Nombre</th>
                     <th style="width: 5%">&nbsp;</th>
                 </tr>
@@ -37,9 +37,9 @@
                 foreach ($controller->listarEntes() as $ente){
                     $i++;
                     ?>
-                    <tr id="tr_item_<?php echo $ente['id']; ?>">
-                        <td> <?php echo $i; ?></td>
-                        <td class="nombre"> <?php echo $ente['nombre']; ?> </td>
+                    <tr id="tr_item_ente_<?php echo $ente['id']; ?>">
+                        <td class="text-center item"> <?php echo $i; ?></td>
+                        <td class="nombre text-uppercase"> <?php echo $ente['nombre']; ?> </td>
                         <td>
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-info" onclick="editEnte(<?php echo $ente['id']; ?>)">

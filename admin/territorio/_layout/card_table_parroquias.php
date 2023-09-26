@@ -14,7 +14,7 @@
 
     </div>
     <!-- /.card-header -->
-    <div class="card-body p-0">
+    <div class="card-body">
         <div class="table-responsive mt-3">
             <table class="table" id="tabla_parroquias">
                 <thead>
