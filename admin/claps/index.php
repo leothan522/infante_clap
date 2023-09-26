@@ -121,5 +121,6 @@ $controller = new ClapsController();
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 
 <script src="_app/bloques.js"></script>
+<script src="_app/entes.js"></script>
 </body>
 </html>

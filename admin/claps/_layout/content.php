@@ -4,3 +4,4 @@
     </div>
 </div>
 <?php require_once "modal_bloques.php" ?>
+<?php require_once "modal_entes.php" ?>

@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\middleware\Admin;
 use app\model\Bloque;
+use app\model\Ente;
 
 class ClapsController extends Admin
 {
@@ -25,4 +26,9 @@ class ClapsController extends Admin
         return $listarBloques;
     }
 
+    public function listarEntes(){
+        $model = new Ente();
+        $listarBloques = $model->getAll();
+        return $listarBloques;
+    }
 }
