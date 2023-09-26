@@ -122,5 +122,6 @@ $controller = new ClapsController();
 
 <script src="_app/bloques.js"></script>
 <script src="_app/entes.js"></script>
+<script src="_app/claps.js"></script>
 </body>
 </html>
