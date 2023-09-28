@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <div id="dataContainerMunicipio">
             <?php
             $listarMunicipios = $controller->listarMunicipios();
@@ -11,7 +11,7 @@
 
         <?php require_once "modal_municipios.php" ?>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div id="dataContainerParroquia">
             <?php
             $listarParroquias = $controller->listarParroquias();

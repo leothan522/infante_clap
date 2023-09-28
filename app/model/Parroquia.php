@@ -9,8 +9,10 @@ class Parroquia extends Model
     {
         $this->TABLA = "parroquias";
         $this->DATA = [
+            'nombre',
+            'mini',
             'municipios_id',
-            'nombre'
+            'created_at'
         ];
     }
 }

@@ -3,6 +3,7 @@ datatable('tabla_parroquias');
 
 //inicializamos el inputmask
 $('#parroquia_nombre').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}");
+$('#parroquia_mini').inputmask("*{2,20}[ ]*{0,20}");
 
 //Aqui se hace la solicitud ajax para registrar una nueva parroquia o editar una existente
 $('#form_parroquias').submit(function (e) {
@@ -10,6 +11,7 @@ $('#form_parroquias').submit(function (e) {
     let procesar = true;
     let municipio = $('#parroquia_municipio');
     let parroquia = $('#parroquia_nombre');
+    let mini = $('#parroquia_mini');
 
     if (municipio.val().length <= 0){
         procesar = false;
@@ -30,6 +32,16 @@ $('#form_parroquias').submit(function (e) {
             .addClass('is-valid');
     }
 
+    if (!mini.inputmask('isComplete')){
+        procesar = false;
+        mini.addClass('is-invalid');
+        $('#error_parroquia_mini').text('La abreviatura es obligatoria, debe tener al menos 2 caracteres.');
+    }else {
+        mini
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
     if (procesar){
         verSpinner(true);
         $.ajax({
@@ -46,6 +58,9 @@ $('#form_parroquias').submit(function (e) {
                     if (data.nuevo){
                         //nuevo
                         let buttons = '<div class="btn-group btn-group-sm">\n' +
+                            '<button type="button" class="btn btn-info" onclick="estatusParroquia('+ data.id +')" id="btn_estatus_parroquia_'+ data.id +'">\n' +
+                            '                                    <i class="fas fa-eye"></i>\n' +
+                            '                                </button>' +
                             '                                <button type="button" class="btn btn-info" onclick="editParroquia('+ data.id +')" data-toggle="modal"\n' +
                             '                                        data-target="#modal-parroquias">\n' +
                             '                                    <i class="fas fa-edit"></i>\n' +
@@ -58,6 +73,7 @@ $('#form_parroquias').submit(function (e) {
                         table.row.add([
                             data.item,
                             data.parroquia,
+                            data.mini,
                             data.municipio,
                             buttons
                         ]).draw();
@@ -65,7 +81,8 @@ $('#form_parroquias').submit(function (e) {
                         let nuevo = $('#tabla_parroquias tr:last');
                         nuevo.attr('id', 'tr_item_p_' + data.id);
                         nuevo.find("td:eq(1)").addClass('parroquia');
-                        nuevo.find("td:eq(2)").addClass('municipio');
+                        nuevo.find("td:eq(2)").addClass('mini');
+                        nuevo.find("td:eq(3)").addClass('municipio');
 
                         //incremento el numero de parroquias en el municipio
                         municipioParroquias(data.municipios_id, data.municipio_parroquias);
@@ -75,6 +92,7 @@ $('#form_parroquias').submit(function (e) {
                         let tr = $('#tr_item_p_' + data.id);
                         table
                             .cell(tr.find('.parroquia')).data(data.parroquia)
+                            .cell(tr.find('.mini')).data(data.mini)
                             .cell(tr.find('.municipio')).data(data.municipio)
                             .draw();
                         if (data.edit_municipio){
@@ -87,9 +105,14 @@ $('#form_parroquias').submit(function (e) {
                     $('#paginate_leyenda_parroquia').text(data.total);
                 }else {
 
-                    if (data.error === 'nombre_duplicado'){
+                    if (data.error_nombre){
                         $('#parroquia_nombre').addClass('is-invalid');
-                        $('#error_parroquia_nombre').text(data.message);
+                        $('#error_parroquia_nombre').text(data.message_nombre);
+                    }
+
+                    if (data.error_mini){
+                        $('#parroquia_mini').addClass('is-invalid');
+                        $('#error_parroquia_mini').text(data.message_mini);
                     }
                 }
 
@@ -134,6 +157,7 @@ function editParroquia(id) {
                 $('#parroquia_nombre').val(data.parroquia);
                 $('#parroquia_opcion').val('editar_parroquia');
                 $('#parroquia_id').val(data.id);
+                $('#parroquia_mini').val(data.mini);
             }
 
             if (data.alerta) {
@@ -251,7 +275,11 @@ function resetParroquia(){
         .removeClass('is-invalid');
     $('#parroquia_id').val('');
     $('#parroquia_opcion').val('guardar_parroquia');
-    $('#title_parroquia').text('Crear Parroquia')
+    $('#title_parroquia').text('Crear Parroquia');
+    $('#parroquia_mini')
+        .val('')
+        .removeClass('is-valid')
+        .removeClass('is-invalid');
 }
 
 function municipioParroquias(id, parroquias) {
@@ -285,4 +313,41 @@ function filtrarParroquias(id) {
     });
 }
 
-console.log('hi Parroquia!');
+
+function estatusParroquia(id) {
+    let boton = $('#btn_estatus_parroquia_' + id);
+    verSpinner(true);
+    $.ajax({
+        type: 'POST',
+        url: 'procesar_parroquia.php',
+        data: {
+            opcion: 'estatus_parroquia',
+            id: id
+        },
+        success: function (response) {
+            let data = JSON.parse(response);
+            if (data.result){
+                if (data.estatus === 1){
+                    boton.html(' <i class="fas fa-eye"></i>');
+                }else {
+                    boton.html('<i class="fas fa-eye-slash"></i>');
+                }
+            }
+
+            if (data.alerta) {
+                Alerta.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: data.message
+                });
+            } else {
+                Toast.fire({
+                    icon: data.icon,
+                    text: data.title
+                });
+            }
+            verSpinner(false);
+        }
+    });
+}
+console.log('hi Parroquizzz!');

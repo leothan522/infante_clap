@@ -60,7 +60,7 @@ $controller = new TerritorioController();
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
 <!-- Preloader -->
-<?php require_once "../_layout/preloader.php" ?>
+<?php /*require_once "../_layout/preloader.php" */?>
 
 <!-- Site wrapper -->
 <div class="wrapper">

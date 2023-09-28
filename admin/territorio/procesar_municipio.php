@@ -12,6 +12,7 @@ if ($_POST) {
     try {
         if (!empty($_POST['opcion'])) {
             $opcion = $_POST['opcion'];
+            $hoy = date('Y-m-d');
 
 
             switch ($opcion) {
@@ -29,8 +30,8 @@ if ($_POST) {
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
-                    $listarMunicipios = $model->paginate($limit, $offset, 'nombre', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, $opcion, 'dataContainerMunicipio', '_municipio')->createLinks();
+                    $listarMunicipios = $model->paginate($limit, $offset, 'nombre', 'DESC',);
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerMunicipio', '_municipio')->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerMunicipio">';
                     require_once "_layout/card_table_municipios.php";
@@ -41,15 +42,19 @@ if ($_POST) {
                 case 'guardar_municipio':
                     $model = new Municipio();
 
-                    if (!empty($_POST['mun_municipio'])) {
+                    if (!empty($_POST['mun_municipio']) && !empty($_POST['municipio_mini'])) {
                         //proceso
                         $nombre = ucwords($_POST['mun_municipio']);
+                        $mini = $_POST['municipio_mini'];
 
-                        $existe = $model->existe('nombre', '=', $nombre, null, 1);
+                        $existeMunicipio = $model->existe('nombre', '=', $nombre, null);
+                        $existeMini = $model->existe('mini', '=', $mini, null);
 
-                        if (!$existe) {
+                        if (!$existeMunicipio && !$existeMini) {
                             $data = [
-                                $nombre
+                                $nombre,
+                                $mini,
+                                $hoy
                             ];
 
                             $model->save($data);
@@ -61,13 +66,29 @@ if ($_POST) {
                             $response['title'] = "Municipio Creado Exitosamente.";
                             $response['message'] = "Municipio Creado " . $nombre;
                             $response['id'] = $municipios['id'];
-                            $response['item'] = '<p> ' . $model->count(1) . '. </p>';
+                            $response['item'] = '<p> ' . $model->count() . '. </p>';
                             $response['nombre'] = $municipios['nombre'];
+                            $response['mini'] = $municipios['mini'];
                             $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;
-                            $response['total'] = $model->count(1);
+                            $response['total'] = $model->count();
 
                         } else {
+
+                            if ($existeMunicipio) {
+                                $response['error_municipio'] = true;
+                                $response['message_municipio'] = 'El nombre ya esta registrado.';
+                            } else {
+                                $response['error_municipio'] = false;
+                            }
+
+                            if ($existeMini) {
+                                $response['error_mini'] = true;
+                                $response['message_mini'] = 'La abreviatura ya esta registrada.';
+                            } else {
+                                $response['error_mini'] = false;
+                            }
+
                             $response['result'] = false;
                             $response['alerta'] = false;
                             $response['error'] = "nombre_duplicado";
@@ -76,12 +97,14 @@ if ($_POST) {
                             $response['message'] = "El nombre ya esta registrado.";
                         }
                     } else {
+
+
                         $response['result'] = false;
                         $response['alerta'] = true;
                         $response['error'] = "faltan_datos";
                         $response['icon'] = "warning";
                         $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos sonm requeridos.";
+                        $response['message'] = "Todos los datos son requeridos.";
                     }
 
                     break;
@@ -100,6 +123,7 @@ if ($_POST) {
                         $response['message'] = "Municipio " . $municipio['nombre'];
                         $response['id'] = $municipio['id'];
                         $response['nombre'] = $municipio['nombre'];
+                        $response['mini'] = $municipio['mini'];
 
                     } else {
                         $response['result'] = false;
@@ -118,22 +142,37 @@ if ($_POST) {
 
                     if (
                         !empty($_POST['mun_municipio']) &&
+                        !empty($_POST['municipio_mini']) &&
                         !empty($_POST['id'])
                     ) {
                         //proceso
                         $id = $_POST['id'];
-                        $nombre = ucwords($_POST['mun_municipio']);
+                        $nombre = $_POST['mun_municipio'];
+                        $mini = $_POST['municipio_mini'];
 
-                        $existe = $model->existe('nombre', '=', $nombre, $id, 1);
+                        $existeMunicipio = $model->existe('nombre', '=', $nombre, $id);
+                        $existeMini = $model->existe('mini', '=', $mini, $id);
 
-                        if (!$existe) {
+                        if (!$existeMunicipio && !$existeMini) {
 
                             $municipio = $model->find($id);
                             $db_nombre = $municipio['nombre'];
+                            $db_mini = $municipio['mini'];
+                            $cambios = false;
 
-                            if ($db_nombre != $nombre) {
-
+                            if ($db_nombre != $nombre){
+                                $cambios = true;
                                 $model->update($id, 'nombre', $nombre);
+                                $model->update($id, 'updated_at', $hoy);
+                            }
+
+                            if ($db_mini != $mini){
+                                $cambios = true;
+                                $model->update($id, 'mini', $mini);
+                                $model->update($id, 'updated_at', $hoy);
+                            }
+
+                            if ($cambios) {
                                 $response['result'] = true;
                                 $response['alerta'] = false;
                                 $response['error'] = false;
@@ -142,13 +181,14 @@ if ($_POST) {
                                 $response['message'] = "Municipio Creado " . $nombre;
                                 $response['id'] = $id;
                                 $response['nombre'] = $nombre;
-                                $response['total'] = $model->count(1);
+                                $response['mini'] = $mini;
+                                $response['total'] = $model->count();
                                 $response['nuevo'] = false;
 
                                 //busco las parroquias vinculadas al municipio
                                 $modelParroquia = new Parroquia();
                                 $response['parroquias'] = array();
-                                foreach ($modelParroquia->getList('municipios_id', '=', $id, 1) as $parroquia){
+                                foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
                                     $response['parroquias'][] = array('id' => $parroquia['id']);
                                 }
 
@@ -162,6 +202,21 @@ if ($_POST) {
                             }
 
                         } else {
+
+                            if ($existeMunicipio) {
+                                $response['error_municipio'] = true;
+                                $response['message_municipio'] = 'El nombre ya esta registrado.';
+                            } else {
+                                $response['error_municipio'] = false;
+                            }
+
+                            if ($existeMini) {
+                                $response['error_mini'] = true;
+                                $response['message_mini'] = 'La abreviatura ya esta registrada.';
+                            } else {
+                                $response['error_mini'] = false;
+                            }
+
                             $response['result'] = false;
                             $response['alerta'] = false;
                             $response['error'] = "nombre_duplicado";
@@ -189,24 +244,60 @@ if ($_POST) {
 
                         //proceso
                         $id = $_POST['id'];
-                        $model->update($id, 'band', 0);
+                        //chequeo las parroquias vinculadas a ese municipio
+                        $modelParroquia = new Parroquia();
+                        $response['parroquias'] = array();
+                        foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
+                            $response['parroquias'][] = array("id" => $parroquia['id']);
+                        }
+                        $model->delete($id);
                         $response['result'] = true;
                         $response['alerta'] = false;
                         $response['error'] = false;
                         $response['icon'] = "success";
                         $response['title'] = "Municipio Eliminado.";
                         $response['message'] = "Municipio Eliminado.";
-                        $response['total'] = $model->count(1);
+                        $response['total'] = $model->count();
+                        $response['total_parroquias'] = $modelParroquia->count();
 
-                        //chequeo las parroquias vinculadas a ese municipio
-                        $modelParroquia = new Parroquia();
-                        $response['parroquias'] = array();
-                        foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia){
-                            $response['parroquias'][] = array("id" => $parroquia['id']);
-                            //elimino las parroquias
-                            $modelParroquia->update($parroquia['id'], 'band', 0);
+                    } else {
+                        $response['result'] = false;
+                        $response['alerta'] = true;
+                        $response['error'] = "faltan_datos";
+                        $response['icon'] = "warning";
+                        $response['title'] = "Faltan Datos.";
+                        $response['message'] = "Todos los datos sonm requeridos.";
+                    }
+
+                    break;
+
+
+                case 'estatus_municipio':
+                    $model = new Municipio();
+
+                    if (
+                        !empty($_POST['id'])
+                    ) {
+
+                        //proceso
+                        $id = $_POST['id'];
+                        $municipio = $model->find($id);
+
+                        if ($municipio['estatus']){
+                            $response['title'] = "Municipio Inactivo.";
+                            $estatus = 0;
+                            $response['icon'] = "info";
+                        }else{
+                            $response['title'] = "Municipio Activo.";
+                            $estatus = 1;
+                            $response['icon'] = "success";
                         }
-                        $response['total_parroquias'] = $modelParroquia->count(1);
+                        $model->update($id, 'estatus', $estatus);
+                        $response['result'] = true;
+                        $response['alerta'] = false;
+                        $response['error'] = false;
+                        $response['message'] = "Municipio Eliminado.";
+                        $response['estatus'] = $estatus;
 
                     } else {
                         $response['result'] = false;

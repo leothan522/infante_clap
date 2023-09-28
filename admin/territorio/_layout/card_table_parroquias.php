@@ -15,12 +15,13 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table-responsive mt-3">
+        <div class="table mt-3">
             <table class="table" id="tabla_parroquias">
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Nombre</th>
+                    <th>Abreviatura</th>
                     <th>Municipio</th>
                     <th style="width: 5%">&nbsp;</th>
                 </tr>
@@ -33,11 +34,20 @@
                     <tr id="tr_item_p_<?php echo $parroquia['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>. </td>
                         <td class="parroquia"><?php echo $parroquia['nombre']; ?></td>
+                        <td class="mini"><?php echo $parroquia['mini']; ?></td>
                         <td class="municipio">
                             <?php echo $controller->getMunicipio($parroquia['municipios_id']); ?>
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-info" onclick="estatusParroquia(<?php echo $parroquia['id']; ?>)" id="btn_estatus_parroquia_<?php echo $parroquia['id']; ?>">
+                                    <?php if ($parroquia['estatus']){ ?>
+                                        <i class="fas fa-eye"></i>
+                                    <?php }else{ ?>
+                                        <i class="fas fa-eye-slash"></i>
+                                    <?php } ?>
+                                </button>
+
                                 <button type="button" class="btn btn-info" onclick="editParroquia(<?php echo $parroquia['id']; ?>)" data-toggle="modal"
                                         data-target="#modal-parroquias">
                                     <i class="fas fa-edit"></i>

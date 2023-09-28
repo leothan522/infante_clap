@@ -9,6 +9,8 @@ class Municipio extends Model
         $this->TABLA = "municipios";
         $this->DATA = [
             'nombre',
+            'mini',
+            'created_at'
         ];
     }
 }

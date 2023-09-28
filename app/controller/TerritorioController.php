@@ -26,23 +26,23 @@ class TerritorioController extends Admin
     {
         $model = new Municipio();
         $limit = 15;
-        $this->linksPaginate = paginate('procesar_municipio.php', 'tabla_municipios', $limit, $model->count(1), null, 'paginate_municipio', 'dataContainerMunicipio', '_municipio')->createLinks();
-        return $model->paginate($limit, null, 'nombre', 'ASC', 1);
+        $this->linksPaginate = paginate('procesar_municipio.php', 'tabla_municipios', $limit, $model->count(), null, 'paginate_municipio', 'dataContainerMunicipio', '_municipio')->createLinks();
+        return $model->paginate($limit, null, 'nombre', 'ASC');
     }
 
     public function listarParroquias()
     {
         $model = new Parroquia();
         $limit = 15;
-        $this->linksPaginate = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(1), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
-        return $model->paginate($limit, null, 'nombre', 'ASC', 1);
+        $this->linksPaginate = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
+        return $model->paginate($limit, null, 'nombre', 'ASC');
     }
 
     public function getMunicipio($id)
     {
         $model = new Municipio();
         $municipio = $model->find($id);
-        return $municipio['nombre'];
+        return $municipio['mini'];
 
     }
 
