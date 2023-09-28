@@ -62,7 +62,7 @@ function sidebar($modulo = null): ?string
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',
-                    'icono' => '<i class="fas fa-users"></i> ',
+                    'icono' => '<i class="fas fa-users-cog"></i> ',
                     'titulo' => 'Usuarios'
                 ],
                 [
