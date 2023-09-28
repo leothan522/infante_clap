@@ -12,7 +12,7 @@ function sidebar($modulo = null): ?string
             'permiso' => true,
             'url' => public_url('admin'),
             'active' => $modulo == 'dashboard',
-            'icono' => '<i class="nav-icon fas fa-home"></i>',
+            'icono' => '<i class="fas fa-tachometer-alt"></i> ',
             'titulo' => 'Dashboard',
             'badge' => null,
             'treeview' => []
@@ -62,14 +62,14 @@ function sidebar($modulo = null): ?string
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',
-                    'icono' => '<i class="fas fa-users-cog nav-icon"></i>',
+                    'icono' => '<i class="fas fa-users"></i> ',
                     'titulo' => 'Usuarios'
                 ],
                 [
                     'permiso' => validarPermisos('root'),
                     'url' => public_url('admin/parametros'),
                     'active' => $modulo == 'parametros.index',
-                    'icono' => '<i class="fas fa-cog nav-icon"></i>',
+                    'icono' => '<i class="fas fa-list"></i> ',
                     'titulo' => 'Parametros'
                 ]
             ]
