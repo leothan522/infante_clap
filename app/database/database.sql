@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `numero` int NOT NULL,
   `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
-  `municipios_id` int NOT NULL,
+  `municipios_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `bloques` (
 -- Volcando estructura para tabla pagos_clap.claps
 CREATE TABLE IF NOT EXISTS `claps` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `estracto` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `estracto` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `familias` int NOT NULL,
   `municipios_id` int unsigned NOT NULL,
   `parroquias_id` int unsigned NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
 CREATE TABLE IF NOT EXISTS `despachos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
-  `nota` text COLLATE utf8mb4_spanish_ci,
+  `nota` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `entes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla pagos_clap.entes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.entes: ~5 rows (aproximadamente)
 
 -- Volcando estructura para tabla pagos_clap.jefes
 CREATE TABLE IF NOT EXISTS `jefes` (
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `jefes` (
   `cedula` int NOT NULL,
   `nombre` int NOT NULL,
   `telefono` int NOT NULL,
-  `genero` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `genero` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `claps_id` int NOT NULL,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -82,21 +82,40 @@ CREATE TABLE IF NOT EXISTS `jefes` (
 
 -- Volcando estructura para tabla pagos_clap.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `parroquias` int unsigned DEFAULT NULL,
-  `band` int unsigned NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mini` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parroquias` int DEFAULT '0',
+  `estatus` int NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla pagos_clap.municipios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.municipios: ~15 rows (aproximadamente)
+INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `estatus`, `created_at`, `updated_at`) VALUES
+	(1, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO', 3, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(2, 'FRANCISCO DE MIRANDA', 'MIRANDA', 4, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(3, 'LEONARDO INFANTE', 'INFANTE', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(4, 'PEDRO ZARAZA', 'ZARAZA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(5, 'JOSE TADEO MONAGAS', 'MONAGAS', 7, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(6, 'JOSE FELIX RIBAS', 'RIBAS', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(7, 'CAMAGUAN', 'CAMAGUAN', 3, 1, '2023-09-27 12:03:47', '2023-09-28 04:00:00'),
+	(8, 'JULIAN MELLADO', 'MELLADO', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(9, 'EL SOCORRO', 'EL SOCORRO', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(10, 'SANTA MARIA DE IPIRE', 'SANTA MARIA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(11, 'CHAGUARAMAS', 'CHAGUARAMAS', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(12, 'JUAN JOSE RONDON', 'RONDON', 3, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(13, 'SAN JOSE DE GUARIBE', 'GUARIBE', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(14, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
+	(15, 'ORTIZ', 'ORTIZ', 4, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47');
 
 -- Volcando estructura para tabla pagos_clap.pagos
 CREATE TABLE IF NOT EXISTS `pagos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `monto` decimal(12,2) NOT NULL,
-  `referencia` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `despachos_id` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `referencia` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `despachos_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -115,14 +134,59 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 
 -- Volcando estructura para tabla pagos_clap.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `municipios_id` int unsigned NOT NULL,
-  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `band` int NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mini` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `municipios_id` bigint unsigned NOT NULL,
+  `estatus` int NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parroquias_municipios_id_foreign` (`municipios_id`),
+  CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla pagos_clap.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla pagos_clap.parroquias: ~39 rows (aproximadamente)
+INSERT INTO `parroquias` (`id`, `nombre`, `mini`, `municipios_id`, `estatus`, `created_at`, `updated_at`) VALUES
+	(1, 'CAMAGUAN', NULL, 7, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(2, 'PUERTO MIRANDA', NULL, 7, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(3, 'UVERITO', NULL, 7, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(4, 'CHAGUARAMAS', NULL, 11, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(5, 'EL SOCORRO', NULL, 9, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(6, 'CALABOZO', NULL, 2, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(7, 'EL RASTRO', NULL, 2, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(8, 'GUARDATINAJAS', NULL, 2, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(9, 'EL CALVARIO', NULL, 2, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(10, 'TUCUPIDO', NULL, 6, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(11, 'SAN RAFAEL DE LAYA', NULL, 6, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(12, 'ALTAGRACIA DE ORITUCO', 'ALTAGRACIA', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(13, 'SAN RAFAEL DE ORITUCO', 'SAN RAFAEL', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(14, 'LIBERTAD DE ORITUCO', 'LIBERTAD', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(15, 'SAN FRANCISCO DE MACAIRA', 'MACAIRA', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(16, 'PASO REAL DE MACAIRA', 'PASO REAL', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(17, 'CARLOS SOUBLETTE', 'SOUBLETTE', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(18, 'FRANCISCO JAVIER DE LAZAMA', 'LEZAMA', 5, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(19, 'SAN JUAN', NULL, 1, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(20, 'PARAPARA', NULL, 1, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(21, 'CANTAGALLO', NULL, 1, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(22, 'LAS MERCEDES DEL LLANO', 'LAS MERCEDES', 12, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(23, 'SANTA RITA DE MANAPIRE', 'SANTA RITA', 12, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(24, 'CABRUTA', NULL, 12, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(25, 'EL SOMBRERO', NULL, 8, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(26, 'SOSA', NULL, 8, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(27, 'VALLE DE LA PASCUA', NULL, 3, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(28, 'ESPINO', NULL, 3, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(29, 'Ortiz', NULL, 15, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(30, 'SAN JOSE DE TIZNADOS', 'SAN JOSE', 15, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(31, 'SAN LORENZO DE TIZNADOS', 'SAN LORENZO', 15, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(32, 'SAN FRANCISCO DE TIZNADOSº', 'SAN FRANCISCO', 15, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(33, 'ZARAZA', NULL, 4, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(34, 'SAN JOSE DE UNARE', NULL, 4, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(35, 'GUAYABAL', NULL, 14, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(36, 'CAZORLA', NULL, 14, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(37, 'GUARIBE', NULL, 13, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(38, 'SANTA MARIA', NULL, 10, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
+	(39, 'ALTAMIRA', NULL, 10, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48');
 
 -- Volcando estructura para tabla pagos_clap.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -149,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Volcando datos para la tabla pagos_clap.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$q8sJLX5XG0nhyXybQn0wHej7Q7DdquAPy5da8tbANngGhk.SwXnFu', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-12', NULL, NULL, 0),
-	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$XibWahOwcjxTdM.YWlhrTuA8gJZeyK7fLe9Ge5yrI5loizvfE2sea', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', NULL, NULL, 0);
+	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$k0hDjkv2UVWA3Qp/OpesrOL5ruFtjBWHWxJVNEMt4yBi4bbuJQGYu', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', '2023-09-23', NULL, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
