@@ -17,7 +17,30 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => []
         ],
-
+        [
+            'permiso'       => validarPermisos('claps.index'),
+            'url'           => '#',
+            'active'        => $modulo == 'claps.index',
+            'icono'         => '<i class="nav-icon fas fa-money-check"></i>',
+            'titulo'        => 'Validación Pagos',
+            'badge'         => null,
+            'treeview'      => [
+                [
+                    'permiso'   => validarPermisos('claps.index'),
+                    'url'       => public_url('admin/claps'),
+                    'active'    => $modulo == 'claps.index',
+                    'icono'     => '<i class="fas fa-users nav-icon"></i>',
+                    'titulo'    =>  'Gestionar CLAPS'
+                ],
+                /*[
+                    'permiso'       => true,
+                    'url'       => '#88',
+                    'active'    => false,
+                    'icono'     => '<i class="far fa-circle nav-icon"></i>',
+                    'titulo'    =>  'Inactive Page'
+                ]*/
+            ]
+        ],
         [
             'permiso' => validarPermisos('territorio.index') || validarPermisos('usuarios.index') || validarPermisos('root'),
             'url' => '#',
@@ -186,6 +209,44 @@ function verPermisos(): array
                 [
                     'permiso' => 'usuarios.destroy',
                     'text' => 'Borrar Usuarios'
+                ]
+            ]
+        ],
+        [
+            'permiso' => 'territotio.index',
+            'text' => 'Territorio',
+            'opciones' => [
+                [
+                    'permiso' => 'municipios.create',
+                    'text' => 'Crear Municipios'
+                ],
+                [
+                    'permiso' => 'municipios.edit',
+                    'text' => 'Editar Municipios'
+                ],
+                [
+                    'permiso' => 'municipios.destroy',
+                    'text' => 'Borrar Municipios'
+                ],
+                [
+                    'permiso' => 'municipios.estatus',
+                    'text' => 'Estatus Municipios'
+                ],
+                [
+                    'permiso' => 'parroquias.create',
+                    'text' => 'Crear Parroquias'
+                ],
+                [
+                    'permiso' => 'parroquias.edit',
+                    'text' => 'Editar Parroquias'
+                ],
+                [
+                    'permiso' => 'parroquias.destroy',
+                    'text' => 'Borrar Parroquias'
+                ],
+                [
+                    'permiso' => 'parroquias.estatus',
+                    'text' => 'Estatus Parroquias'
                 ]
             ]
         ],

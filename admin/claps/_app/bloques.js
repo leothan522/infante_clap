@@ -1,6 +1,6 @@
 //validamos campos para los bloques
-$('#bloques_input_nombre').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}");
-$('#bloques_input_numero').inputmask("9{1,3}");
+inputmask('#bloques_input_nombre', 'alfanumerico', 4, 15);
+inputmask('#bloques_input_numero', 'numerico', 1, 3, '');
 
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('bloques_tabla');
@@ -107,34 +107,13 @@ function cambiarMunicipio() {
     let municipio = $('#bloques_select_municipios');
     municipio.removeClass('is-invalid');
     limpiarBloques(false);
+    ajaxRequest({ url: 'procesar_bloques.php', data: { opcion: 'get_bloques_municipios', id: municipio.val() }, html: 'si' }, function (data){
 
-    ajaxRequest({url: 'procesar_bloques.php', data: { opcion: 'get_bloques_municipios', id: id }}, function (data){
-
-        $('#dataContainerBloques')
-            .html(data);
-
+        $('#dataContainerBloques').html(data);
         datatable('bloques_tabla');
         $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
+
     });
-    /*
-    $.ajax({
-        type: 'POST',
-        url: 'procesar_bloques.php',
-        data: {
-            opcion: 'get_bloques_municipios',
-            id: municipio.val()
-        },
-        success: function (response) {
-
-            let data = response;
-            $('#dataContainerBloques')
-                .html(data);
-
-            datatable('bloques_tabla');
-            $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
-            verSpinner(false);
-        }
-    });*/
 }
 
 //esta funsion sirve para resetear los datos del modal
@@ -159,45 +138,6 @@ function getMunicipios(municipio = true) {
         }
     });
 
-    /*$.ajax({
-        type: 'POST',
-        url: 'procesar_bloques.php',
-        data: {
-            opcion: 'get_municipios'
-        },
-        success: function (response) {
-
-            let data = JSON.parse(response);
-
-            if (data.result){
-                let select = $('#bloques_select_municipios');
-                let municipios = data.municipios.length;
-                select.empty();
-                select.append('<option value="">Seleccione</option>');
-                for (let i = 0; i < municipios; i++) {
-                    let id = data.municipios[i]['id'];
-                    let nombre = data.municipios[i]['nombre'];
-                    select.append('<option value="' + id + '">' + nombre + '</option>');
-                }
-
-            }
-
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                /!*Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });*!/
-            }
-
-            verSpinner(false);
-        }
-    });*/
 }
 
 function limpiarBloques( municipio = true) {
@@ -222,40 +162,15 @@ function limpiarBloques( municipio = true) {
 function eliminarBloque(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
-            verSpinner(true);
-            $.ajax({
-                type: 'POST',
-                url: 'procesar_bloques.php',
-                data: {
-                    opcion: 'eliminar_bloque',
-                    id: id
-                },
-                success: function (response) {
-                    let data = JSON.parse(response);
 
-                    if (data.result) {
-                        let table = $('#bloques_tabla').DataTable();
-                        let item = $('#btn_eliminar_' + id).closest('tr');
-                        table
-                            .row(item)
-                            .remove()
-                            .draw();
-                    }
-
-                    if (data.alerta) {
-                        Alerta.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.message
-                        });
-                    } else {
-                        Toast.fire({
-                            icon: data.icon,
-                            text: data.title
-                        });
-                    }
-                    verSpinner(false);
-
+            ajaxRequest({ url: 'procesar_bloques.php', data: { opcion: 'eliminar_bloque', id: id } }, function (data) {
+                if (data.result) {
+                    let table = $('#bloques_tabla').DataTable();
+                    let item = $('#btn_eliminar_' + id).closest('tr');
+                    table
+                        .row(item)
+                        .remove()
+                        .draw();
                 }
             });
 
@@ -264,4 +179,4 @@ function eliminarBloque(id) {
     });
 }
 
-console.log('Hi j!');
+console.log('bloques!');

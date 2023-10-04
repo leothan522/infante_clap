@@ -123,7 +123,7 @@ $('#form_create_user').submit(function (e) {
                     btn_eliminar = 'disabled';
                 }
 
-                if (!data.btn_estatus){
+                if (!data.btn_permisos){
                     btn_estatus = 'disabled';
                 }
 

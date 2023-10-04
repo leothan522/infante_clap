@@ -11,9 +11,11 @@ use app\model\Ente;
 $response = array();
 $paginate = false;
 
-if ($_POST) try {
-    if (!empty($_POST['opcion'])) {
-        $opcion = $_POST['opcion'];
+if (!empty($_POST['opcion'])) {
+
+    $opcion = $_POST['opcion'];
+
+    try {
         $model = new Clap();
         switch ($opcion) {
 
@@ -39,7 +41,7 @@ if ($_POST) try {
                 $response['result'] = true;
                 break;
 
-                case 'get_bloque_parroquia':
+            case 'get_bloque_parroquia':
                 if (!empty($_POST['id'])){
                     $id = $_POST['id'];
 
@@ -87,36 +89,13 @@ if ($_POST) try {
 
         }
 
-
-    } else {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = "faltan_datos";
-        $response['icon'] = "warning";
-        $response['title'] = "Faltan datos.";
-        $response['message'] = "La variable opcion no definida.";
+    } catch (PDOException $e) {
+        $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
+    } catch (Exception $e) {
+        $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
     }
-} catch (PDOException $e) {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_model';
-    $response['icon'] = "error";
-    $response['title'] = "Error en el Model";
-    $response['message'] = "PDOException {$e->getMessage()}";
-} catch (Exception $e) {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_model';
-    $response['icon'] = "error";
-    $response['title'] = "Error en el Model";
-    $response['message'] = "General Error: {$e->getMessage()}";
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_opcion');
 }
 
 if (!$paginate) {

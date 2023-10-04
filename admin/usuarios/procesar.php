@@ -110,7 +110,7 @@ if ($_POST) {
                                 $response['total'] = $model->count(1);
                                 $response['btn_editar'] = validarPermisos('usuarios.edit');
                                 $response['btn_eliminar'] = validarPermisos('usuarios.destroy');
-                                $response['btn_permisos'] = validarPermisos('usuarios.estatus');
+                                $response['btn_permisos'] = validarPermisos();
 
                             } else {
                                 $response = crearResponse(
