@@ -10,11 +10,14 @@ $controller = new UsersController();
 $response = array();
 
 if ($_POST) {
-    $model = new User();
-    try {
-        if (!empty($_POST['opcion'])) {
-            $opcion = $_POST['opcion'];
 
+    if (!empty($_POST['opcion'])) {
+
+        $opcion = $_POST['opcion'];
+
+        try {
+
+            $model = new User();
 
             switch ($opcion) {
 
@@ -26,7 +29,7 @@ if ($_POST) {
                         !empty($_POST['email']) &&
                         !empty($_POST['telefono']) &&
                         !empty($_POST['password'])
-                    ){
+                    ) {
                         //datos recibidospor el POST
                         $name = $_POST['name'];
                         $email = $_POST['email'];
@@ -39,7 +42,7 @@ if ($_POST) {
                         $user = $model->find($id);
 
 
-                        if (password_verify($password, $user['password'])){
+                        if (password_verify($password, $user['password'])) {
                             //variable local
                             $cambios = false;
 
@@ -59,40 +62,36 @@ if ($_POST) {
 
                             }
 
-                            if ($cambios){
+                            if ($cambios) {
                                 //sucess
                                 $model->update($id, 'updated_at', $updated_at);
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = 'cambios';
-                                $response['icon'] = "success";
-                                $response['title'] = "Cambios guardados.";
-                                $response['message'] = "Cambios guardados exitosamente.";
-                            }else{
+                                $user = $model->find($id);
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Cambios guardados.',
+                                    'Cambios guardados exitosamente.'
+                                );
+                                $response['nombre'] = $user['name'];
+                                $response['email'] = $user['email'];
+                                $response['telefono'] = $user['telefono'];
+                            } else {
                                 //manejo el error
-                                $response['result'] = false;
-                                $response['alerta'] = true;
-                                $response['error'] = "no_cambios";
-                                $response['icon'] = "info";
-                                $response['title'] = "Sin Cambios.";
-                                $response['message'] = "No se realizo ningun cambio.";
+                                $response = crearResponse('no_cambios');
                             }
-                        }else{
+
+                        } else {
                             //manejo el error
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = "no_password";
-                            $response['icon'] = "error";
-                            $response['title'] = "Contraseña Incorrecta.";
-                            $response['message'] = "Se debe ingresar la contraseña actual.";
+                            $response = crearResponse(
+                                'no_password',
+                                false,
+                                'Contraseña Incorrecta.',
+                                'Se debe ingresar la contraseña actual.',
+                                'error',
+                            );
                         }
-                    }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "La variable opcion no definida.";
+                    } else {
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -103,7 +102,7 @@ if ($_POST) {
                         !empty($_POST['contrasea_actual']) &&
                         !empty($_POST['contrasea_nueva']) &&
                         !empty($_POST['confirmar'])
-                    ){
+                    ) {
                         $contrasea_actual = $_POST['contrasea_actual'];
                         $contrasea_nueva = $_POST['contrasea_nueva'];
                         $confirmar = $_POST['confirmar'];
@@ -111,103 +110,76 @@ if ($_POST) {
                         $id = $controller->USER_ID;
                         $get_user = $model->find($id);
 
-                        if (password_verify($contrasea_actual, $get_user['password'])){
-                            if (strlen($contrasea_nueva) >= 7){
-                                if (!password_verify($contrasea_nueva, $get_user['password'])){
+                        if (password_verify($contrasea_actual, $get_user['password'])) {
+                            if (strlen($contrasea_nueva) >= 7) {
+                                if (!password_verify($contrasea_nueva, $get_user['password'])) {
                                     $contrasea_nueva = password_hash($contrasea_nueva, PASSWORD_DEFAULT);
                                     $model->update($id, 'password', $contrasea_nueva);
                                     $model->update($id, 'updated_at', $updated_at);
 
-                                    $response['result'] = true;
-                                    $response['alerta'] = false;
-                                    $response['error'] = 'cambios';
-                                    $response['icon'] =  "success";
-                                    $response['title'] = "Cambios guardados.";
-                                    $response['message'] = "Cambios guardados exitosamente.";
+                                    $response = crearResponse(
+                                        null,
+                                        true,
+                                        'Cambios guardados.',
+                                        'Cambios guardados exitosamente.',
+                                    );
 
-                                }else{
-                                    $response['result'] = false;
-                                    $response['alerta'] = true;
-                                    $response['error'] = 'password_iguales';
-                                    $response['icon'] =  "error";
-                                    $response['title'] = "Contraseña nueva incorrecta.";
-                                    $response['message'] = "El contraseña nueva no debe ser igual a la contraseña anterior.";
+                                } else {
+                                    $response = crearResponse(
+                                        'password_iguales',
+                                        false,
+                                        'Contraseña nueva incorrecta.',
+                                        'El contraseña nueva no debe ser igual a la contraseña anterior.',
+                                        'error',
+                                        true
+                                    );
                                 }
 
-                            }else{
-                                $response['result'] = false;
-                                $response['alerta'] = false;
-                                $response['error'] = 'no_password_tamaño';
-                                $response['icon'] =  "error";
-                                $response['title'] = "Contraseña nueva incorrecta.";
-                                $response['message'] = "El contraseña es obligatoria, debe tener al menos 8 caracteres.";
+                            } else {
+                                $response = crearResponse(
+                                    'no_password_tamaño',
+                                    false,
+                                    'Contraseña nueva incorrecta.',
+                                    'El contraseña es obligatoria, debe tener al menos 8 caracteres.',
+                                    'error',
+                                );
                             }
-                        }else {
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = 'no_password';
-                            $response['icon'] =  "error";
-                            $response['title'] = "Contraseña actual incorrecta.";
-                            $response['message'] = "La contraseña actual es incorrecta.";
+                        } else {
+                            $response = crearResponse(
+                                'no_password',
+                                false,
+                                'Contraseña actual incorrecta.',
+                                'La contraseña actual es incorrecta.',
+                                'error',
+                            );
                         }
 
 
-                    }else{
+                    } else {
                         //manejo los errores
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "Revisar los input enviados.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la case \"$opcion\":";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
-
             }
 
-
-        } else {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = "faltan_datos";
-            $response['icon'] = "warning";
-            $response['title'] = "Faltan datos.";
-            $response['message'] = "La variable opcion no definida.";
+        } catch (PDOException $e) {
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
+        } catch (Exception $e) {
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
-    } catch (PDOException $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "PDOException {$e->getMessage()}";
-    } catch (Exception $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "General Error: {$e->getMessage()}";
+
+    } else {
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
+
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 

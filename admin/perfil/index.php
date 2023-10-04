@@ -102,6 +102,7 @@ $controller = new PerfilController();
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 
 
 <script src="_app/perfil.js"></script>

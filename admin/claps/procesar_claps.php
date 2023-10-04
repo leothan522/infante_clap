@@ -11,91 +11,99 @@ use app\model\Ente;
 $response = array();
 $paginate = false;
 
-if (!empty($_POST['opcion'])) {
+if ($_POST) {
 
-    $opcion = $_POST['opcion'];
+    if (!empty($_POST['opcion'])) {
 
-    try {
-        $model = new Clap();
-        switch ($opcion) {
+        $opcion = $_POST['opcion'];
 
-            //definimos las opciones a procesar
+        try {
+            $model = new Clap();
+            switch ($opcion) {
 
-            case 'get_municipios_select':
-                $modelMunicipio = new Municipio();
-                $response['municipios'] = array();
-                foreach ($modelMunicipio->getAll() as $municipio){
-                    $id = $municipio['id'];
-                    $nombre = $municipio['mini'];
-                    $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
-                }
+                //definimos las opciones a procesar
 
-                $modelEnte = new Ente();
-                $response['entes'] = array();
-                foreach ($modelEnte->getAll(null, 'nombre') as $ente){
-                    $id = $ente['id'];
-                    $nombre = $ente['nombre'];
-                    $response['entes'][] = array("id" => $id, "nombre" => $nombre);
-                }
+                case 'get_municipios_select':
+                    $modelMunicipio = new Municipio();
 
-                $response['result'] = true;
-                break;
+                    $response = crearResponse(
+                        null,
+                        true,
+                        'Exito.',
+                        'Exito.',
+                        'success',
+                        false,
+                        true
+                    );
 
-            case 'get_bloque_parroquia':
-                if (!empty($_POST['id'])){
-                    $id = $_POST['id'];
-
-                    $modelBloque = new Bloque();
-                    $response['bloques'] = array();
-                    foreach ($modelBloque->getList('municipios_id', '=', $id, null, 'numero') as $bloque){
-                        $id = $bloque['id'];
-                        $nombre = $bloque['numero'];
-                        $response['bloques'][] = array("id" => $id, "nombre" => $nombre);
+                    $response['municipios'] = array();
+                    foreach ($modelMunicipio->getAll() as $municipio) {
+                        $id = $municipio['id'];
+                        $nombre = $municipio['mini'];
+                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
                     }
 
-                    $modelParroquia = new Parroquia();
-                    $response['parroquias'] = array();
-                    foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia){
-                        $id = $parroquia['id'];
-                        $nombre = $parroquia['nombre'];
-                        $response['parroquias'][] = array("id" => $id, "nombre" => $nombre);
+                    $modelEnte = new Ente();
+                    $response['entes'] = array();
+                    foreach ($modelEnte->getAll(null, 'nombre') as $ente) {
+                        $id = $ente['id'];
+                        $nombre = $ente['nombre'];
+                        $response['entes'][] = array("id" => $id, "nombre" => $nombre);
                     }
 
-                    $response['result'] = true;
-                    $response['alerta'] = false;
-                    $response['error'] = false;
-                    $response['icon'] = "success";
-                    $response['title'] = "Exito.";
-                    $response['message'] = "exito";
-                }else{
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_municipio";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Faltan datos.";
-                    $response['message'] = "Primero se debe seleccionar un municipio";
-                }
-                break;
+                    break;
 
-            //Por defecto
-            default:
-                $response['result'] = false;
-                $response['alerta'] = true;
-                $response['error'] = "no_opcion";
-                $response['icon'] = "warning";
-                $response['title'] = "Opcion no Programada.";
-                $response['message'] = "No se ha programado la logica para la case \"$opcion\":";
-                break;
+                case 'get_bloque_parroquia':
+                    if (!empty($_POST['id'])) {
+                        $id = $_POST['id'];
 
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Exito.',
+                            'Exito.',
+                            'success',
+                            false,
+                            true
+                        );
+
+                        $modelBloque = new Bloque();
+                        $response['bloques'] = array();
+                        foreach ($modelBloque->getList('municipios_id', '=', $id, null, 'numero') as $bloque) {
+                            $id = $bloque['id'];
+                            $nombre = $bloque['numero'];
+                            $response['bloques'][] = array("id" => $id, "nombre" => $nombre);
+                        }
+
+                        $modelParroquia = new Parroquia();
+                        $response['parroquias'] = array();
+                        foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
+                            $id = $parroquia['id'];
+                            $nombre = $parroquia['nombre'];
+                            $response['parroquias'][] = array("id" => $id, "nombre" => $nombre);
+                        }
+
+                    } else {
+                        $response['result'] = crearResponse('faltan_datos');
+                    }
+                    break;
+
+                //Por defecto
+                default:
+                    $response = crearResponse('no_opcion', false, null, $opcion);
+                    break;
+            }
+
+        } catch (PDOException $e) {
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
+        } catch (Exception $e) {
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
-
-    } catch (PDOException $e) {
-        $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
-    } catch (Exception $e) {
-        $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
+    } else {
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response = crearResponse('error_opcion');
+    $response = crearResponse('error_method');
 }
 
 if (!$paginate) {

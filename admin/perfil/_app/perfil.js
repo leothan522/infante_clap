@@ -1,6 +1,6 @@
 //Inicializamos el InputMak
-$('#edit_name').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}");
-$('#edit_telefono').inputmask("(9999) 999-99.99");
+inputmask('#edit_name', 'alfa', 3, 100, ' ');
+inputmaskTelefono('#edit_telefono');
 
 //Inicializar el input de subir foto
 $(function () {
@@ -19,7 +19,7 @@ $('#form_perfil_datos').submit(function (e){
     if (!name.inputmask('isComplete')){
         procesar = false;
         name.addClass('is-invalid');
-        $('#error_edit_name').text('El Nombre es obligatorio, debe tener al menos 4 caracteres.');
+        $('#error_edit_name').text('El Nombre es obligatorio, debe tener al menos 3 caracteres.');
     } else {
         name.removeClass('is-invalid');
         name.addClass('is-valid');
@@ -54,7 +54,40 @@ $('#form_perfil_datos').submit(function (e){
     }
 
     if (procesar){
-        verSpinner();
+
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
+            if (data.result){
+                $('#profile_name').text(data.nombre);
+                $('#profile_email').text(data.email);
+                $('#profile_telefono').text(data.telefono);
+                $('#ficha_nombre').text(data.nombre);
+                $('#ficha_email').text(data.email);
+                $('#navbar_header_name').text(data.nombre);
+
+                name
+                    .val(data.nombre)
+                    .removeClass('is-valid');
+                email
+                    .val(data.email)
+                    .removeClass('is-valid');
+                telefono
+                    .val(data.telefono)
+                    .removeClass('is-valid');
+                password_actual
+                    .removeClass('is-valid')
+                    .val('')
+                    .attr('type', 'password');
+
+            }else {
+                if (data.error === 'no_password'){
+                    password_actual.removeClass('is-valid');
+                    password_actual.addClass('is-invalid');
+                    $('#error_password_actual').text(data.message);
+                }
+            }
+        });
+
+        /*verSpinner();
         $.ajax({
             type: "POST",
             url: "procesar.php",
@@ -99,7 +132,7 @@ $('#form_perfil_datos').submit(function (e){
                 }
                 verSpinner(false);
             }
-        })
+        })*/
     }
 
 
@@ -141,7 +174,45 @@ $('#form_perfil_seguridad').submit(function (e){
     }
 
     if (procesar){
-        verSpinner();
+
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
+
+            if (data.result){
+
+                password_actual
+                    .removeClass('is-valid')
+                    .val('')
+                    .attr('type', 'password');
+                password_nueva
+                    .removeClass('is-valid')
+                    .val('')
+                    .attr('type', 'password');
+                confirmar
+                    .removeClass('is-valid')
+                    .val('')
+                    .attr('type', 'password');
+                $('#remember').prop("checked", false);
+
+            }else {
+
+                if (data.error === "no_password"){
+                    password_actual
+                        .removeClass('is-valid')
+                        .addClass('is-invalid');
+                    $('#error_contrasea_actual').text(data.message);
+                }
+
+                if (data.error === "no_password_tamaño"){
+                    password_nueva
+                        .removeClass('is-valid')
+                        .addClass('is-invalid');
+                    $('#error_contrasea_nueva').text(data.message);
+                }
+
+            }
+        });
+
+        /*verSpinner();
         $.ajax({
             type: 'POST',
             url: 'procesar.php',
@@ -196,7 +267,7 @@ $('#form_perfil_seguridad').submit(function (e){
                 verSpinner(false);
 
             }
-        })
+        })*/
     }
 });
 
@@ -228,4 +299,4 @@ $('#check_datos').click(function (){
     }
 });
 
-console.log('hi vv!')
+console.log('perfil 2!')
