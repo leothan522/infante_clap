@@ -41,7 +41,7 @@ $('#bloques_form').submit(function (e) {
     }
 
     if (procesar) {
-        ajaxRequest({ data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: 'procesar_bloques.php', data: $(this).serialize() }, function (data) {
             if (data.result){
 
                 let table = $('#bloques_tabla').DataTable();
@@ -91,52 +91,32 @@ $('#bloques_form').submit(function (e) {
 });
 
 function editBloque(id) {
-    ajaxRequest({data: { opcion: 'get_bloque', id: id }}, function (data) {
-
-    });
-
-   /* verSpinner(true);
-    $.ajax({
-        type: 'POST',
-        url: 'procesar_bloques.php',
-        data: {
-            opcion: 'get_bloque',
-            id: id
-        },
-        success: function (response) {
-            let data = JSON.parse(response);
-
-            if (data.result) {
-                $('#bloques_input_numero').val(data.numero);
-                $('#bloques_input_nombre').val(data.nombre);
-                $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
-                $('#bloques_id').val(data.id);
-                $('#bloques_opcion').val('editar_bloque');
-                $('#title_form_bloque').text('Editar Bloque')
-            }
-
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });
-            }
-            verSpinner(false);
+    ajaxRequest({url: 'procesar_bloques.php', data: { opcion: 'get_bloque', id: id }}, function (data) {
+        if (data.result) {
+            $('#bloques_input_numero').val(data.numero);
+            $('#bloques_input_nombre').val(data.nombre);
+            $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
+            $('#bloques_id').val(data.id);
+            $('#bloques_opcion').val('editar_bloque');
+            $('#title_form_bloque').text('Editar Bloque')
         }
-    });*/
+    });
 }
 
 function cambiarMunicipio() {
     let municipio = $('#bloques_select_municipios');
     municipio.removeClass('is-invalid');
     limpiarBloques(false);
-    verSpinner(true);
+
+    ajaxRequest({url: 'procesar_bloques.php', data: { opcion: 'get_bloques_municipios', id: id }}, function (data){
+
+        $('#dataContainerBloques')
+            .html(data);
+
+        datatable('bloques_tabla');
+        $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
+    });
+    /*
     $.ajax({
         type: 'POST',
         url: 'procesar_bloques.php',
@@ -154,19 +134,32 @@ function cambiarMunicipio() {
             $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
             verSpinner(false);
         }
-    });
+    });*/
 }
 
 //esta funsion sirve para resetear los datos del modal
 function getMunicipios(municipio = true) {
-    verSpinner(true);
     limpiarBloques(true);
     let html = '<span>Seleccione un Municipio para empezar</span>';
     $('#dataContainerBloques')
         .html(html);
     $('#bloques_municipios_id').val('');
 
-    $.ajax({
+    ajaxRequest({url: 'procesar_bloques.php', data: {opcion: 'get_municipios'}}, function (data) {
+        if (data.result) {
+            let select = $('#bloques_select_municipios');
+            let municipios = data.municipios.length;
+            select.empty();
+            select.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < municipios; i++) {
+                let id = data.municipios[i]['id'];
+                let nombre = data.municipios[i]['nombre'];
+                select.append('<option value="' + id + '">' + nombre + '</option>');
+            }
+        }
+    });
+
+    /*$.ajax({
         type: 'POST',
         url: 'procesar_bloques.php',
         data: {
@@ -196,15 +189,15 @@ function getMunicipios(municipio = true) {
                     text: data.message
                 });
             } else {
-                /*Toast.fire({
+                /!*Toast.fire({
                     icon: data.icon,
                     text: data.title
-                });*/
+                });*!/
             }
 
             verSpinner(false);
         }
-    });
+    });*/
 }
 
 function limpiarBloques( municipio = true) {
