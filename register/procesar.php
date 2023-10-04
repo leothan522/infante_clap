@@ -49,29 +49,24 @@ if ($_POST) {
 
                             $user = $model->first('email', '=', $email);
                             $_SESSION['id'] = $user['id'];
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = false;
-                            $response['icon'] =  "success";
-                            $response['title'] = "Guardado.";
-                            $response['message'] = "Bienvenido ". $name;
-
+                            $response = crearResponse(
+                                null,
+                                true,
+                                "Bienvenido ". $name,
+                                "Bienvenido ". $name
+                            );
                         }else{
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = 'email_duplicado';
-                            $response['icon'] =  "warning";
-                            $response['title'] = "Email Duplicado.";
-                            $response['message'] = "El email ya esta registrado.";
+                            $response = crearResponse(
+                                'email_duplicado',
+                                false,
+                                'Email Duplicado.',
+                                'El email ya esta registrado.',
+                                'warning'
+                            );
                         }
 
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "El nombre del parametro es obligatorio.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -80,44 +75,20 @@ if ($_POST) {
 
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la opcion \"$opcion\"";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
             }
 
         } catch (PDOException $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "PDOException {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
         } catch (Exception $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "General Error: {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
     } else {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = "faltan_datos";
-        $response['icon'] = "warning";
-        $response['title'] = "Faltan datos.";
-        $response['message'] = "La variable opcion no definida.";
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
+
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

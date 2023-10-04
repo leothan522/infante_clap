@@ -1,4 +1,4 @@
-$('#name').inputmask("*{4,20}[ ]*{0,20}[ ]*{0,20}[ ]*{0,20}");
+inputmask('#name', 'alfa', 3, 100, ' ');
 $('#telefono').inputmask("(9999) 999-99.99");
 
 $('#form_registrar_usuario').submit(function (e) {
@@ -59,7 +59,20 @@ $('#form_registrar_usuario').submit(function (e) {
 
 
     if (procesar){
-        verSpinner();
+
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
+
+            if (data.result){
+                window.location.replace ("../admin/");
+            }else {
+                if (data.error === "email_duplicado") {
+                    email.addClass('is-invalid');
+                    $('#error_email').text("email ya registrado.");
+                }
+            }
+
+        });
+        /*verSpinner();
         $.ajax({
            type: 'POST',
            url: 'procesar.php',
@@ -90,7 +103,7 @@ $('#form_registrar_usuario').submit(function (e) {
                    verSpinner(false);
                }
            }
-        });
+        });*/
     }
 
 });
@@ -106,3 +119,5 @@ $('#remember').click(function () {
         confirmar.attr('type', 'password');
     }
 });
+
+console.log('hi!');

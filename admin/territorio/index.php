@@ -112,6 +112,8 @@ $controller = new TerritorioController();
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
+
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js'); ?>"></script>

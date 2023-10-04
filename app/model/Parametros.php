@@ -3,7 +3,7 @@ namespace app\model;
 
 use app\model\Model;
 
-class Parametro extends Model
+class Parametros extends Model
 {
     public function __construct()
     {

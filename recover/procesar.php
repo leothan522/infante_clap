@@ -31,36 +31,36 @@ if ($_POST) {
 
                         $existeEmail = $model->existe('token', '=', $token,null, 1);
                         if ($existeEmail){
+
                             $id = $existeEmail['id'];
                             $model->update($id, 'password', $password);
                             $model->update($id, 'token', null);
                             $model->update($id, 'date_token', null);
                             $model->update($id, 'updated_at', $created_at);
 
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Contraseña Actualizada.',
+                                'Su contraseña se ha restablecido correctamente. Inicie sesión con su nueva clave.',
+                                'success',
+                                true
+                            );
 
-                            $response['result'] = true;
-                            $response['alerta'] = true;
-                            $response['error'] = false;
-                            $response['icon'] =  "success";
-                            $response['title'] = "Contraseña Actualizada.";
-                            $response['message'] = "Su contraseña se ha restablecido correctamente. Inicie sesión con su nueva clave";
 
                         }else{
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = 'email_duplicado';
-                            $response['icon'] =  "warning";
-                            $response['title'] = "Token no encontrado.";
-                            $response['message'] = "El token se encuentra vencido.";
+                            $response = crearResponse(
+                                'email_duplicado',
+                                false,
+                                'Token no encontrado.',
+                                'El token se encuentra vencido.',
+                                'warning',
+                                true
+                            );
                         }
 
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "El nombre del parametro es obligatorio.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -69,44 +69,20 @@ if ($_POST) {
 
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la opcion \"$opcion\"";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
             }
 
         } catch (PDOException $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "PDOException {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
         } catch (Exception $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "General Error: {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
     } else {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = "faltan_datos";
-        $response['icon'] = "warning";
-        $response['title'] = "Faltan datos.";
-        $response['message'] = "La variable opcion no definida.";
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
+
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

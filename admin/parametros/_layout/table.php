@@ -23,7 +23,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table-responsive mt-3">
+        <div class="table mt-3">
             <table class="table" id="table_parametros">
                 <thead>
                 <tr>
@@ -38,7 +38,7 @@
                 <?php
                 foreach ($listarParametros as $parametro){ ?>
                     <tr id="tr_item_<?php echo $parametro['id']; ?>">
-                        <td><span class="text-bold"><?php echo $i++; ?></span></td>
+                        <td><span class="text-bold"><?php echo ++$i; ?></span></td>
                         <td class="nombre">
                             <?php echo $parametro['nombre'] ?>
                         </td>

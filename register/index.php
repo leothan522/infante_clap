@@ -5,6 +5,11 @@ require_once "../vendor/autoload.php";
 use app\controller\GuestController;
 
 $controller = new GuestController();
+if (config('app_register') == "false"){
+    header("Status: 301 Moved Permanently");
+    header("Location: ".config('app_dominio')."");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,7 +55,7 @@ $controller = new GuestController();
 <div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center p-0">
-            <a href="./">
+            <a href="<?php echo config('app_dominio'); ?>">
                 <img class="img-thumbnail border-transparent" src="<?php asset('public/img/logo_alguarisa.jpg'); ?>" alt="Alimentos del Guárico">
             </a>
         </div>
@@ -151,6 +156,8 @@ $controller = new GuestController();
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
+<script src="<?php asset('public/js/app.js'); ?>"></script>
 
 
 <script src="_app/register.js"></script>

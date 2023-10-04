@@ -41,78 +41,61 @@ $('#bloques_form').submit(function (e) {
     }
 
     if (procesar) {
-       verSpinner(true);
-       $.ajax({
-          type: 'POST',
-          url: 'procesar_bloques.php',
-          data: $(this).serialize(),
-          success: function (response) {
-              let data = JSON.parse(response);
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
+            if (data.result){
 
-              if (data.result){
-                  let table = $('#bloques_tabla').DataTable();
+                let table = $('#bloques_tabla').DataTable();
 
-                  if (data.nuevo){
-                      //estoy guardando
-                      let buttons = '<div class="btn-group btn-group-sm">\n' +
-                          '                                <button type="button" class="btn btn-info" onclick="editBloque('+ data.id +')">\n' +
-                          '                                    <i class="fas fa-edit"></i>\n' +
-                          '                                </button>\n' +
-                          '                                <button type="button" class="btn btn-info" onclick="eliminarBloque('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
-                          '                                    <i class="far fa-trash-alt"></i>\n' +
-                          '                                </button>\n' +
-                          '                            </div>';
+                if (data.nuevo){
+                    //estoy guardando
+                    let buttons = '<div class="btn-group btn-group-sm">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="editBloque('+ data.id +')">\n' +
+                        '                                    <i class="fas fa-edit"></i>\n' +
+                        '                                </button>\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="eliminarBloque('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
+                        '                                    <i class="far fa-trash-alt"></i>\n' +
+                        '                                </button>\n' +
+                        '                            </div>';
 
-                      table.row.add([
-                          data.numero,
-                          data.nombre,
-                          buttons
-                      ]).draw();
+                    table.row.add([
+                        data.numero,
+                        data.nombre,
+                        buttons
+                    ]).draw();
 
-                      let nuevo = $('#bloques_tabla tr:last');
-                      nuevo.attr('id', 'tr_item_' + data.id);
-                      nuevo.find("td:eq(0)").addClass('numero');
-                      nuevo.find("td:eq(1)").addClass('nombre');
+                    let nuevo = $('#bloques_tabla tr:last');
+                    nuevo.attr('id', 'tr_item_' + data.id);
+                    nuevo.find("td:eq(0)").addClass('numero');
+                    nuevo.find("td:eq(1)").addClass('nombre');
 
-                  }else{
-                      //estoy editando
-                      let tr = $('#tr_item_' + data.id);
-                      table
-                          .cell(tr.find('.numero')).data(data.numero)
-                          .cell(tr.find('.nombre')).data(data.nombre)
-                          .draw();
-                  }
-                  limpiarBloques(false);
-              }else {
-                  if (data.error_numero){
-                      numero.addClass('is-invalid');
-                  }
-                  if (data.error_nombre){
-                      nombre.addClass('is-invalid');
-                  }
-              }
-
-              if (data.alerta) {
-                  Alerta.fire({
-                      icon: data.icon,
-                      title: data.title,
-                      text: data.message
-                  });
-              } else {
-                  Toast.fire({
-                      icon: data.icon,
-                      text: data.title
-                  });
-              }
-              verSpinner(false);
-          }
-       });
+                }else{
+                    //estoy editando
+                    let tr = $('#tr_item_' + data.id);
+                    table
+                        .cell(tr.find('.numero')).data(data.numero)
+                        .cell(tr.find('.nombre')).data(data.nombre)
+                        .draw();
+                }
+                limpiarBloques(false);
+            }else {
+                if (data.error_numero){
+                    numero.addClass('is-invalid');
+                }
+                if (data.error_nombre){
+                    nombre.addClass('is-invalid');
+                }
+            }
+        });
     }
 
 });
 
 function editBloque(id) {
-    verSpinner(true);
+    ajaxRequest({data: { opcion: 'get_bloque', id: id }}, function (data) {
+
+    });
+
+   /* verSpinner(true);
     $.ajax({
         type: 'POST',
         url: 'procesar_bloques.php',
@@ -146,7 +129,7 @@ function editBloque(id) {
             }
             verSpinner(false);
         }
-    });
+    });*/
 }
 
 function cambiarMunicipio() {
@@ -168,6 +151,7 @@ function cambiarMunicipio() {
                 .html(data);
 
             datatable('bloques_tabla');
+            $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
             verSpinner(false);
         }
     });
@@ -287,4 +271,4 @@ function eliminarBloque(id) {
     });
 }
 
-console.log('Hi r!');
+console.log('Hi j!');

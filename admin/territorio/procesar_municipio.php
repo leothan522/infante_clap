@@ -7,22 +7,25 @@ use app\model\Parroquia;
 
 $response = array();
 $paginate = false;
+
 if ($_POST) {
 
-    try {
-        if (!empty($_POST['opcion'])) {
-            $opcion = $_POST['opcion'];
-            $hoy = date('Y-m-d');
+    if (!empty($_POST['opcion'])) {
 
+        $opcion = $_POST['opcion'];
+        $hoy = date('Y-m-d');
+
+        try {
+
+            $model = new Municipio();
 
             switch ($opcion) {
 
                 //definimos las opciones a procesar
 
                 case 'paginate_municipio':
-                    $paginate = true;
 
-                    $model = new Municipio();
+                    $paginate = true;
 
                     $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
                     $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
@@ -40,7 +43,6 @@ if ($_POST) {
                     break;
 
                 case 'guardar_municipio':
-                    $model = new Municipio();
 
                     if (!empty($_POST['mun_municipio']) && !empty($_POST['municipio_mini'])) {
                         //proceso
@@ -59,12 +61,13 @@ if ($_POST) {
 
                             $model->save($data);
                             $municipios = $model->first('nombre', '=', $nombre);
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = false;
-                            $response['icon'] = "success";
-                            $response['title'] = "Municipio Creado Exitosamente.";
-                            $response['message'] = "Municipio Creado " . $nombre;
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Municipio Creado Exitosamente.',
+                                "Municipio Creado " . $nombre
+                            );
+                            //datos extras para el $response
                             $response['id'] = $municipios['id'];
                             $response['item'] = '<p> ' . $model->count() . '. </p>';
                             $response['nombre'] = $municipios['nombre'];
@@ -74,6 +77,16 @@ if ($_POST) {
                             $response['total'] = $model->count();
 
                         } else {
+
+                            $response = crearResponse(
+                                'nombre_duplicado',
+                                false,
+                                'Nombre Duplicado.',
+                                'El nombre ya esta registrado.',
+                                'warning'
+                            );
+
+                            //datos extras para el $response
 
                             if ($existeMunicipio) {
                                 $response['error_municipio'] = true;
@@ -89,56 +102,39 @@ if ($_POST) {
                                 $response['error_mini'] = false;
                             }
 
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = "nombre_duplicado";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Nombre Duplicado.";
-                            $response['message'] = "El nombre ya esta registrado.";
                         }
                     } else {
-
-
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos son requeridos.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
                 case 'get_municipio':
-                    $model = new Municipio();
 
                     if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
                         $municipio = $model->find($id);
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = false;
-                        $response['icon'] = "success";
-                        $response['title'] = "Editar Muncipio.";
-                        $response['message'] = "Municipio " . $municipio['nombre'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Editar Muncipio.',
+                            "Municipio " . $municipio['nombre'],
+                            'success',
+                            false,
+                            true
+                        );
+                        //datos extras para el $response
                         $response['id'] = $municipio['id'];
                         $response['nombre'] = $municipio['nombre'];
                         $response['mini'] = $municipio['mini'];
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos son requeridos.";
+                        $response = crearResponse('faltan_datos');
                     }
-
 
                     break;
 
                 case 'editar_municipio':
-                    $model = new Municipio();
 
                     if (
                         !empty($_POST['mun_municipio']) &&
@@ -160,25 +156,28 @@ if ($_POST) {
                             $db_mini = $municipio['mini'];
                             $cambios = false;
 
-                            if ($db_nombre != $nombre){
+                            if ($db_nombre != $nombre) {
                                 $cambios = true;
                                 $model->update($id, 'nombre', $nombre);
                                 $model->update($id, 'updated_at', $hoy);
                             }
 
-                            if ($db_mini != $mini){
+                            if ($db_mini != $mini) {
                                 $cambios = true;
                                 $model->update($id, 'mini', $mini);
                                 $model->update($id, 'updated_at', $hoy);
                             }
 
                             if ($cambios) {
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = false;
-                                $response['icon'] = "success";
-                                $response['title'] = "Municipio Actualizado.";
-                                $response['message'] = "Municipio Creado " . $nombre;
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Municipio Actualizado.',
+                                    "Municipio Creado " . $nombre
+                                );
+
+                                //datos extras para el $response
+
                                 $response['id'] = $id;
                                 $response['nombre'] = $nombre;
                                 $response['mini'] = $mini;
@@ -193,15 +192,20 @@ if ($_POST) {
                                 }
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = true;
-                                $response['error'] = "no_cambios";
-                                $response['icon'] = "warning";
-                                $response['title'] = "Sin Cambios.";
-                                $response['message'] = "No se realizaron Cambios.";
+                                $response = crearResponse('no_cambios');
                             }
 
                         } else {
+
+                            $response = crearResponse(
+                                'nombre_duplicado',
+                                false,
+                                'Nombre Duplicado.',
+                                'El nombre ya esta registrado.',
+                                'warning'
+                            );
+
+                            //datos extras para el $response
 
                             if ($existeMunicipio) {
                                 $response['error_municipio'] = true;
@@ -217,26 +221,14 @@ if ($_POST) {
                                 $response['error_mini'] = false;
                             }
 
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = "nombre_duplicado";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Nombre Duplicado.";
-                            $response['message'] = "El nombre ya esta registrado.";
                         }
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos sonm requeridos.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
                 case 'eliminar_municipio':
-                    $model = new Municipio();
 
                     if (
                         !empty($_POST['id'])
@@ -244,6 +236,13 @@ if ($_POST) {
 
                         //proceso
                         $id = $_POST['id'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Municipio Eliminado.',
+                            'Municipio Eliminado.'
+                        );
+
                         //chequeo las parroquias vinculadas a ese municipio
                         $modelParroquia = new Parroquia();
                         $response['parroquias'] = array();
@@ -251,29 +250,18 @@ if ($_POST) {
                             $response['parroquias'][] = array("id" => $parroquia['id']);
                         }
                         $model->delete($id);
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = false;
-                        $response['icon'] = "success";
-                        $response['title'] = "Municipio Eliminado.";
-                        $response['message'] = "Municipio Eliminado.";
+
+                        //datos extras para el $response
                         $response['total'] = $model->count();
                         $response['total_parroquias'] = $modelParroquia->count();
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos sonm requeridos.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-
                 case 'estatus_municipio':
-                    $model = new Municipio();
 
                     if (
                         !empty($_POST['id'])
@@ -283,77 +271,51 @@ if ($_POST) {
                         $id = $_POST['id'];
                         $municipio = $model->find($id);
 
-                        if ($municipio['estatus']){
+                        $response = crearResponse(
+                            null,
+                            true,
+                            '',
+                            'Municipio Actualizado.'
+                        );
+
+                        //datos extras para el $response
+
+                        if ($municipio['estatus']) {
                             $response['title'] = "Municipio Inactivo.";
                             $estatus = 0;
                             $response['icon'] = "info";
-                        }else{
+                        } else {
                             $response['title'] = "Municipio Activo.";
                             $estatus = 1;
                             $response['icon'] = "success";
                         }
                         $model->update($id, 'estatus', $estatus);
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = false;
-                        $response['message'] = "Municipio Eliminado.";
+
                         $response['estatus'] = $estatus;
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan Datos.";
-                        $response['message'] = "Todos los datos sonm requeridos.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la case \"$opcion\":";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
-
             }
 
-
-        } else {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = "faltan_datos";
-            $response['icon'] = "warning";
-            $response['title'] = "Faltan datos.";
-            $response['message'] = "La variable opcion no definida.";
+        } catch (PDOException $e) {
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
+        } catch (Exception $e) {
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
-    } catch (PDOException $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "PDOException {$e->getMessage()}";
-    } catch (Exception $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "General Error: {$e->getMessage()}";
+
+    } else {
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
 
 if (!$paginate) {

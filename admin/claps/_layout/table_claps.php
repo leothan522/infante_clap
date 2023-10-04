@@ -3,7 +3,7 @@
         <h3 class="card-title">Claps Registrados</h3>
 
         <div class="card-tools">
-            <button class="btn btn-tool" data-toggle="modal" data-target="#modal-claps">
+            <button class="btn btn-tool" data-toggle="modal" onclick="resetClap()" data-target="#modal-claps">
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>

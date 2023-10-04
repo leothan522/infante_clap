@@ -20,7 +20,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table-responsive mt-3">
+        <div class="table mt-3">
             <table class="table" id="tabla_usuarios">
                 <thead>
                 <tr>
@@ -37,7 +37,7 @@
                 <?php
                 foreach ($listarUsuarios as $user) {
                     $i++;
-                ?>
+                    ?>
                     <tr id="tr_item_<?php echo $user['id']; ?>">
                         <td class="text-center"><?php echo $i ?></td>
                         <td class="nombre"><?php echo $user['name'] ?></td>
@@ -47,17 +47,22 @@
                         <td class="estatus text-center"><?php echo verEstatusUsuario($user['estatus']) ?></td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" onclick="getUser(<?php echo $user['id']?>)"
+                                <button type="button" class="btn btn-info" onclick="getUser(<?php echo $user['id'] ?>)"
                                         data-toggle="modal" data-target="#modal_edit_usuarios"
-                                        <?php if (($controller->USER_ID == $user['id']) || ($user['role'] == 100) || (!validarPermisos('usuarios.edit'))){ echo 'disabled'; } ?> >
+                                    <?php if (($_SESSION['id'] == $user['id']) || ($user['role'] == 100) || (!validarPermisos('usuarios.edit')) || ($user['role'] > $user_role && $user_role != 100)) { echo 'disabled'; } ?> >
                                     <i class="fas fa-user-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_permisos" onclick="getPermisos(<?php echo $user['id'] ?>)"
-                                        <?php if (($controller->USER_ID == $user['id']) || ($user['role'] == 100) || (!validarPermisos())){ echo 'disabled'; } ?>>
+                                <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#modal_permisos" onclick="getPermisos(<?php echo $user['id'] ?>)"
+                                    <?php if (($_SESSION['id'] == $user['id']) || ($user['role'] == 100) || (!validarPermisos())) {
+                                        echo 'disabled';
+                                    } ?>>
                                     <i class="fas fa-user-shield"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="destroyUser(<?php echo $user['id']; ?>)" id="btn_eliminar_<?php echo $user['id'] ?>"
-                                        <?php if (($controller->USER_ID == $user['id']) || ($user['role'] == 100) || (!validarPermisos('usuarios.destroy'))){ echo 'disabled'; } ?> >
+                                <button type="button" class="btn btn-info"
+                                        onclick="destroyUser(<?php echo $user['id']; ?>)"
+                                        id="btn_eliminar_<?php echo $user['id'] ?>"
+                                    <?php if (($_SESSION['id'] == $user['id']) || ($user['role'] == 100) || (!validarPermisos('usuarios.destroy')) || ($user['role'] > $user_role && $user_role != 100)) { echo 'disabled'; } ?> >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>

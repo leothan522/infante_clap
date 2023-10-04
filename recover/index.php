@@ -46,7 +46,7 @@ $controller = new RecoverController();
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center p-0">
-            <a href="./">
+            <a href="<?php echo config('app_dominio'); ?>">
                 <img class="img-thumbnail border-transparent" src="<?php asset('public/img/logo_alguarisa.jpg'); ?>" alt="Alimentos del Guárico">
             </a>
         </div>
@@ -102,6 +102,7 @@ $controller = new RecoverController();
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
+<script src="<?php asset('public/js/app.js');  ?>"></script>
 
 <script src="_app/recover.js"></script>
 </body>

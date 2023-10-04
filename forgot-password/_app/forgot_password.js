@@ -13,7 +13,26 @@ $('#form_forgot_password').submit(function (e) {
     }
 
     if (procesar){
-        verSpinner();
+
+        ajaxRequest({ data:$(this).serialize() }, function (data) {
+
+            if (data.result){
+                const html = '<a href="../login" class="btn btn-primary btn-block">Ir al Login</a>';
+                let span = $('#error_email');
+                span.removeClass('invalid-feedback');
+                span.addClass('valid-feedback');
+                span.text(data.message);
+                $('#boton_a_login').html(html);
+            }else {
+                if (data.error === "no_email") {
+                    email.addClass('is-invalid');
+                    $('#error_email').text(data.message);
+                }
+            }
+
+        });
+
+        /*verSpinner();
         $.ajax({
             type: 'POST',
             url: 'procesar.php',
@@ -54,8 +73,10 @@ $('#form_forgot_password').submit(function (e) {
 
                 verSpinner(false);
             }
-        });
+        });*/
     }
 
 
 });
+
+console.log('hi!');

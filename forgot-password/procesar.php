@@ -34,14 +34,14 @@ if ($_POST) {
 
                             $token = generar_string_aleatorio(50);
                             $email_url = str_replace('@', '%40', $email);
-                            $url = public_url('recover/').'?token='.$token.'&email='.$email_url.'';
+                            $url = public_url('recover/') . '?token=' . $token . '&email=' . $email_url . '';
                             $hoy = date("Y-m-d H:i:s");
 
 
                             //definir variables
                             $asunto = utf8_decode('Reestablecimiento de Contraseña');
-                            $html = 'Para restablecer su contraseña siga el siguiente enlace: <strong><a href='.$url.'>Restablecer Contraseña</a></strong>';
-                            $noHtml = 'Para restablecer su contraseña siga el siguiente enlace: '. $url ;
+                            $html = 'Para restablecer su contraseña siga el siguiente enlace: <strong><a href=' . $url . '>Restablecer Contraseña</a></strong>';
+                            $noHtml = 'Para restablecer su contraseña siga el siguiente enlace: ' . $url;
 
                             //envio correo
                             $mailer = new MailerController();
@@ -50,32 +50,26 @@ if ($_POST) {
                             $model->update($existeEmail['id'], 'token', $token);
                             $model->update($existeEmail['id'], 'date_token', $hoy);
 
-
-
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = false;
-                            $response['icon'] =  "success";
-                            $response['title'] = "Correo Enviado.";
-                            $response['message'] = "Tu nueva contraseña se ha enviado a tu correo.";
-
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Correo Enviado.',
+                                'Tu nueva contraseña se ha enviado a tu correo.'
+                            );
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = false;
-                            $response['error'] = 'no_email';
-                            $response['icon'] = "error";
-                            $response['title'] = "Email NO encontrado.";
-                            $response['message'] = "El Email NO se encuentra en nuestros registro.";
+                            $response = crearResponse(
+                                'no_email',
+                                false,
+                                'Email NO encontrado.',
+                                'El Email NO se encuentra en nuestros registro.',
+                                'error',
+                                true
+                            );
                         }
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "El nombre del parametro es obligatorio.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -83,44 +77,20 @@ if ($_POST) {
 
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la opcion \"$opcion\"";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
             }
 
         } catch (PDOException $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "PDOException {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
         } catch (Exception $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "General Error: {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
     } else {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = "faltan_datos";
-        $response['icon'] = "warning";
-        $response['title'] = "Faltan datos.";
-        $response['message'] = "La variable opcion no definida.";
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
+
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

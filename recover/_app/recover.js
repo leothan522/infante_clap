@@ -25,7 +25,25 @@ $('#form_recover').submit(function (e) {
     }
 
     if (procesar){
-        verSpinner(true);
+
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
+
+            if (data.result){
+                Swal.fire({
+                    title: data.title,
+                    text: data.message,
+                    icon: data.icon,
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡Ok!'
+                }).then((result) => {
+                    window.location.replace ("../login/");
+                });
+            }
+
+        });
+
+        /*verSpinner(true);
         $.ajax({
             type: 'POST',
             url: 'procesar.php',
@@ -60,9 +78,9 @@ $('#form_recover').submit(function (e) {
                 }
                 verSpinner(false);
             }
-        });
+        });*/
     }
 });
 
 
-console.log('hi mundo');
+console.log('hi!');

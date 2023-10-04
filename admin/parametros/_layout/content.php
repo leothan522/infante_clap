@@ -7,7 +7,7 @@
         <?php
         $listarParametros = $controller->listarParametros();
         $linksPaginate = $controller->links;
-        $i = 1;
+        $i = 0;
         require_once "table.php";
         ?>
         </div>

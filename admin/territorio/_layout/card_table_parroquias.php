@@ -21,7 +21,7 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Nombre</th>
-                    <th>Abreviatura</th>
+                    <!--<th>Abreviatura</th>-->
                     <th>Municipio</th>
                     <th style="width: 5%">&nbsp;</th>
                 </tr>
@@ -34,7 +34,7 @@
                     <tr id="tr_item_p_<?php echo $parroquia['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>. </td>
                         <td class="parroquia"><?php echo $parroquia['nombre']; ?></td>
-                        <td class="mini"><?php echo $parroquia['mini']; ?></td>
+                        <!--<td class="mini"><?php /*echo $parroquia['mini']; */?></td>-->
                         <td class="municipio">
                             <?php echo $controller->getMunicipio($parroquia['municipios_id']); ?>
                         </td>

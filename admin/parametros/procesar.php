@@ -3,17 +3,20 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\database\Query;
-use app\model\Parametro;
+use app\model\Parametros;
 
 $response = array();
+$paginate = false;
 
 if ($_POST) {
-    $model = new Parametro();
-    $paginate = false;
-    try {
-        if (!empty($_POST['opcion'])) {
-            $opcion = $_POST['opcion'];
 
+    if (!empty($_POST['opcion'])) {
+
+        $opcion = $_POST['opcion'];
+
+        try {
+
+            $model = new Parametros();
 
             switch ($opcion) {
 
@@ -28,7 +31,7 @@ if ($_POST) {
                         $valor = $_POST['valor'];
 
                         if (empty($tabla_id)) {
-                            if ($tabla_id != 0){
+                            if ($tabla_id != 0) {
                                 $tabla_id = null;
                             }
                             $tabla_id_sql = "";
@@ -48,13 +51,14 @@ if ($_POST) {
                         $sql = "SELECT *FROM `parametros` WHERE `nombre` = '$name' $tabla_id_sql  AND `valor` = '$valor' ORDER BY `id` DESC;";
                         $row = $query->getFirst($sql);
 
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Parametro agregado.',
+                            'Parametro agregado.'
+                        );
 
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = 'cambios';
-                        $response['icon'] = "success";
-                        $response['title'] = "Permiso Agregado.";
-                        $response['message'] = "Parametro agregado.";
+                        //datos extras para el $response
                         $response['id'] = $row['id'];
                         $response['nombre'] = $row['nombre'];
                         $response['tabla_id'] = $row['tabla_id'];
@@ -64,40 +68,34 @@ if ($_POST) {
                         $response['total'] = $model->count();
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "El nombre del parametro es obligatorio.";
+                        $response = crearResponse('faltan_datos');
                     }
-
 
                     break;
 
                 case "get_parametro":
+
                     if (!empty($_POST['id'])) {
 
                         $id = $_POST['id'];
                         $row = $model->find($id);
 
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['icon'] = "info";
-                        $response['title'] = "Editar Parametro.";
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Editar Parametro.',
+                            'Editar Parametro.',
+                            'info'
+                        );
+
+                        //datos extras para el $response
                         $response['id'] = $row['id'];
                         $response['nombre'] = $row['nombre'];
                         $response['tabla_id'] = $row['tabla_id'];
                         $response['valor'] = $row['valor'];
 
-
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "ID no definido.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -138,25 +136,27 @@ if ($_POST) {
                             $model->update($id, 'valor', $valor);
                         }
 
-
                         if ($cambios) {
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['icon'] = "success";
-                            $response['title'] = "Parametro Actualizado.";
-                            $response['message'] = "Parametro Actualizado";
+
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Parametro Actualizado.',
+                                'Parametro Actualizado.'
+                            );
+
+                            //datos extras para el $response
                             $response['id'] = $id;
                             $response['nombre'] = $nombre;
                             $response['tabla_id'] = $tabla_id;
                             $response['valor'] = $valor;
+
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "no_cambios";
-                            $response['icon'] = "info";
-                            $response['title'] = "Sin Cambios.";
-                            $response['message'] = "No se realizo ningun cambio.";
+                            $response = crearResponse('no_cambios');
                         }
+
+                    }else{
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -168,19 +168,17 @@ if ($_POST) {
 
                         $model->delete($id);
 
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['icon'] = "success";
-                        $response['title'] = "Parametro Borrado.";
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Parametro Borrado.',
+                            'Parametro Borrado.'
+                        );
+                        //datos extras para el $response
                         $response['total'] = $model->count();
 
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "La variable ID no definida.";
+                        $response = crearResponse('faltan_datos');
                     }
                     break;
 
@@ -196,59 +194,30 @@ if ($_POST) {
 
                     echo '<div id="dataContainer">';
                     $listarParametros = $model->paginate($limit, $offset);
-                    $linksPaginate = paginate('procesar.php','table_parametros', $limit, $totalRows, $offset)->createLinks();
+                    $linksPaginate = paginate('procesar.php', 'table_parametros', $limit, $totalRows, $offset)->createLinks();
                     $i = $offset;
                     require_once "_layout/table.php";
                     echo '</div>';
-
-
-
 
                     break;
 
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la case \"$opcion\":";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
-
             }
 
-
-        } else {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = "faltan_datos";
-            $response['icon'] = "warning";
-            $response['title'] = "Faltan datos.";
-            $response['message'] = "La variable opcion no definida.";
+        } catch (PDOException $e) {
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
+        } catch (Exception $e) {
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
-    } catch (PDOException $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "PDOException {$e->getMessage()}";
-    } catch (Exception $e) {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = 'error_model';
-        $response['icon'] = "error";
-        $response['title'] = "Error en el Model";
-        $response['message'] = "General Error: {$e->getMessage()}";
+
+    } else {
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
 
 if (!$paginate){

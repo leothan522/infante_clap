@@ -50,6 +50,11 @@ class Auth
                     session_destroy();
                     header('location: '. ROOT_PATH. 'login\\');
                 }
+
+                if (!$this->USER_STATUS) {
+                    session_destroy();
+                    header('location: '. ROOT_PATH. 'login\\');
+                }
                 
             } catch (PDOException $e) {
                 session_destroy();

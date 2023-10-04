@@ -48,7 +48,7 @@ $controller = new ClapsController();
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
 <!-- Preloader -->
-<?php require_once "../_layout/preloader.php" ?>
+<?php /*require_once "../_layout/preloader.php" */?>
 
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -119,9 +119,12 @@ $controller = new ClapsController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
+<script src="<?php asset('public/js/app.js'); ?>"></script>
 
 <script src="_app/bloques.js"></script>
 <script src="_app/entes.js"></script>
 <script src="_app/claps.js"></script>
+
 </body>
 </html>

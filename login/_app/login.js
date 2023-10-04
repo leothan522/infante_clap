@@ -23,50 +23,31 @@ $('#form_login').submit(function (e) {
     }
 
     if (procesar){
-        verSpinner();
-        $.ajax({
-            type: 'POST',
-            url: 'procesar.php',
-            data: $(this).serialize(),
-            success: function (response) {
 
-                let data = JSON.parse(response);
-
+        ajaxRequest({ data: $(this).serialize() }, function (data) {
                 if (data.result){
-                    window.location.replace ("../admin/");
+                    window.location.replace("../admin/");
                 }else {
-
-                    if (data.error === "no_email") {
+                    if (data.error === "no_email"){
                         email.addClass('is-invalid');
                         $('#error_email').text(data.message);
+                        password
+                            .removeClass('is-valid')
+                            .removeClass('is-invalid');
                     }
 
-                    if (data.error === "no_password") {
+                    if (data.error === "no_password"){
                         password.addClass('is-invalid');
                         $('#error_password').text(data.message);
                     }
 
-                    if (data.error === "no_activo") {
+                    if (data.error === "no_activo"){
                         email.addClass('is-invalid');
-                        $('#error_email').text(data.message);
+                        $('#error_email').text(data.message)
                     }
 
-                    if (data.alerta) {
-                        Alerta.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.message
-                        });
-                    } else {
-                        Toast.fire({
-                            icon: data.icon,
-                            text: data.title
-                        });
-                    }
-                    verSpinner(false);
                 }
-            }
-        });
+        })
     }
 
 });

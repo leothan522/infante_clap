@@ -208,7 +208,7 @@ if ($_POST) {
                     $model = new Municipio();
                     $response['result'] = true;
                     $response['municipios'] = array();
-                    foreach ($model->getAll(1) as $municipio){
+                    foreach ($model->getAll() as $municipio){
                         $id = $municipio['id'];
                         $nombre = $municipio['nombre'];
                         $response['municipios'][] = array("id" => $id, "nombre" => $nombre);

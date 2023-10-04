@@ -116,6 +116,92 @@ function formatoMillares($cantidad, $decimales = 0): string
     return number_format($cantidad, $decimales, ',', '.');
 }
 
+function crearResponse($error = null, $result = false, $title = null, $message = null, $icon = 'success', $alerta = false, $noToast = null ): array
+{
+    $response = array();
+
+
+    switch ($error){
+
+        case 'error_method':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = 'error_method';
+            $response['icon'] = "error";
+            $response['title'] = "Error Method.";
+            $response['message'] = "Deben enviarse los datos por el method POST.";
+            break;
+
+        case 'error_opcion':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "error_opcion";
+            $response['icon'] = "error";
+            $response['title'] = "Error Opcion.";
+            $response['message'] = "La variable \"opcion\" no esta definida.";
+            break;
+
+        case 'error_excepcion':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = 'error_excepcion';
+            $response['icon'] = "error";
+            $response['title'] = 'Error Exception.';
+            $response['message'] = $message;
+            break;
+
+        case 'no_opcion':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "no_opcion";
+            $response['icon'] = "warning";
+            $response['title'] = "Opción no Programada.";
+            $response['message'] = "No se ha programado la logica para la opción \"$message\"";
+            break;
+
+        case 'faltan_datos':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "faltan_datos";
+            $response['icon'] = "warning";
+            $response['title'] = "Faltan datos.";
+            $response['message'] = "Algunos campos son requeridos, es decir obligatorios.";
+            break;
+
+        case 'no_cambios':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "no_cambios";
+            $response['icon'] = "info";
+            $response['title'] = "Sin Cambios.";
+            $response['message'] = "No se realizo ningun cambio.";
+            break;
+
+        case 'no_permisos':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "no_permisos";
+            $response['icon'] = "warning";
+            $response['title'] = "Permiso Denegado.";
+            $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+            break;
+
+        default:
+            $response['result'] = $result;
+            $response['alerta'] = $alerta;
+            $response['error'] = $error;
+            if (!is_null($noToast)){
+                $response['toast'] = 'false';
+            }
+            $response['icon'] =  $icon;
+            $response['title'] = $title;
+            $response['message'] = $message;
+            break;
+    }
+
+    return $response;
+}
+
 
 //**************************************************************** */
 

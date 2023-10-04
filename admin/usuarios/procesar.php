@@ -7,7 +7,7 @@ use app\controller\UsersController;
 
 $response = array();
 $paginate = false;
-$controller = new UsersController();
+
 
 if ($_POST) {
 
@@ -24,7 +24,7 @@ if ($_POST) {
                 //definimos las opciones a procesar
 
                 case 'paginate':
-
+                    //$controller = new UsersController();
                     $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
                     $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
                     $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
@@ -34,6 +34,8 @@ if ($_POST) {
                     $listarUsuarios = $model->paginate($limit, $offset, 'role', 'DESC', 1);
                     $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset)->createLinks();
                     $i = $offset;
+                    $user = $model->find($_SESSION['id']);
+                    $user_role = $user['role'];
                     echo '<div id="dataContainer">';
                     require_once "_layout/card_table.php";
                     echo '</div>';
@@ -45,13 +47,16 @@ if ($_POST) {
                 case 'generar_clave':
 
                     $password = generar_string_aleatorio();
+                    $response = crearResponse(
+                        null,
+                        true,
+                        'Contraseña Generada.',
+                        $password,
+                        'info',
+                        false,
+                        true
+                    );
 
-                    $response['result'] = true;
-                    $response['alerta'] = false;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "info";
-                    $response['title'] = "Contraseña Generada";
-                    $response['message'] = $password;
                     break;
 
                 case 'guardar':
@@ -88,12 +93,13 @@ if ($_POST) {
                                 $model->save($data);
 
                                 $user = $model->first('email', '=', $email);
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = false;
-                                $response['icon'] = "success";
-                                $response['title'] = "Usuario Creado Exitosamente.";
-                                $response['message'] = "Usuario Creado " . $name;
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Usuario Creado Exitosamente.',
+                                    "Usuario Creado " . $name
+                                );
+                                //datos extras para el $response
                                 $response['id'] = $user['id'];
                                 $response['name'] = $user['name'];
                                 $response['email'] = $user['email'];
@@ -102,31 +108,25 @@ if ($_POST) {
                                 $response['item'] = '<p class="text-center">'.$model->count(1).'</p>';
                                 $response['estatus'] = '<p class="text-center">' . verEstatusUsuario($user['estatus']) . '</p>';
                                 $response['total'] = $model->count(1);
+                                $response['btn_editar'] = validarPermisos('usuarios.edit');
+                                $response['btn_eliminar'] = validarPermisos('usuarios.destroy');
+                                $response['btn_permisos'] = validarPermisos('usuarios.estatus');
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = false;
-                                $response['error'] = 'email_duplicado';
-                                $response['icon'] = "warning";
-                                $response['title'] = "Email Duplicado.";
-                                $response['message'] = "El email ya esta registrado.";
+                                $response = crearResponse(
+                                    'email_duplicado',
+                                    false,
+                                    'Email Duplicado.',
+                                    'El email ya esta registrado.',
+                                    'warning'
+                                );
                             }
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "El nombre del parametro es obligatorio.";
+                            $response = crearResponse('faltan_datos');
                         }
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
@@ -141,12 +141,16 @@ if ($_POST) {
 
                         if ($user) {
 
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = false;
-                            $response['icon'] = "success";
-                            $response['title'] = "Editar Usuario";
-                            $response['message'] = "Mostrando Usuario " . $user['name'];
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Editar Usuario.',
+                                "Mostrando Usuario " . $user['name'],
+                                'success',
+                                false,
+                                true
+                            );
+                            //datos extras para el $response
                             $response['id'] = $user['id'];
                             $response['name'] = $user['name'];
                             $response['email'] = $user['email'];
@@ -158,21 +162,17 @@ if ($_POST) {
                             $response['role'] = $user['role'];
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "no_user";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Usuario NO encontrado.";
-                            $response['message'] = "El id del usuario no esta disponible.";
+                            $response = crearResponse(
+                                'no_user',
+                                false,
+                                'Usuario NO encontrado.',
+                                'El id del usuario no esta disponible.',
+                                'warning',
+                                true
+                            );
                         }
-
                     } else {
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "El nombre del parametro es obligatorio.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -193,21 +193,25 @@ if ($_POST) {
                                 if ($estatus) {
                                     $model->update($id, 'estatus', 0);
                                     $title = 'Usuario Inactivo';
+                                    $icono = 'info';
                                     $newEstatus = 0;
                                     $verEstatus = verEstatusUsuario(0, false);
                                 } else {
                                     $model->update($id, 'estatus', 1);
                                     $title = 'Usuario Activo';
+                                    $icono = 'success';
                                     $newEstatus = 1;
                                     $verEstatus = verEstatusUsuario(1, false);
                                 }
 
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = false;
-                                $response['icon'] = "info";
-                                $response['title'] = $title;
-                                $response['message'] = "Mostrando Usuario " . $user['name'];
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    $title,
+                                    "Mostrando Usuario " . $user['name'],
+                                    $icono
+                                );
+                                //datos extra para el $response
                                 $response['id'] = $user['id'];
                                 $response['name'] = $user['name'];
                                 $response['email'] = $user['email'];
@@ -220,29 +224,21 @@ if ($_POST) {
                                 $response['table_estatus'] = '<p class="text-center">' . verEstatusUsuario($newEstatus) . '</p>';
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = true;
-                                $response['error'] = "no_user";
-                                $response['icon'] = "warning";
-                                $response['title'] = "Usuario NO encontrado.";
-                                $response['message'] = "El id del usuario no esta disponible.";
+                                $response = crearResponse(
+                                    'no_user',
+                                    false,
+                                    'Usuario NO encontrado."',
+                                    'El id del usuario no esta disponible.',
+                                    'warning',
+                                    true
+                                );
                             }
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "El nombre del parametro es obligatorio.";
+                            $response = crearResponse('faltan_datos');
                         }
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
@@ -270,12 +266,13 @@ if ($_POST) {
 
                                 $model->update($id, 'password', $db_password);
 
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = false;
-                                $response['icon'] = "success";
-                                $response['title'] = "Contraseña Guardada";
-                                $response['message'] = $password;
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Contraseña Guardada.',
+                                    $password
+                                );
+                                //datos extras para el $response
                                 $response['id'] = $user['id'];
                                 $response['name'] = $user['name'];
                                 $response['email'] = $user['email'];
@@ -287,30 +284,21 @@ if ($_POST) {
                                 $response['role'] = $user['role'];
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = true;
-                                $response['error'] = "no_user";
-                                $response['icon'] = "warning";
-                                $response['title'] = "Usuario NO encontrado.";
-                                $response['message'] = "El id del usuario no esta disponible.";
+                                $response = crearResponse(
+                                    'no_user',
+                                    false,
+                                    'Usuario NO encontrado."',
+                                    'El id del usuario no esta disponible.',
+                                    'warning',
+                                    true
+                                );
                             }
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "El nombre del parametro es obligatorio.";
+                            $response = crearResponse('faltan_datos');
                         }
-
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
@@ -371,12 +359,13 @@ if ($_POST) {
 
                                     $user = $model->find($id);
 
-                                    $response['result'] = true;
-                                    $response['alerta'] = false;
-                                    $response['error'] = false;
-                                    $response['icon'] = "success";
-                                    $response['title'] = "Cambios Guardados";
-                                    $response['message'] = "Usuario Creado " . $name;
+                                    $response = crearResponse(
+                                        null,
+                                        true,
+                                        'Cambios Guardados.',
+                                        $name." Actualizado."
+                                    );
+                                    //datos extras para el $response
                                     $response['id'] = $user['id'];
                                     $response['name'] = $user['name'];
                                     $response['email'] = $user['email'];
@@ -390,38 +379,23 @@ if ($_POST) {
                                     $response['table_role'] = '<p class="text-center">' . verRoleUsuario($user['role']) . '</p>';
 
                                 }else{
-                                    $response['result'] = false;
-                                    $response['alerta'] = true;
-                                    $response['error'] = "no_cambios";
-                                    $response['icon'] = "info";
-                                    $response['title'] = "Sin Cambios.";
-                                    $response['message'] = "No se realizo ningun cambio.";
+                                    $response = crearResponse('no_cambios');
                                 }
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = false;
-                                $response['error'] = 'email_duplicado';
-                                $response['icon'] = "warning";
-                                $response['title'] = "Email Duplicado.";
-                                $response['message'] = "El email ya esta registrado.";
+                                $response = crearResponse(
+                                    'email_duplicado',
+                                    false,
+                                    'Email Duplicado.',
+                                    'El email ya esta registrado.',
+                                    'warning'
+                                );
                             }
-
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "El nombre del parametro es obligatorio.";
+                            $response = crearResponse('faltan_datos');
                         }
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
@@ -439,38 +413,31 @@ if ($_POST) {
                                 $model->update($id, 'band', 0);
                                 $model->update($id, 'deleted_at', date("Y-m-d"));
 
-                                $response['result'] = true;
-                                $response['alerta'] = false;
-                                $response['error'] = false;
-                                $response['icon'] = "success";
-                                $response['title'] = "Usuario Eliminado";
-                                $response['message'] = "Usuario Eliminado";
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Usuario Eliminado.',
+                                    'Usuario Eliminado.'
+                                );
+                                //datos extras para el $response
                                 $response['total'] = $model->count(1);
 
                             } else {
-                                $response['result'] = false;
-                                $response['alerta'] = true;
-                                $response['error'] = "no_user";
-                                $response['icon'] = "warning";
-                                $response['title'] = "Usuario NO encontrado.";
-                                $response['message'] = "El id del usuario no esta disponible.";
+                                $response = crearResponse(
+                                    'no_user',
+                                    false,
+                                    'Usuario NO encontrado."',
+                                    'El id del usuario no esta disponible.',
+                                    'warning',
+                                    true
+                                );
                             }
 
                         } else {
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "El nombre del parametro es obligatorio.";
+                            $response = crearResponse('faltan_datos');
                         }
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
@@ -482,12 +449,16 @@ if ($_POST) {
                         $id = $_POST['id'];
                         $user = $model->find($id);
 
-                        $response['result'] = true;
-                        $response['alerta'] = false;
-                        $response['error'] = false;
-                        $response['icon'] = "info";
-                        $response['title'] = "Ver Permisos";
-                        $response['message'] = "Mostrando Usuario " . $user['name'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Ver Permisos.',
+                            "Mostrando Usuario " . $user['name'],
+                            'info',
+                            false,
+                            true
+                        );
+                        //datos extras para el $response
                         $response['id'] = $user['id'];
                         $response['name'] = $user['name'];
                         $response['email'] = $user['email'];
@@ -500,14 +471,8 @@ if ($_POST) {
                         $permisos = verPermisos();
                         $response['permisos'] = $permisos[1];
 
-
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "faltan_datos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Faltan datos.";
-                        $response['message'] = "La variable opcion no definida.";
+                        $response = crearResponse('faltan_datos');
                     }
 
                     break;
@@ -515,6 +480,7 @@ if ($_POST) {
                 case 'guarda_permisos':
 
                     if (validarPermisos()){
+
                         if (!empty($_POST['id'])){
 
                             $id = $_POST['id'];
@@ -531,12 +497,13 @@ if ($_POST) {
 
                             $model->update($id, 'permisos', crearJson($permisos));
 
-                            $response['result'] = true;
-                            $response['alerta'] = false;
-                            $response['error'] = false;
-                            $response['icon'] = "success";
-                            $response['title'] = "Permisos Guardados";
-                            $response['message'] = "Mostrando Usuario " . $user['name'];
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Permisos Guardados.',
+                                "Mostrando Usuario " . $user['name']
+                            );
+                            //datos extras para el response
                             $response['id'] = $user['id'];
                             $response['name'] = $user['name'];
                             $response['email'] = $user['email'];
@@ -549,69 +516,33 @@ if ($_POST) {
                             $permisos = verPermisos();
                             $response['permisos'] = $permisos[1];
 
-
                         }else{
-                            $response['result'] = false;
-                            $response['alerta'] = true;
-                            $response['error'] = "faltan_datos";
-                            $response['icon'] = "warning";
-                            $response['title'] = "Faltan datos.";
-                            $response['message'] = "La variable opcion no definida.";
+                            $response = crearResponse('faltas_datos');
                         }
 
-
                     }else{
-                        $response['result'] = false;
-                        $response['alerta'] = true;
-                        $response['error'] = "no_permisos";
-                        $response['icon'] = "warning";
-                        $response['title'] = "Permiso Denegado.";
-                        $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
+                        $response = crearResponse('no_permisos');
                     }
 
                     break;
 
                 //Por defecto
                 default:
-                    $response['result'] = false;
-                    $response['alerta'] = true;
-                    $response['error'] = "no_opcion";
-                    $response['icon'] = "warning";
-                    $response['title'] = "Opcion no Programada.";
-                    $response['message'] = "No se ha programado la logica para la opcion \"$opcion\"";
+                    $response = crearResponse('no_opcion', false, null, $opcion);
                     break;
             }
 
         } catch (PDOException $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "PDOException {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "PDOException {$e->getMessage()}");
         } catch (Exception $e) {
-            $response['result'] = false;
-            $response['alerta'] = true;
-            $response['error'] = 'error_model';
-            $response['icon'] = "error";
-            $response['title'] = "Error en el Model";
-            $response['message'] = "General Error: {$e->getMessage()}";
+            $response = crearResponse('error_excepcion', false, null, "General Error: {$e->getMessage()}");
         }
+
     } else {
-        $response['result'] = false;
-        $response['alerta'] = true;
-        $response['error'] = "faltan_datos";
-        $response['icon'] = "warning";
-        $response['title'] = "Faltan datos.";
-        $response['message'] = "La variable opcion no definida.";
+        $response = crearResponse('error_opcion');
     }
 } else {
-    $response['result'] = false;
-    $response['alerta'] = true;
-    $response['error'] = 'error_method';
-    $response['icon'] = "error";
-    $response['title'] = "Error Method.";
-    $response['message'] = "Deben enviarse los datos por el method POST.";
+    $response = crearResponse('error_method');
 }
 
 if (!$paginate) {
