@@ -39,6 +39,21 @@ $('#form_territorio_municipio').submit(function (e) {
             if (data.result){
 
                 let table = $('#tabla_municipios').DataTable();
+                let btn_editar = '';
+                let btn_eliminar = '';
+                let btn_estatus = '';
+
+                if (!data.btn_editar){
+                    btn_editar = 'disabled';
+                }
+
+                if (!data.btn_eliminar){
+                    btn_eliminar = 'disabled';
+                }
+
+                if (!data.btn_estatus){
+                    btn_estatus = 'disabled';
+                }
 
                 if (data.nuevo){
                     //es nuevo registro
@@ -49,13 +64,13 @@ $('#form_territorio_municipio').submit(function (e) {
                         '                            </div></div>';
 
                     let buttons = '<div class="btn-group btn-group-sm">\n' +
-                        '<button type="button" class="btn btn-info" onclick="estatusMunicipio('+ data.id +')" id="btn_estatus_'+ data.id +'">\n' +
+                        '<button type="button" class="btn btn-info" onclick="estatusMunicipio('+ data.id +')" id="btn_estatus_'+ data.id +'" '+ btn_estatus +' >\n' +
                         '                                    <i class="fas fa-eye"></i>\n' +
                         '                                </button>' +
-                        '                                <button type="button" class="btn btn-info" onclick="editMunicipio('+ data.id +')" data-toggle="modal" data-target="#modal-municipios">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="editMunicipio('+ data.id +')" data-toggle="modal" data-target="#modal-municipios" '+ btn_editar +' >\n' +
                         '                                    <i class="fas fa-edit"></i>\n' +
                         '                                </button>\n' +
-                        '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ data.id +')" id="btn_eliminar_'+ data.id +'" '+ btn_eliminar +' >\n' +
                         '                                    <i class="far fa-trash-alt"></i>\n' +
                         '                                </button>\n' +
                         '                            </div>';

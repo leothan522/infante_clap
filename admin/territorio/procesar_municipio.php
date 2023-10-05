@@ -75,6 +75,9 @@ if ($_POST) {
                             $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
+                            $response['btn_editar'] = validarPermisos('municipios.edit');
+                            $response['btn_eliminar'] = validarPermisos('municipios.destroy');
+                            $response['btn_estatus'] = validarPermisos('municipios.estatus');
 
                         } else {
 

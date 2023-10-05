@@ -7,7 +7,10 @@
             <a href="./" class="btn btn-tool d-none" id="parroquias_btn_restablecer">
                 <i class="fas fa-sync-alt"></i> Reestablacer
             </a>
-            <button class="btn btn-tool" data-toggle="modal" onclick="resetParroquia()" data-target="#modal-parroquias">
+            <button class="btn btn-tool" data-toggle="modal"
+                    onclick="resetParroquia()"
+                    data-target="#modal-parroquias"
+                    <?php if (!validarPermisos('parroquias.create')){ echo 'disabled'; } ?> >
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>
@@ -40,7 +43,10 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" onclick="estatusParroquia(<?php echo $parroquia['id']; ?>)" id="btn_estatus_parroquia_<?php echo $parroquia['id']; ?>">
+                                <button type="button" class="btn btn-info"
+                                        onclick="estatusParroquia(<?php echo $parroquia['id']; ?>)"
+                                        id="btn_estatus_parroquia_<?php echo $parroquia['id']; ?>"
+                                        <?php if (!validarPermisos('parroquias.estatus')){ echo 'disabled'; } ?> >
                                     <?php if ($parroquia['estatus']){ ?>
                                         <i class="fas fa-eye"></i>
                                     <?php }else{ ?>
@@ -48,11 +54,16 @@
                                     <?php } ?>
                                 </button>
 
-                                <button type="button" class="btn btn-info" onclick="editParroquia(<?php echo $parroquia['id']; ?>)" data-toggle="modal"
-                                        data-target="#modal-parroquias">
+                                <button type="button" class="btn btn-info"
+                                        onclick="editParroquia(<?php echo $parroquia['id']; ?>)" data-toggle="modal"
+                                        data-target="#modal-parroquias"
+                                        <?php if (!validarPermisos('parroquias.edit')){ echo 'disabled'; } ?> >
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="elimParroquia(<?php echo $parroquia['id']; ?>)" id="btn_eliminar_p_<?php echo $parroquia['id']; ?>">
+                                <button type="button" class="btn btn-info"
+                                        onclick="elimParroquia(<?php echo $parroquia['id']; ?>)"
+                                        id="btn_eliminar_p_<?php echo $parroquia['id']; ?>"
+                                        <?php if (!validarPermisos('parroquias.destroy')){ echo 'disabled'; } ?> >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>

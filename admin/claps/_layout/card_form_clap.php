@@ -47,7 +47,7 @@
                             <option value="urbano">Urbano</option>
                             <option value="rural">Rural</option>
                         </select>
-                        <div class="invalid-feedback error_clap_select_entes" id=""></div>
+                        <div class="invalid-feedback error_clap_select_estracto" id=""></div>
                     </div>
                 </div>
 

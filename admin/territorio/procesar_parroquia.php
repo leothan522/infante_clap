@@ -93,6 +93,9 @@ if ($_POST) {
                             $response['mini'] = $parroquias['mini'];
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
+                            $response['btn_editar'] = validarPermisos('parroquias.edit');
+                            $response['btn_eliminar'] = validarPermisos('parroquias.destroy');
+                            $response['btn_estatus'] = validarPermisos('parroquias.estatus');
 
                         } else {
                             //la parroquia ya existe

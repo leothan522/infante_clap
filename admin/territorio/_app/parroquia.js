@@ -50,17 +50,33 @@ $('#form_parroquias').submit(function (e) {
 
                 let table = $('#tabla_parroquias').DataTable();
 
+                let btn_editar = '';
+                let btn_eliminar = '';
+                let btn_estatus = '';
+
+                if (!data.btn_editar){
+                    btn_editar = 'disabled';
+                }
+
+                if (!data.btn_eliminar){
+                    btn_eliminar = 'disabled';
+                }
+
+                if (!data.btn_estatus){
+                    btn_estatus = 'disabled';
+                }
+
                 if (data.nuevo){
                     //nuevo
                     let buttons = '<div class="btn-group btn-group-sm">\n' +
-                        '<button type="button" class="btn btn-info" onclick="estatusParroquia('+ data.id +')" id="btn_estatus_parroquia_'+ data.id +'">\n' +
+                        '<button type="button" class="btn btn-info" onclick="estatusParroquia('+ data.id +')" id="btn_estatus_parroquia_'+ data.id +'" '+ btn_estatus +'>\n' +
                         '                                    <i class="fas fa-eye"></i>\n' +
                         '                                </button>' +
                         '                                <button type="button" class="btn btn-info" onclick="editParroquia('+ data.id +')" data-toggle="modal"\n' +
-                        '                                        data-target="#modal-parroquias">\n' +
+                        '                                        data-target="#modal-parroquias" '+ btn_editar +'>\n' +
                         '                                    <i class="fas fa-edit"></i>\n' +
                         '                                </button>\n' +
-                        '                                <button type="button" class="btn btn-info" onclick="elimParroquia('+ data.id +')" id="btn_eliminar_p_'+ data.id +'">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="elimParroquia('+ data.id +')" id="btn_eliminar_p_'+ data.id +'" '+ btn_eliminar +' >\n' +
                         '                                    <i class="far fa-trash-alt"></i>\n' +
                         '                                </button>\n' +
                         '                            </div>';

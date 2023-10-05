@@ -23,7 +23,7 @@
                     <div class="modal-footer justify-content-between">
                         <input type="hidden" name="id" placeholder="clap_id" id="clap_id">
                         <input type="hidden" name="opcion" value="guardar_clap" id="clap_opcion">
-                        <button type="button" class="btn btn-primary" onclick="prueba()">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                     <?php verCargando(); ?>

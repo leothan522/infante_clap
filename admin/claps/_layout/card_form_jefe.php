@@ -50,7 +50,7 @@
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                 </div>
-                <div class="invalid-feedback error_jefe_input_nombre" id=""></div>
+                <div class="invalid-feedback error_jefe_input_telefono" id=""></div>
             </div>
 
         </div>
