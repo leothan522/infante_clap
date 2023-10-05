@@ -16,7 +16,7 @@
                 <div class="invalid-feedback error_jefe_input_cedula" id=""></div>
             </div>
 
-            <label for="name">Nombre</label>
+            <label for="name">Nombre del Jefe</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control jefe_input_nombre" placeholder="Ingrese el Nombre completo" name="jefe_input_nombre" id="">
                 <div class="input-group-append">
@@ -51,6 +51,17 @@
                     </div>
                 </div>
                 <div class="invalid-feedback error_jefe_input_telefono" id=""></div>
+            </div>
+
+            <label for="name">Correo <small class="text-muted"><em>(Opcional)</em></small></label>
+            <div class="input-group mb-3">
+                <input type="email" class="form-control jefe_input_email" placeholder="Ingrese el correo electrónico (Opcional)" name="jefe_input_email" id="">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="fas fa-at"></i>
+                    </div>
+                </div>
+                <div class="invalid-feedback error_jefe_input_email" id=""></div>
             </div>
 
         </div>

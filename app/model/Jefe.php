@@ -13,6 +13,7 @@ class Jefe extends Model
             'nombre',
             'telefono',
             'genero',
+            'email',
             'claps_id'
         ];
     }

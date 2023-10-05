@@ -53,9 +53,9 @@
 
             </div>
 
-            <label for="name">Nombre</label>
+            <label for="name">Nombre del Clap</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control clap_input_nombre" placeholder="Ingrese el Nombre del Clap" name="clap_nombre" id="">
+                <input type="text" class="form-control clap_input_nombre" placeholder="Ingrese el Nombre del Clap" name="clap_input_nombre" id="">
                 <div class="invalid-feedback error_clap_input_nombre" id=""></div>
             </div>
 
@@ -63,7 +63,7 @@
                 <div class="col-md-4">
                     <label for="name">Familias</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control clap_input_familias" placeholder="Cantidad" name="clap_familias" id="">
+                        <input type="text" class="form-control clap_input_familias" placeholder="Cantidad" name="clap_input_familias" id="">
                         <div class="invalid-feedback error_clap_input_familias" id=""></div>
                     </div>
                 </div>
@@ -79,6 +79,12 @@
                     </div>
                 </div>
 
+            </div>
+
+            <label for="name">UBCH <small class="text-muted"> <em>(Opcional)</em></small></label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control clap_input_ubch" placeholder="Nombre de la UBCH (Opcional)" name="clap_ubch" id="">
+                <div class="invalid-feedback error_clap_input_ubch" id=""></div>
             </div>
 
         </div>

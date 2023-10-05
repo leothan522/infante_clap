@@ -42,10 +42,10 @@
                         <td class="nombre text-uppercase"> <?php echo $ente['nombre']; ?> </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" onclick="editEnte(<?php echo $ente['id']; ?>)">
+                                <button type="button" class="btn btn-info" onclick="editEnte(<?php echo $ente['id']; ?>)" <?php if ($ente['band']){ echo 'disabled'; } ?> >
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="eliminarEnte(<?php echo $ente['id']; ?>)" id="btn_eliminar_ente_<?php echo $ente['id']; ?>">
+                                <button type="button" class="btn btn-info" onclick="eliminarEnte(<?php echo $ente['id']; ?>)" id="btn_eliminar_ente_<?php echo $ente['id']; ?>" <?php if ($ente['band']){ echo 'disabled'; } ?> >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>

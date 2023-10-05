@@ -25,30 +25,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>9999</td>
-                    <td>Campo alegre</td>
-                    <td>
-                        antonny maluenga
-                    </td>
-                    <td class="text-right">27613025</td>
-                    <td class="text-center">04121995647</td>
-                    <td class="text-right">99999</td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-info">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button type="button" class="btn btn-info">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-info">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
+                <?php
+                foreach ($listarClap as $clap) {
+                    $i++;
+                    $jefe = getJefe($clap['id']);
+                    ?>
+                    <tr id="tr_item_claps_<?php ?>">
+                        <td class="text-center item"><?php echo $i; ?></td>
+                        <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
+                        <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
+                        <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
+                        <td class="text-center telefono"> <?php echo $jefe['telefono']; ?> </td>
+                        <td class="text-right familias"><?php echo formatoMillares($clap['familias'], 0); ?></td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-info" onclick="">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
         </div>

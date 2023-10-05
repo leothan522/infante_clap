@@ -1,6 +1,18 @@
 <div class="row">
     <div class="col-12">
-        <?php require_once "table_claps.php"; ?>
+        <?php
+        use app\model\Jefe;
+       $listarClap = $controller->listarClaps();
+
+       function getJefe($id)
+        {
+            $model = new Jefe();
+            $jefe = $model->first('claps_id', '=', $id);
+            return $jefe;
+        }
+            $i = 0;
+            require "table_claps.php";
+            ?>
     </div>
 </div>
 <?php require_once "modal_bloques.php" ?>

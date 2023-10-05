@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once "../vendor/autoload.php";
-use app\controller\WebController;
-$controller = new WebController();
+use app\controller\ClapsController;
+$controller = new ClapsController();
 ?>
 <!DOCTYPE html>
 <!--

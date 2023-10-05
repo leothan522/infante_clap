@@ -134,8 +134,24 @@ $('#form_create_clap').submit(function (e) {
             .addClass('is-valid');
     }
 
+
     if (procesar) {
         ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
+
+            if (data.result){
+
+            }else{
+                //errores
+                if (data.error_clap == true){
+                    nombre_clap.addClass('is-invalid');
+                    $('.error_clap_input_nombre').text('El nombre ya se encuentra registrado.');
+                }
+
+                if (data.error_jefe == true){
+                    cedula.addClass('is-invalid');
+                    $('.error_jefe_input_cedula').text('La cédula ya se encuentra registrada.')
+                }
+            }
 
         });
     }

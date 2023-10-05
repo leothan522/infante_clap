@@ -161,4 +161,22 @@ class Model
         return $row;
     }
 
+    public function sqlPersonalizado($sql, $opcion = 'getFirst')
+    {
+        $query = new Query();
+
+        switch ($opcion){
+            case 'getAll':
+                $row = $query->getAll($sql);
+                break;
+            case 'save':
+                $row = $query->save($sql);
+                break;
+            default:
+                $row = $query->getFirst($sql);
+                break;
+        }
+        return $row;
+    }
+
 }

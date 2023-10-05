@@ -2,12 +2,12 @@
 
 namespace app\model;
 
-class Despacho extends Model
+class Cuota extends Model
 {
 
     public function __construct()
     {
-        $this->TABLA = "despachos";
+        $this->TABLA = "cuotas";
         $this->DATA = [
           'fecha',
           'notas'
