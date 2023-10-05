@@ -136,6 +136,14 @@ if ($_POST) {
                     }
                     break;
 
+                case 'get_entes':
+                    $paginate = true;
+                    $model = new Ente();
+                    $listarBloques = $model->getAll();
+
+                    require '_layout/table_entes.php';
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);

@@ -13,8 +13,8 @@
                     <div class="col-md-4">
                         <?php require_once "form_entes.php" ?>
                     </div>
-                    <div class="col-md-8">
-                        <?php require_once "table_entes.php" ?>
+                    <div class="col-md-8" id="mostrar_entes">
+                        <!--se cargara por JAVASCRITP-->
                     </div>
                 </div>
             </div>

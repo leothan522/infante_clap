@@ -52,7 +52,15 @@ $('#entes_form').submit(function (e) {
                         .draw();
                 }
                 resetEnte();
+            }else {
+                //
+                if (data.error === 'nombre_duplicado'){
+                    nombre.addClass('is-invalid');
+                    $('#error_entes_nombre').text('El nombre ya esta registrado.')
+                }
+
             }
+
             quitarClass();
         });
 
@@ -99,11 +107,21 @@ function resetEnte() {
         .removeClass('is-valid');
     $('#entes_id').val('');
     $('#error_entes_nombre').text('');
+    $('#entes_opcion').val('guardar_ente');
+
+    getEntes();
 }
 
 function quitarClass() {
     $('#entes_input_nombre')
         .removeClass('is-valid');
+}
+
+function getEntes() {
+    ajaxRequest({ url: 'procesar_entes.php', data: { opcion: 'get_entes' }, html: 'si' }, function (data) {
+        $('#mostrar_entes').html(data);
+        datatable('entes_tabla');
+    });
 }
 
 console.log('entes');

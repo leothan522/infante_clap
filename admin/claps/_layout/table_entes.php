@@ -34,7 +34,7 @@
                 <tbody>
                 <?php
                 $i = 0;
-                foreach ($controller->listarEntes() as $ente){
+                foreach ($listarBloques as $ente){
                     $i++;
                     ?>
                     <tr id="tr_item_ente_<?php echo $ente['id']; ?>">

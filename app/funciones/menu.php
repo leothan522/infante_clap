@@ -213,7 +213,7 @@ function verPermisos(): array
             ]
         ],
         [
-            'permiso' => 'territotio.index',
+            'permiso' => 'territorio.index',
             'text' => 'Territorio',
             'opciones' => [
                 [
