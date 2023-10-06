@@ -223,111 +223,70 @@ function resetClap() {
 
     resetDatosClap();
     resetDatosJefes();
-    verSpinner(true);
-    $.ajax({
-        type: 'POST',
-        url: 'procesar_claps.php',
-        data: {
-            opcion: 'get_municipios_select'
-        },
-        success: function (response) {
 
-            let data = JSON.parse(response);
-
-            if (data.result) {
-                let select_municipio = $('.clap_select_municipio');
-                let municipios = data.municipios.length;
-                select_municipio.empty();
-                select_municipio.append('<option value="">Seleccione</option>');
-                for (let i = 0; i < municipios; i++) {
-                    let id = data.municipios[i]['id'];
-                    let nombre = data.municipios[i]['nombre'];
-                    select_municipio.append('<option value="' + id + '">' + nombre + '</option>');
-                }
-
-                let select_ente = $('.clap_select_entes');
-                let entes = data.entes.length;
-                select_ente.empty();
-                select_ente.append('<option value="">Seleccione</option>');
-                for (let i = 0; i < entes; i++) {
-                    let id = data.entes[i]['id'];
-                    let nombre = data.entes[i]['nombre'];
-                    select_ente.append('<option value="' + id + '" >' + nombre + '</option>');
-                }
-
+    ajaxRequest({ url: 'procesar_claps.php', data: { opcion: 'get_municipios_select' } }, function (data) {
+        if (data.result) {
+            let select_municipio = $('.clap_select_municipio');
+            let municipios = data.municipios.length;
+            select_municipio.empty();
+            select_municipio.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < municipios; i++) {
+                let id = data.municipios[i]['id'];
+                let nombre = data.municipios[i]['nombre'];
+                select_municipio.append('<option value="' + id + '">' + nombre + '</option>');
             }
 
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                /*Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });*/
+            let select_ente = $('.clap_select_entes');
+            let entes = data.entes.length;
+            select_ente.empty();
+            select_ente.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < entes; i++) {
+                let id = data.entes[i]['id'];
+                let nombre = data.entes[i]['nombre'];
+                select_ente.append('<option value="' + id + '" >' + nombre + '</option>');
             }
-            verSpinner(false);
+
         }
     });
-    /* */
 }
 
 function getBloquesParroquias() {
     let municipio = $('.clap_select_municipio');
 
-    verSpinner(true);
-    $.ajax({
-        type: 'POST',
-        url: 'procesar_claps.php',
-        data: {
-            opcion: 'get_bloque_parroquia',
-            id: municipio.val()
-        },
-        success: function (response) {
-
-            let data = JSON.parse(response);
-
-            if (data.result) {
-                let select_bloque = $('.clap_select_bloque');
-                let bloques = data.bloques.length;
-                select_bloque.empty();
-                select_bloque.append('<option value="">Seleccione</option>');
-                for (let i = 0; i < bloques; i++) {
-                    let id = data.bloques[i]['id'];
-                    let nombre = data.bloques[i]['nombre'];
-                    select_bloque.append('<option value="' + id + '">' + nombre + '</option>');
-                }
-
-                let select_parroquia = $('.clap_select_parroquia');
-                let parroquias = data.parroquias.length;
-                select_parroquia.empty();
-                select_parroquia.append('<option value="">Seleccione</option>');
-                for (let i = 0; i < parroquias; i++) {
-                    let id = data.parroquias[i]['id'];
-                    let nombre = data.parroquias[i]['nombre'];
-                    select_parroquia.append('<option value="' + id + '">' + nombre + '</option>');
-                }
+    ajaxRequest({ url: 'procesar_claps.php', data: { opcion: 'get_bloque_parroquia', id: municipio.val() } }, function (data) {
+        if (data.result) {
+            let select_bloque = $('.clap_select_bloque');
+            let bloques = data.bloques.length;
+            select_bloque.empty();
+            select_bloque.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < bloques; i++) {
+                let id = data.bloques[i]['id'];
+                let nombre = data.bloques[i]['nombre'];
+                select_bloque.append('<option value="' + id + '">' + nombre + '</option>');
             }
 
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                /*Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });*/
+            let select_parroquia = $('.clap_select_parroquia');
+            let parroquias = data.parroquias.length;
+            select_parroquia.empty();
+            select_parroquia.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < parroquias; i++) {
+                let id = data.parroquias[i]['id'];
+                let nombre = data.parroquias[i]['nombre'];
+                select_parroquia.append('<option value="' + id + '">' + nombre + '</option>');
             }
-            verSpinner(false);
         }
     });
-    /* */
 }
 
-console.log('clapswwww');
+function editClap(id) {
+    resetClap();
+
+    ajaxRequest({ url: 'procesar_claps.php', data: { opcion: 'get_datos_clap', id: id } }, function (data) {
+        if (data.result) {
+
+
+
+        }
+    });
+}
+console.log('clapzzz');

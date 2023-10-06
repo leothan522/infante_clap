@@ -207,6 +207,31 @@ if ($_POST) {
                     }
                     break;
 
+                case 'get_datos_clap':
+                   if (!empty($_POST['id'])) {
+                       $id = $_POST['id'];
+                       $response = crearResponse(
+                           null,
+                           true,
+                           'Datos del CLAP',
+                           'Datos del CLAP',
+                           'success',
+                           null,
+                           true
+                       );
+                       $clap = $model->find($id);
+
+                       $response['estracto'] = $clap['estracto'];
+                       $response['nombre'] = $clap['nombre'];
+                       $response['familias'] = $clap['familias'];
+                       $response['ubch'] = $clap['ubch'];
+
+                   }else{
+                       $response = crearResponse('faltan_datos');
+                   }
+
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);
