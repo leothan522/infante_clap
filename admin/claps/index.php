@@ -40,6 +40,10 @@ $controller = new ClapsController();
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2/css/select2.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); ?>">
+
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
@@ -104,6 +108,9 @@ $controller = new ClapsController();
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+
+<!-- select2 -->
+<script src="<?php asset('app/resources/adminlte/plugins/select2/js/select2.full.min.js'); ?>"></script>
 
 <!-- DataTables  & Plugins -->
 <script src="<?php asset('app/resources/adminlte/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>

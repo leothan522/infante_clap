@@ -220,12 +220,16 @@ if ($_POST) {
                            true
                        );
                        $clap = $model->find($id);
-
-                       $response['estracto'] = $clap['estracto'];
                        $response['nombre'] = $clap['nombre'];
+                       $response['estracto'] = $clap['estracto'];
                        $response['familias'] = $clap['familias'];
+                       $response['municipios_id'] = $clap['municipios_id'];
+                       $response['parroquias_id'] = $clap['parroquias_id'];
+                       $response['bloques_id'] = $clap['bloques_id'];
+                       $response['entes_id'] = $clap['entes_id'];
                        $response['ubch'] = $clap['ubch'];
-
+                       $response['id'] = $clap['id'];
+                       $response['nuevo'] = false;
                    }else{
                        $response = crearResponse('faltan_datos');
                    }

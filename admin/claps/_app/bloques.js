@@ -5,6 +5,7 @@ inputmask('#bloques_input_numero', 'numerico', 1, 3, '');
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('bloques_tabla');
 
+
 //Guardamos y Editamos los bloques
 $('#bloques_form').submit(function (e) {
     e.preventDefault();

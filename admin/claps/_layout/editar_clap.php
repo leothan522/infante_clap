@@ -4,7 +4,7 @@
         <form id="form_create_clap">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h4 class="modal-title" id="clap_title">Nombre del CLAP</h4>
+                    <h4 class="modal-title text-uppercase" id="clap_edit_title">Nombre del CLAP</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -17,14 +17,15 @@
                         </div>
 
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <input type="hidden" name="id" placeholder="clap_id" id="clap_id">
-                        <input type="hidden" name="opcion" value="" id="clap_opcion">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    </div>
-                    <?php verCargando(); ?>
                 </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="text" name="id" placeholder="clap_id" id="clap_edit_id">
+                    <input type="text" name="opcion" value="editar_clap">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+                <?php verCargando(); ?>
+            </div>
         </form>
         <!-- /.modal-content -->
     </div>
