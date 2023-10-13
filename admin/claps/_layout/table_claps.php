@@ -48,6 +48,12 @@
                                 <button type="button" class="btn btn-info" data-toggle="modal" onclick="editJefe(<?php echo $jefe['id']; ?>)" data-target="#editar-jefe">
                                     <i class="fas fa-user-edit"></i>
                                 </button>
+
+                                <button type="button" class="btn btn-info"
+                                        onclick="destroyClap(<?php echo $clap['id'] ?>)"
+                                        id="btn_eliminar_<?php echo $clap['id']; ?>">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>

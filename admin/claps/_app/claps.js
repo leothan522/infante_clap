@@ -418,6 +418,10 @@ $('#form_edit_clap').submit(function (e) {
     if (procesar){
         ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize() }, function (data) {
 
+            if (data.result){
+                cerrarModal('#editar-clap')
+            }
+
         });
     }
 });
@@ -508,4 +512,17 @@ function cerrarModal(idModal) {
     $(idModal).modal('hide');
 }
 
-console.log('clap qqqq');
+//eliminar los clap
+function destroyClap(id) {
+    MessageDelete.fire().then((result) => {
+        if (result.isConfirmed) {
+
+            ajaxRequest({ url: 'procesar_claps.php', data: { opcion: 'eliminar_clap', id: id } }, function (data) {
+
+
+            });
+        }
+    });
+}
+
+console.log('clap rrrr');

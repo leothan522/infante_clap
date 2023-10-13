@@ -371,15 +371,94 @@ if ($_POST) {
                         $familias = $_POST['clap_edit_input_familias'];
                         $entes = $_POST['clap_edit_select_entes'];
                         $ubch = $_POST['clap_edit_ubch'];
+                        $id = $_POST['clap_edit_id'];
+                        $cambios = false;
 
-                        $sql = "SELECT * FROM `claps` WHERE `municipios_id` = '$municipio' AND `nombre` = '$nombre';";
+                        $sql = "SELECT * FROM `claps` WHERE `municipios_id` = '$municipio' AND `nombre` = '$nombre' AND '$id' != `id` ;";
                         $existe = $model->sqlPersonalizado($sql);
+                        $clap = $model->find($id);
 
-                       $db_municipio = $existe['municipio_id'];
-                       $db_parroquia = $existe['parroquias_id'];
-                       $db_bloque = $existe['bloques_id'];
-                       $db_estracto = $existe['estracto'];
-                       $db_nombre = $existe['nombre'];
+                       $db_municipio = $clap['municipios_id'];
+                       $db_parroquia = $clap['parroquias_id'];
+                       $db_bloque = $clap['bloques_id'];
+                       $db_estracto = $clap['estracto'];
+                       $db_nombre = $clap['nombre'];
+                       $db_familias = $clap['familias'];
+                       $db_entes = $clap['entes_id'];
+                       $db_ubch = $clap['ubch'];
+                       $db_id = $clap['id'];
+
+                       if (!$existe){
+
+                           if ($db_municipio != $municipio){
+                               $cambios = true;
+                               $model->update($id, 'municipios_id', $municipio);
+                           }
+
+                           if ($db_parroquia != $parroquia){
+                               $cambios = true;
+                               $model->update($id, 'parroquias_id', $parroquia);
+                           }
+
+                           if ($db_bloque != $bloque){
+                               $cambios = true;
+                               $model->update($id, 'bloques_id', $bloque);
+                           }
+
+                           if ($db_estracto != $estracto){
+                               $cambios = true;
+                               $model->update($id, 'estracto', $estracto);
+                           }
+
+                           if ($db_nombre != $nombre){
+                               $cambios = true;
+                               $model->update($id, 'nombre', $nombre);
+                           }
+
+                           if ($db_familias != $familias){
+                               $cambios = true;
+                               $model->update($id, 'familias', $familias);
+                           }
+
+
+                           if ($db_entes != $entes){
+                               $cambios = true;
+                               $model->update($id, 'entes_id', $entes);
+                           }
+
+                           if ($db_ubch != $ubch){
+                               $cambios = true;
+                               $model->update($id, 'ubch', $ubch);
+                           }
+
+                           if ($cambios){
+                               $response = crearResponse(
+                                   null,
+                                   true,
+                                   'Editado Exitosamente.',
+                                   'El Clap se ha editado Exitosamente.'
+                               );
+                           }else{
+                               $response = crearResponse(
+                                   'sin_cambios',
+                                   false,
+                                   'Sin cambios',
+                                   'no se realizó ningun cambio',
+                                   'info',
+                                   true
+                               );
+                           }
+
+
+                       }else{
+                           $response = crearResponse(
+                               'datos_duplicados',
+                               false,
+                               'Datos Duplicados',
+                               'Datos Duplicados',
+                               'warning'
+                           );
+                       }
 
 
                     }else{
@@ -391,6 +470,38 @@ if ($_POST) {
                             'warning'
                         );
                     }
+
+                    break;
+
+                case 'eliminar_clap':
+                    if (!empty($_POST['id'])) {
+
+                        //proceso
+                        $id = $_POST['id'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'clap Eliminada.',
+                            'Clap Eliminado.'
+                        );
+
+
+                        $modelJefe = new Jefe();
+                        $response['jefes'] = array();
+                        foreach ($modelJefe->getList('claps_id', '=', $id) as $jefe) {
+                            $response['jefes'][] = array("id" => $jefe['id']);
+                        }
+                        $model->delete($id);
+                        $modelJefe->delete($id);
+
+                        //datos extras para el $response
+                        $response['total'] = $model->count();
+                        $response['total_jefes'] = $modelJefe->count();
+
+                    } else {
+                        $response = crearResponse('faltan_datos');
+                    }
+
 
                     break;
 

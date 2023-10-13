@@ -339,61 +339,6 @@ function destroyMunicipio(id) {
 
                 }
             });
-
-            /*verSpinner(true);
-            $.ajax({
-                type: 'POST',
-                url: 'procesar_municipio.php',
-                data: {
-                    opcion: 'eliminar_municipio',
-                    id: id
-                },
-                success: function (response) {
-                    let data = JSON.parse(response);
-
-                    if (data.result){
-                        let table = $('#tabla_municipios').DataTable();
-                        let item = $('#btn_eliminar_' + id).closest('tr');
-                        table
-                            .row(item)
-                            .remove()
-                            .draw();
-                        $('#paginate_leyenda_municipio').text(data.total);
-
-                        //elimno las parroquias
-                        let tabla_prroquias = $('#tabla_parroquias').DataTable();
-                        let parroquias = data.parroquias.length;
-                        let item_parroquia;
-                        for (let i = 0; i < parroquias; i++) {
-                          if ($('#btn_eliminar_p_' + data.parroquias[i]['id']).length > 0){
-                              item_parroquia = $('#btn_eliminar_p_' + data.parroquias[i]['id']).closest('tr');
-                              tabla_prroquias
-                                  .row(item_parroquia)
-                                  .remove()
-                                  .draw();
-                          }
-                        }
-
-                        $('#paginate_leyenda_parroquia').text(data.total_parroquias);
-
-                    }
-
-                    if (data.alerta) {
-                        Alerta.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.message
-                        });
-                    } else {
-                        Toast.fire({
-                            icon: data.icon,
-                            text: data.title
-                        });
-                    }
-                    verSpinner(false);
-                }
-            });*/
-
         }
     });
 }
