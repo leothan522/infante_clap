@@ -102,7 +102,7 @@ if ($_POST) {
                         !empty($_POST['jefe_input_nombre']) &&
                         !empty($_POST['jefe_select_genero']) &&
                         !empty($_POST['jefe_input_telefono'])
-                    ){
+                    ) {
                         $municipio = $_POST['clap_select_municipio'];
                         $parroquia = $_POST['clap_select_parroquia'];
                         $bloque = $_POST['clap_select_bloque'];
@@ -122,11 +122,11 @@ if ($_POST) {
                         $modelJefe = new Jefe();
                         $existejefe = $modelJefe->existe('cedula', '=', $cedula);
 
-                        if (empty($ubch)){
+                        if (empty($ubch)) {
                             $ubch = null;
                         }
 
-                        if (!$existeClap && !$existejefe){
+                        if (!$existeClap && !$existejefe) {
                             //proceso
                             $data = [
                                 $clap_nombre,
@@ -142,9 +142,9 @@ if ($_POST) {
                             $model->save($data);
                             $sql = "SELECT * FROM `claps` WHERE `municipios_id` = '$municipio' AND `nombre` = '$clap_nombre';";
                             $clapNuevo = $model->sqlPersonalizado($sql);
-                            if ($clapNuevo){
+                            if ($clapNuevo) {
 
-                                if (empty($email)){
+                                if (empty($email)) {
                                     $email = null;
                                 }
 
@@ -163,10 +163,10 @@ if ($_POST) {
                             $jefeNuevo = $modelJefe->existe('cedula', '=', $cedula, null, 1);
 
                             $response = crearResponse(
-                              null,
-                              true,
-                              'Guardado Exitosamente.',
-                              'El Clap se ha guardado Exitosamente.'
+                                null,
+                                true,
+                                'Guardado Exitosamente.',
+                                'El Clap se ha guardado Exitosamente.'
                             );
                             $response['nombre_clap'] = $clapNuevo['nombre'];
                             $response['nombre_jefe'] = $jefeNuevo['nombre'];
@@ -175,7 +175,7 @@ if ($_POST) {
                             $response['familias'] = $clapNuevo['familias'];
                             $response['nuevo'] = true;
 
-                        }else{
+                        } else {
                             //dulicado
                             $response = crearResponse(
                                 'datos_duplicados',
@@ -190,49 +190,207 @@ if ($_POST) {
                             $response['message_clap'] = null;
                             $response['message_jefe'] = null;
 
-                            if ($existeClap){
+                            if ($existeClap) {
                                 $response['error_clap'] = true;
                                 $response['message_clap'] = 'El nombre del Clap ya se encuentra registrado en el municipio';
                             }
 
-                            if ($existejefe){
+                            if ($existejefe) {
                                 $response['error_jefe'] = true;
                                 $response['message_jefe'] = 'La cédula ya se encuentra registrada';
                             }
 
                         }
 
-                    }else{
+                    } else {
                         $response = crearResponse('faltan_datos');
                     }
                     break;
 
                 case 'get_datos_clap':
-                   if (!empty($_POST['id'])) {
-                       $id = $_POST['id'];
-                       $response = crearResponse(
-                           null,
-                           true,
-                           'Datos del CLAP',
-                           'Datos del CLAP',
-                           'success',
-                           null,
-                           true
-                       );
-                       $clap = $model->find($id);
-                       $response['nombre'] = $clap['nombre'];
-                       $response['estracto'] = $clap['estracto'];
-                       $response['familias'] = $clap['familias'];
-                       $response['municipios_id'] = $clap['municipios_id'];
-                       $response['parroquias_id'] = $clap['parroquias_id'];
-                       $response['bloques_id'] = $clap['bloques_id'];
-                       $response['entes_id'] = $clap['entes_id'];
-                       $response['ubch'] = $clap['ubch'];
-                       $response['id'] = $clap['id'];
-                       $response['nuevo'] = false;
-                   }else{
-                       $response = crearResponse('faltan_datos');
-                   }
+                    if (!empty($_POST['id'])) {
+                        $id = $_POST['id'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Datos del CLAP',
+                            'Datos del CLAP',
+                            'success',
+                            null,
+                            true
+                        );
+                        $clap = $model->find($id);
+                        $response['nombre'] = $clap['nombre'];
+                        $response['estracto'] = $clap['estracto'];
+                        $response['familias'] = $clap['familias'];
+                        $response['municipios_id'] = $clap['municipios_id'];
+                        $response['parroquias_id'] = $clap['parroquias_id'];
+                        $response['bloques_id'] = $clap['bloques_id'];
+                        $response['entes_id'] = $clap['entes_id'];
+                        $response['ubch'] = $clap['ubch'];
+                        $response['id'] = $clap['id'];
+                        $response['nuevo'] = false;
+                    } else {
+                        $response = crearResponse('faltan_datos');
+                    }
+
+                    break;
+
+                case 'get_datos_jefe':
+                    $modelJefe = new Jefe();
+                    if (!empty($_POST['id'])) {
+                        $id = $_POST['id'];
+                        $response = crearResponse(
+                            null,
+                            true,
+                            'Datos del Jefe',
+                            'se trajo los datos del jefe',
+                            'success',
+                            null,
+                            true
+                        );
+                        $jefe = $modelJefe->find($id);
+                        $response['id'] = $jefe['id'];
+                        $response['cedula'] = $jefe['cedula'];
+                        $response['nombre'] = $jefe['nombre'];
+                        $response['genero'] = $jefe['genero'];
+                        $response['telefono'] = $jefe['telefono'];
+                        $response['email'] = $jefe['email'];
+                    } else {
+                        $response = crearResponse('faltan_datos');
+                    }
+                    break;
+
+                case 'editar_jefe':
+                    $modelJefe = new Jefe();
+                    if (
+                        !empty($_POST['jefe_edit_input_cedula']) &&
+                        !empty($_POST['jefe_edit_input_nombre']) &&
+                        !empty($_POST['jefe_edit_select_genero']) &&
+                        !empty($_POST['jefe_edit_input_telefono'])
+                    ) {
+                        $cedula = $_POST['jefe_edit_input_cedula'];
+                        $nombre = $_POST['jefe_edit_input_nombre'];
+                        $genero = $_POST['jefe_edit_select_genero'];
+                        $telefono = $_POST['jefe_edit_input_telefono'];
+                        $email = $_POST['jefe_edit_input_email'];
+                        $id = $_POST['jefe_edit_id'];
+                        $cambios = false;
+                        $jefe = $modelJefe->find($id);
+
+                        $db_cedula = $jefe['cedula'];
+                        $db_nombre = $jefe['nombre'];
+                        $db_genero = $jefe['genero'];
+                        $db_telefono = $jefe['telefono'];
+                        $db_email = $jefe['email'];
+
+                        $existe = $modelJefe->existe('cedula', '=', $cedula, $id, 1);
+
+                        if (!$existe) {
+
+                            if ($db_cedula != $cedula) {
+                                $cambios = true;
+                                $modelJefe->update($id, 'cedula', $cedula);
+                            }
+
+                            if ($db_nombre != $nombre) {
+                                $cambios = true;
+                                $modelJefe->update($id, 'nombre', $nombre);
+                            }
+
+                            if ($db_genero != $genero) {
+                                $cambios = true;
+                                $modelJefe->update($id, 'genero', $genero);
+                            }
+
+                            if ($db_telefono != $telefono) {
+                                $cambios = true;
+                                $modelJefe->update($id, 'telefono', $telefono);
+                            }
+
+                            if ($db_email != $email) {
+                                $cambios = true;
+                                $modelJefe->update($id, 'email', $email);
+                            }
+
+                            if ($cambios) {
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Editado Exitosamente.',
+                                    'El jefe se ha guardado Exitosamente.'
+                                );
+                            } else {
+                                $response = crearResponse(
+                                    'sin_cambios',
+                                    false,
+                                    'Sin cambios',
+                                    'no se realizó ningun cambio',
+                                    'info',
+                                    true
+                                );
+                            }
+
+
+                        } else {
+                            $response = crearResponse(
+                                'datos_duplicados',
+                                false,
+                                'Datos Duplicados',
+                                'Datos Duplicados',
+                                'warning'
+                            );
+                        }
+
+                    } else {
+                        $response = crearResponse(
+                            "fantan_datos",
+                            false,
+                            'Faltan datos',
+                            'faltan datos',
+                            'warning'
+                        );
+                    }
+                    break;
+
+                case 'editar_clap':
+                    if (
+                        !empty($_POST['clap_edit_select_municipio']) &&
+                        !empty($_POST['clap_edit_select_parroquia']) &&
+                        !empty($_POST['clap_edit_select_bloque']) &&
+                        !empty($_POST['clap_edit_select_estracto']) &&
+                        !empty($_POST['clap_edit_input_nombre']) &&
+                        !empty($_POST['clap_edit_input_familias']) &&
+                        !empty($_POST['clap_edit_select_entes'])
+                    ){
+                        $municipio = $_POST['clap_edit_select_municipio'];
+                        $parroquia = $_POST['clap_edit_select_parroquia'];
+                        $bloque = $_POST['clap_edit_select_bloque'];
+                        $estracto = $_POST['clap_edit_select_estracto'];
+                        $nombre = $_POST['clap_edit_input_nombre'];
+                        $familias = $_POST['clap_edit_input_familias'];
+                        $entes = $_POST['clap_edit_select_entes'];
+                        $ubch = $_POST['clap_edit_ubch'];
+
+                        $sql = "SELECT * FROM `claps` WHERE `municipios_id` = '$municipio' AND `nombre` = '$nombre';";
+                        $existe = $model->sqlPersonalizado($sql);
+
+                       $db_municipio = $existe['municipio_id'];
+                       $db_parroquia = $existe['parroquias_id'];
+                       $db_bloque = $existe['bloques_id'];
+                       $db_estracto = $existe['estracto'];
+                       $db_nombre = $existe['nombre'];
+
+
+                    }else{
+                        $response = crearResponse(
+                            "fantan_datos",
+                            false,
+                            'Faltan datos',
+                            'faltan datos',
+                            'warning'
+                        );
+                    }
 
                     break;
 

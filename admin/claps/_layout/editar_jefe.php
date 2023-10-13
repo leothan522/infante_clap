@@ -1,10 +1,10 @@
 <!-- Modal -->
 <div class="modal fade" id="editar-jefe">
     <div class="modal-dialog modal-lm">
-        <form id="form_create_clap">
+        <form id="form_edit_jefe">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h4 class="modal-title" id="clap_title">Nombre del Jefe</h4>
+                    <h4 class="modal-title" id="jefe_edit_title">Nombre del Jefe</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -18,8 +18,8 @@
 
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <input type="hidden" name="id_jefe" placeholder="clap_id" id="jefe_id">
-                        <input type="hidden" name="opcion" value="" id="jefe_opcion">
+                        <input type="hidden" name="jefe_edit_id" placeholder="jefe_id" id="jefe_edit_id">
+                        <input type="hidden" name="opcion" value="editar_jefe">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>

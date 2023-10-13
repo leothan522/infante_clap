@@ -45,7 +45,7 @@
                                 <button type="button" class="btn btn-info" data-toggle="modal" onclick="editClap(<?php echo $clap['id']; ?>)" data-target="#editar-clap">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editar-jefe">
+                                <button type="button" class="btn btn-info" data-toggle="modal" onclick="editJefe(<?php echo $jefe['id']; ?>)" data-target="#editar-jefe">
                                     <i class="fas fa-user-edit"></i>
                                 </button>
                             </div>

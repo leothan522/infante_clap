@@ -150,6 +150,7 @@ $('#form_create_clap').submit(function (e) {
         ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
 
             if (data.result){
+                cerrarModal('#modal-claps');
 
             }else{
                 //errores
@@ -330,8 +331,181 @@ function editClap(id) {
             }
         });
     }, 150);
-
-
 }
 
-console.log('claps');
+//capturamos el formulario de editar los datos del clap
+$('#form_edit_clap').submit(function (e) {
+   e.preventDefault();
+   let procesar = true;
+   let municipio = $('#clap_edit_select_municipio');
+   let parroquia = $('#clap_edit_select_parroquia');
+   let bloque = $('#clap_edit_select_bloque');
+   let estracto = $('#clap_edit_select_estracto');
+   let nombre = $('#clap_edit_input_nombre');
+   let familias = $('#clap_edit_input_familias');
+   let entes = $('#clap_edit_select_entes');
+
+   if (municipio.val().length <= 0){
+       procesar = false;
+       municipio.addClass('is-invalid');
+       $('#error_clap_edit_select_municipio').text('El municipio es obligatorio');
+   }else {
+       municipio
+           .removeClass('is-invalid')
+           .addClass('is-valid');
+   }
+
+   if (parroquia.val().length <= 0){
+       procesar = false;
+       parroquia.addClass('is-invalid');
+       $('#error_clap_edit_select_parroquia').text('La parroquia es obligatoria.');
+   }else {
+       parroquia
+           .removeClass('is-invalid')
+           .addClass('is-valid');
+   }
+
+   if (bloque.val().length <= 0){
+       procesar = false;
+       bloque.addClass('is-invalid');
+       $('#error_clap_edit_select_bloque').text('El bloque es obligatorio.');
+   }else {
+       bloque
+           .removeClass('is-invalid')
+           .addClass('is-valid');
+   }
+
+    if (estracto.val().length <= 0){
+        procesar = false;
+        estracto.addClass('is-invalid');
+        $('#error_clap_edit_select_estracto').text('El estracto es obligatorio.');
+    }else {
+        estracto
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (!nombre.inputmask('isComplete')){
+        procesar = false;
+        nombre.addClass('is-invalid');
+        $('#error_clap_edit_input_nombre').text('El nombre es obligatorio, y debe tener al menos 3 letras.');
+    }else {
+        nombre
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (!familias.inputmask('isComplete')){
+        procesar = false;
+        familias.addClass('is-invalid');
+        $('#error_clap_edit_input_familias').text('La cantidad de familias es obligatoria.');
+    }else {
+        familias
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (entes.val().length <= 0){
+        procesar = false;
+        entes.addClass('is-invalid');
+        $('#error_clap_edit_select_entes').text('El ente es obligatorio.');
+    }else {
+        entes
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (procesar){
+        ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize() }, function (data) {
+
+        });
+    }
+});
+
+function editJefe(id) {
+    resetDatosJefes(opcion = 'edit');
+    ajaxRequest({ url: 'procesar_claps.php', data: { opcion: 'get_datos_jefe', id: id } }, function (data) {
+
+        if (data.result){
+            $('#jefe_edit_input_cedula').val(data.cedula);
+            $('#jefe_edit_input_nombre').val(data.nombre);
+            $('#jefe_edit_select_genero')
+                .val(data.genero)
+                .trigger('change');
+            $('#jefe_edit_input_telefono').val(data.telefono);
+            $('#jefe_edit_input_email').val(data.email);
+            $('#jefe_edit_title').text(data.nombre);
+            $('#jefe_edit_id').val(data.id);
+        }
+
+    });
+}
+
+//capturamos el formulario para editar lor jefes
+$('#form_edit_jefe').submit(function (e) {
+   e.preventDefault();
+   let procesar = true;
+   let cedula = $('#jefe_edit_input_cedula');
+   let nombre = $('#jefe_edit_input_nombre');
+   let genero = $('#jefe_edit_select_genero');
+   let telefono = $('#jefe_edit_input_telefono');
+   let email = $('#jefe_edit_input_email');
+
+   if (!cedula.inputmask('isComplete')){
+       procesar = false;
+       cedula.addClass('is-invalid');
+       $('#error_jefe_edit_input_cedula').text('La cédula es obligatoria.');
+   }else {
+       cedula
+           .removeClass('is-invalid')
+           .addClass('is-valid');
+   }
+
+
+    if (!nombre.inputmask('isComplete')){
+        procesar = false;
+        nombre.addClass('is-invalid');
+        $('#error_jefe_edit_input_nombre').text('El nombre es obligatorio, y debe tener al menos 3 letras.');
+    }else {
+        nombre
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (genero.val().length <= 0){
+        procesar = false;
+        genero.addClass('is-invalid');
+        $('#error_jefe_edit_select_genero').text('El género es obligatorio.');
+    }else {
+        genero
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (!telefono.inputmask('isComplete')){
+        procesar = false;
+        telefono.addClass('is-invalid');
+        $('#error_jefe_edit_input_telefono').text('El teléfono es obligatorio.');
+    }else {
+        telefono
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (procesar){
+        ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize() }, function (data) {
+            if (data.result){
+                cerrarModal('#editar-jefe');
+            }
+        });
+    }
+
+});
+
+
+//funcion para cerrar los modals
+function cerrarModal(idModal) {
+    $(idModal).modal('hide');
+}
+
+console.log('clap qqqq');

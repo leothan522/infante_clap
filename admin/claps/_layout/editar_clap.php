@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="editar-clap">
     <div class="modal-dialog modal-lm">
-        <form id="form_create_clap">
+        <form id="form_edit_clap">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title text-uppercase" id="clap_edit_title">Nombre del CLAP</h4>
@@ -19,8 +19,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <input type="text" name="id" placeholder="clap_id" id="clap_edit_id">
-                    <input type="text" name="opcion" value="editar_clap">
+                    <input type="hidden" name="id" placeholder="clap_id" id="clap_edit_id">
+                    <input type="hidden" name="opcion" value="editar_clap">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>

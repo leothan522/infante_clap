@@ -9,7 +9,7 @@
                 <div class="col-md-6">
                     <label>Municipio</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select rounded-0 text-uppercase select2" name="clap_select_municipio"
+                        <select class="custom-select rounded-0 text-uppercase select2" name="clap_edit_select_municipio"
                                 onchange="getBloquesParroquias('#clap_edit_select_municipio', '#clap_edit_select_bloque', '#clap_edit_select_parroquia')"
                                 id="clap_edit_select_municipio">
                             <!--Option con JS-->
@@ -21,7 +21,7 @@
                 <div class="col-md-6">
                     <label>Parroquia</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select rounded-0 text-uppercase select2" name="clap_select_parroquia" id="clap_edit_select_parroquia">
+                        <select class="custom-select rounded-0 text-uppercase select2" name="clap_edit_select_parroquia" id="clap_edit_select_parroquia">
                             <option value="">Seleccione</option>
 
                         </select>
@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                     <label>Bloque</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select rounded-0 text-uppercase" name="clap_select_bloque" id="clap_edit_select_bloque">
+                        <select class="custom-select rounded-0 text-uppercase" name="clap_edit_select_bloque" id="clap_edit_select_bloque">
                             <option value="">Seleccione</option>
                         </select>
                         <div class="invalid-feedback" id="error_clap_edit_select_bloque"></div>
@@ -44,7 +44,7 @@
                 <div class="col-md-6">
                     <label>Estracto</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select rounded-0 text-uppercase" name="clap_select_estracto" id="clap_edit_select_estracto">
+                        <select class="custom-select rounded-0 text-uppercase" name="clap_edit_select_estracto" id="clap_edit_select_estracto">
                             <option value="">Seleccione</option>
                             <option value="urbano">Urbano</option>
                             <option value="rural">Rural</option>
@@ -57,7 +57,7 @@
 
             <label for="name">Nombre del Clap</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Ingrese el Nombre del Clap" name="clap_input_nombre" id="clap_edit_input_nombre">
+                <input type="text" class="form-control" placeholder="Ingrese el Nombre del Clap" name="clap_edit_input_nombre" id="clap_edit_input_nombre">
                 <div class="invalid-feedback" id="error_clap_edit_input_nombre"></div>
             </div>
 
@@ -65,7 +65,7 @@
                 <div class="col-md-4">
                     <label for="name">Familias</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cantidad" name="clap_input_familias" id="clap_edit_input_familias">
+                        <input type="text" class="form-control" placeholder="Cantidad" name="clap_edit_input_familias" id="clap_edit_input_familias">
                         <div class="invalid-feedback" id="error_clap_edit_input_familias"></div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="col-md-8">
                     <label>Entes</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select rounded-0 text-uppercass" name="clap_select_entes" id="clap_edit_select_entes">
+                        <select class="custom-select rounded-0 text-uppercass" name="clap_edit_select_entes" id="clap_edit_select_entes">
                             <option>Seleccione</option>
 
                         </select>
@@ -85,7 +85,7 @@
 
             <label for="name">UBCH <small class="text-muted"> <em>(Opcional)</em></small></label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Nombre de la UBCH (Opcional)" name="clap_ubch" id="clap_edit_input_ubch">
+                <input type="text" class="form-control" placeholder="Nombre de la UBCH (Opcional)" name="clap_edit_ubch" id="clap_edit_input_ubch">
                 <div class="invalid-feedback" id="error_clap_edit_input_ubch"></div>
             </div>
 
