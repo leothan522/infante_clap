@@ -357,7 +357,7 @@ if ($_POST) {
                                 $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefes['nombre'] .'</p>';
                                 $response['cedula'] = '<p class="text-right">'. formatoMillares($jefes['cedula'], 0) .'</p>';
                                 $response['telefono'] = '<p class="text-center">'. $jefes['telefono'] .'</p>';
-                                $response['familias'] = '<p class="text-right">' .$claps['familias']. '</p>';
+                                $response['familias'] = '<p class="text-right">' .formatoMillares($claps['familias']). '</p>';
                                 $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
                                 $response['editar_jefe'] = true;
 

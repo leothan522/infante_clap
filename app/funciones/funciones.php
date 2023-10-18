@@ -202,6 +202,30 @@ function crearResponse($error = null, $result = false, $title = null, $message =
     return $response;
 }
 
+function verFecha($fecha): string
+{
+    $newDate = date("d-m-Y", strtotime($fecha));
+    return $newDate;
+}
+
+function diaEspanol($fecha){
+    $diaSemana = date("w",strtotime($fecha));
+    $diasEspanol = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado");
+    $dia = $diasEspanol[$diaSemana];
+    return $dia;
+}
+
+function mesEspanol($numMes = null){
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    if (!is_null($numMes)){
+        $mes = $meses[$numMes - 1];
+        return $mes;
+    }else{
+        return $meses;
+    }
+}
+
+
 
 //**************************************************************** */
 
@@ -217,11 +241,7 @@ function verHora($hora): string
     return $newHora;
 }
 
-function verFecha($fecha): string
-{
-    $newDate = date("d-m-Y", strtotime($fecha));
-    return $newDate;
-}
+
 
 function verFechaLetras($fecha): string
 {

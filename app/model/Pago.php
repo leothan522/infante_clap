@@ -11,7 +11,8 @@ class Pago extends Model
         $this->DATA = [
             'monto',
             'referencia',
-            'despachos_id'
+            'cuotas_id',
+            'claps_id'
         ];
     }
 }

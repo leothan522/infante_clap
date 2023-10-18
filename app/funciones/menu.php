@@ -18,11 +18,20 @@ function sidebar($modulo = null): ?string
             'treeview' => []
         ],
         [
+            'permiso' => validarPermisos('pagos.index'),
+            'url' => public_url('admin/pagos'),
+            'active' => $modulo == 'pagos.index',
+            'icono' => '<i class="nav-icon fas fa-money-check"></i>',
+            'titulo' => 'Validación Pagos',
+            'badge' => null,
+            'treeview' => []
+        ],
+        [
             'permiso'       => validarPermisos('claps.index'),
             'url'           => '#',
             'active'        => $modulo == 'claps.index',
-            'icono'         => '<i class="nav-icon fas fa-money-check"></i>',
-            'titulo'        => 'Validación Pagos',
+            'icono'         => '<i class="fas fa-users nav-icon"></i>',
+            'titulo'        => 'Censo CLAP',
             'badge'         => null,
             'treeview'      => [
                 [
@@ -30,7 +39,7 @@ function sidebar($modulo = null): ?string
                     'url'       => public_url('admin/claps'),
                     'active'    => $modulo == 'claps.index',
                     'icono'     => '<i class="fas fa-users nav-icon"></i>',
-                    'titulo'    =>  'Gestionar CLAPS'
+                    'titulo'    =>  'Gestionar CLAP'
                 ],
                 /*[
                     'permiso'       => true,

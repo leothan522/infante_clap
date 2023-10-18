@@ -50,8 +50,9 @@ CREATE TABLE IF NOT EXISTS `claps` (
 -- Volcando estructura para tabla alguarisa_claps.cuotas
 CREATE TABLE IF NOT EXISTS `cuotas` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `mes` int unsigned NOT NULL,
   `fecha` date NOT NULL,
-  `nota` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+  `precio` decimal(12,2) unsigned DEFAULT NULL,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -64,12 +65,9 @@ CREATE TABLE IF NOT EXISTS `entes` (
   `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `band` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.entes: ~2 rows (aproximadamente)
-INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
-	(1, 'Alimentos del Guárico S.A.', 1),
-	(2, 'Mixto', 0);
+-- Volcando datos para la tabla alguarisa_claps.entes: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_claps.jefes
 CREATE TABLE IF NOT EXISTS `jefes` (
@@ -106,7 +104,7 @@ INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `estatus`, `crea
 	(4, 'PEDRO ZARAZA', 'ZARAZA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
 	(5, 'JOSE TADEO MONAGAS', 'MONAGAS', 7, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
 	(6, 'JOSE FELIX RIBAS', 'RIBAS', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(7, 'CAMAGUAN', 'CAMAGUAN', 3, 1, '2023-09-27 12:03:47', '2023-09-28 04:00:00'),
+	(7, 'CAMAGUAN', 'CAMAGUA', 3, 1, '2023-09-27 12:03:47', '2023-10-16 04:00:00'),
 	(8, 'JULIAN MELLADO', 'MELLADO', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
 	(9, 'EL SOCORRO', 'EL SOCORRO', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
 	(10, 'SANTA MARIA DE IPIRE', 'SANTA MARIA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
@@ -121,7 +119,8 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `monto` decimal(12,2) NOT NULL,
   `referencia` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `despachos_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `cuotas_id` int unsigned NOT NULL,
+  `claps_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
