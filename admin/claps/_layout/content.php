@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <div class="dataContainerClap">
+        <div id="dataContainerClap">
             <?php
             use app\model\Jefe;
             function getJefe($id)
@@ -24,5 +24,6 @@
 <?php require_once "modal_entes.php" ?>
 <?php require_once 'editar_jefe.php' ?>
 <?php require_once 'editar_clap.php'; ?>
+<?php require_once 'modal_show_claps.php'; ?>
 
 

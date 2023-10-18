@@ -32,7 +32,7 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
 
-                case 'paginate_clap':
+                case 'paginate':
 
                     $paginate = true;
 
@@ -42,11 +42,11 @@ if ($_POST) {
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
-                    $listarClap = $model->paginate($limit, $offset, 'nombre', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerClap')->createLinks();
+                    $listarClap = $model->paginate($limit, $offset, 'id', 'DESC', 1);
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerClap', )->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerClap">';
-                    require_once "_layout/table_claps.php";
+                    require "_layout/table_claps.php";
                     echo '</div>';
                     break;
 
@@ -194,13 +194,15 @@ if ($_POST) {
                                 'Guardado Exitosamente.',
                                 'El Clap se ha guardado Exitosamente.'
                             );
+                            $response['id'] = $clapNuevo['id'];
                             $response['nombre_clap'] = '<p class="text-uppercase">'. $clapNuevo['nombre'] .'</p>';
                             $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefeNuevo['nombre'] .'</p>';
-                            $response['cedula'] = '<p class="text-right">'. $jefeNuevo['cedula'] .'</p>';
+                            $response['cedula'] = '<p class="text-right">'. formatoMillares($jefeNuevo['cedula'], 0) .'</p>';
                             $response['telefono'] = '<p class="text-center">'. $jefeNuevo['telefono'] .'</p>';
-                            $response['familias'] = '<p class="text-right">' .$clapNuevo['familias']. '</p>';
-                            $response['item'] = '<p class="text-center"> ' . $model->count() . '. </p>';
+                            $response['familias'] = '<p class="text-right">' .formatoMillares($clapNuevo['familias'], 0). '</p>';
+                            $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
                             $response['nuevo'] = true;
+                            $response['total'] = $model->count(1);
 
                         } else {
                             //dulicado
@@ -347,6 +349,18 @@ if ($_POST) {
                                     'Editado Exitosamente.',
                                     'El jefe se ha guardado Exitosamente.'
                                 );
+                                $jefes = $modelJefe->find($id);
+                                $claps = $model->first('id', '=', $jefes['claps_id']);
+                                $response['id_clap'] = $claps['id'];
+                                $response['id_jefe'] = $jefes['id'];
+                                $response['nombre_clap'] = '<p class="text-uppercase">'. $claps['nombre'] .'</p>';
+                                $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefes['nombre'] .'</p>';
+                                $response['cedula'] = '<p class="text-right">'. formatoMillares($jefes['cedula'], 0) .'</p>';
+                                $response['telefono'] = '<p class="text-center">'. $jefes['telefono'] .'</p>';
+                                $response['familias'] = '<p class="text-right">' .$claps['familias']. '</p>';
+                                $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                                $response['editar_jefe'] = true;
+
                             } else {
                                 $response = crearResponse(
                                     'sin_cambios',
@@ -404,6 +418,8 @@ if ($_POST) {
                         $sql = "SELECT * FROM `claps` WHERE `municipios_id` = '$municipio' AND `nombre` = '$nombre' AND '$id' != `id` ;";
                         $existe = $model->sqlPersonalizado($sql);
                         $clap = $model->find($id);
+                        $modelJefe = new Jefe();
+                        $jefe = $modelJefe->first('claps_id', '=', $clap['id']);
 
                        $db_municipio = $clap['municipios_id'];
                        $db_parroquia = $clap['parroquias_id'];
@@ -465,6 +481,16 @@ if ($_POST) {
                                    'Editado Exitosamente.',
                                    'El Clap se ha editado Exitosamente.'
                                );
+                               $claps = $model->find($id);
+                               $jefes = $modelJefe->first('claps_id', '=', $clap['id']);
+                               $response['id'] = $clap['id'];
+                               $response['nombre_clap'] = '<p class="text-uppercase">'. $claps['nombre'] .'</p>';
+                               $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefes['nombre'] .'</p>';
+                               $response['cedula'] = '<p class="text-right">'. formatoMillares($jefes['cedula'], 0) .'</p>';
+                               $response['telefono'] = '<p class="text-center">'. $jefes['telefono'] .'</p>';
+                               $response['familias'] = '<p class="text-right">' .formatoMillares($claps['familias'], 0). '</p>';
+                               $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                               $response['edit_clap'] = true;
                            }else{
                                $response = crearResponse(
                                    'sin_cambios',
@@ -522,7 +548,7 @@ if ($_POST) {
                         $modelJefe->delete($id);
 
                         //datos extras para el $response
-                        $response['total'] = $model->count();
+                        $response['total'] = $model->count(1);
                         $response['total_jefes'] = $modelJefe->count();
 
                     } else {
@@ -530,6 +556,57 @@ if ($_POST) {
                     }
 
 
+                    break;
+
+                case 'show_clap':
+
+                    $modelMunicipio = new Municipio();
+                    $modelParroquia = new Parroquia();
+                    $modelBloque = new Bloque();
+                    $modelEnte = new Ente();
+                    $modelJefe = new Jefe();
+
+                    if (!empty($_POST['id'])){
+
+                        $id = $_POST['id'];
+                        $clap = $model->find($id);
+
+                        $municipio = $modelMunicipio->find($clap['municipios_id']);
+                        $parroquia = $modelParroquia->find($clap['parroquias_id']);
+                        $bloque = $modelBloque->find($clap['bloques_id']);
+                        $entes = $modelEnte->find($clap['entes_id']);
+                        $jefe = $modelJefe->first('claps_id', '=', $clap['id']);
+
+                        $response = crearResponse(
+                            null,
+                            true,
+                            '',
+                            '',
+                            'success',
+                            false,
+                            true
+                        );
+                        $response['clap_id'] = $clap['id'];
+                        $response['clap_nombre'] = $clap['nombre'];
+                        $response['clap_estracto'] = $clap['estracto'];
+                        $response['clap_familias'] = formatoMillares($clap['familias']);
+                        $response['clap_municipio'] = $municipio['mini'];
+                        $response['clap_parroquia'] = $parroquia['nombre'];
+                        $response['clap_bloque'] = $bloque['numero'];
+                        $response['clap_ente'] = $entes['nombre'];
+                        $response['clap_ubch'] = $clap['ubch'];
+                        $response['jefe_id'] = $jefe['id'];
+                        $response['jefe_cedula'] = formatoMillares($jefe['cedula'], 0);
+                        $response['jefe_nombre'] = $jefe['nombre'];
+                        $response['jefe_telefono'] = $jefe['telefono'];
+                        $response['jefe_genero'] = $jefe['genero'];
+                        $response['jefe_email'] = $jefe['email'];
+
+
+
+                    }else{
+                        $response = crearResponse('faltan_datos');
+                    }
                     break;
 
                 //Por defecto

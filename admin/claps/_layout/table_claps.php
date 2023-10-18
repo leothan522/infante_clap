@@ -40,21 +40,10 @@
                         <td class="text-right familias"><?php echo formatoMillares($clap['familias'], 0); ?></td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" onclick="">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-show-claps"
+                                        onclick="showClapJefe(<?php echo $clap['id']; ?>)" id="btn_elimiar_clap_<?php echo $clap['id'] ?>">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <!--<button type="button" class="btn btn-info" data-toggle="modal" onclick="editClap(<?php /*echo $clap['id']; */?>)" data-target="#editar-clap">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-info" data-toggle="modal" onclick="editJefe(<?php /*echo $jefe['id']; */?>)" data-target="#editar-jefe">
-                                    <i class="fas fa-user-edit"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-info"
-                                        onclick="destroyClap(<?php /*echo $clap['id'] */?>)"
-                                        id="btn_eliminar_<?php /*echo $clap['id']; */?>">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>-->
                             </div>
                         </td>
                     </tr>

@@ -44,8 +44,8 @@ class ClapsController extends Admin
     public function listarClaps()
     {
         $model = new Clap();
-        $limit = 2;
-        $this->linksPaginate = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate_clap', 'dataContainerClap')->createLinks();
+        $limit = 30;
+        $this->linksPaginate = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
         return $model->paginate($limit, null, 'id', 'DESC', 1);
     }
 
