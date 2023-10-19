@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\middleware\Admin;
+use app\model\Cuota;
 
 class PagosController extends Admin
 {
@@ -17,5 +18,10 @@ class PagosController extends Admin
         }
     }
 
-
+    public function listarCuotas()
+    {
+        $model = new Cuota();
+        $listarCuotas = $model->getAll(1);
+        return $listarCuotas;
+    }
 }

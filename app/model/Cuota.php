@@ -10,7 +10,7 @@ class Cuota extends Model
         $this->TABLA = "cuotas";
         $this->DATA = [
           'mes',
-          'fecha',
+          'fecha'
         ];
     }
 }

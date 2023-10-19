@@ -98,5 +98,8 @@ $controller = new PagosController();
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
+
+<script src="_app/pagos.js"></script>
+
 </body>
 </html>
