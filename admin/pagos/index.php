@@ -3,6 +3,7 @@ session_start();
 require_once "../../vendor/autoload.php";
 use app\controller\PagosController;
 $controller = new PagosController();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -97,6 +98,21 @@ $controller = new PagosController();
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
+<!-- DataTables  & Plugins -->
+<script src="<?php asset('app/resources/adminlte/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/jszip/jszip.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
+<script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 
 
 <script src="_app/pagos.js"></script>

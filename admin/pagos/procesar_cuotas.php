@@ -18,6 +18,24 @@ if ($_POST) {
             switch ($opcion) {
 
                 //definimos las opciones a procesar
+                case 'paginate':
+
+                    $paginate = true;
+
+                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
+                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
+                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
+                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
+                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+
+                    $listarCuotas = $model->paginate($limit, $offset, 'fecha', 'DESC', 1);
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerCuotas', )->createLinks();
+                    $i = $offset;
+                    echo '<div id="dataContainerCuotas">';
+                    require "_layout/table_cuotas.php";
+                    echo '</div>';
+                    break;
+
                 case 'guardar_cuotas':
                     if (
                         !empty($_POST['cuotas_select_mes']) &&
@@ -38,6 +56,13 @@ if ($_POST) {
                           'Guardado Exitosamente',
                           'Se Guardo Exitosamente'
                         );
+                        $cuota = $model->first('mes', '=', $mes);
+                        $response['id'] = $cuota['id'];
+                        $response['mes'] = mesEspanol($cuota['mes']);
+                        $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
+                        $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                        $response['nuevo'] = true;
+                        $response['total'] = $model->count(1);
 
                     }else{
                         $response = crearResponse('faltan_datos');
@@ -98,6 +123,13 @@ if ($_POST) {
                                 'Editado Exitosamente',
                                 'Editado Exitosamente'
                             );
+                            $cuota = $model->find($id);
+                            $response['id'] = $cuota['id'];
+                            $response['mes'] = mesEspanol($cuota['mes']);
+                            $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
+                            $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                            $response['nuevo'] = false;
+                            $response['total'] = $model->count(1);
 
                         }else{
                             $response = crearResponse('no_cambios');
@@ -124,6 +156,7 @@ if ($_POST) {
                             'Cuota Eliminada.',
                             'Cuota Eliminada.'
                         );
+                        $response['total'] = $model->count(1);
 
 
                     } else {

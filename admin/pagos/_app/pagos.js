@@ -1,3 +1,7 @@
+//Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
+datatable('tabla_cuotas');
+
+
 //cacturo el formulario para guardar la cuota
 $('#cuotas_form').submit(function (e) {
    e.preventDefault();
@@ -28,13 +32,46 @@ $('#cuotas_form').submit(function (e) {
     if (procesar){
         ajaxRequest({ url: 'procesar_cuotas.php', data: $(this).serialize() }, function (data) {
             if (data.result){
-                mes
-                    .removeClass('is-valid')
-                    .val('');
-                fecha
-                    .removeClass('is-valid')
-                    .val('');
+                let table = $('#tabla_cuotas').DataTable();
+
+                if (data.nuevo){
+                    let button = '<div class="btn-group btn-group-sm">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="editCuota('+ data.id +')">\n' +
+                        '                                    <i class="fas fa-edit"></i>\n' +
+                        '                                </button>\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="destroyCuota('+ data.id +')" id="btn_eliminar_cuotas_('+ data.id +')">\n' +
+                        '                                    <i class="far fa-trash-alt"></i>\n' +
+                        '                                </button>\n' +
+                        '                            </div>';
+
+                    table.row.add([
+                        data.item,
+                        data.mes,
+                        data.fecha,
+                        button
+                    ]).draw();
+
+                    let nuevo = $('#tabla_cuotas tr:last');
+                    nuevo.attr('id', 'tr_item_cuota_' + data.id);
+                    nuevo.find("td:eq(0)").addClass('item');
+                    nuevo.find("td:eq(1)").addClass('mes');
+                    nuevo.find("td:eq(2)").addClass('fecha');
+
+                    $('#paginate_leyenda').text(data.total);
+                }else{
+                    let tr = $('#tr_item_cuota_' + data.id);
+                    table
+                        .cell(tr.find('.mes')).data(data.mes)
+                        .cell(tr.find('.fecha')).data(data.fecha)
+                        .draw();
+                }
+
+
+                resetCuota();
             }
+
+
+
         });
     }
 
@@ -57,9 +94,30 @@ function destroyCuota(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
             ajaxRequest({ url: 'procesar_cuotas.php', data: {opcion: 'eliminar_cuotas', id: id} }, function (data) {
+                if (data.result){
+                    let table = $('#tabla_cuotas').DataTable();
+                    let items = $('#btn_eliminar_' + id).closest('tr');
+                    table
+                        .row(items)
+                        .remove()
+                        .draw();
+                }
 
+                $('#paginate_leyenda').text(data.total);
             });
         }
     });
 }
-console.log('cuotas');
+
+function resetCuota() {
+    $('#cuotas_select_mes')
+        .removeClass('is-valid')
+        .val('');
+    $('#cuotas_input_fecha')
+        .removeClass('is-valid')
+        .val('');
+    $('#cuotas_id').val('');
+    $('#cuotas_opcion').val('guardar_cuotas');
+
+}
+console.log('cuotasssss');

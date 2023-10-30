@@ -15,7 +15,14 @@
                         <?php require_once "form_cuotas.php" ?>
                     </div>
                     <div class="col-md-8">
-                        <?php require_once 'table_cuotas.php'; ?>
+                        <div id="dataContainerCuotas">
+                            <?php
+                            $listarCuotas = $controller->listarCuotas();
+                            $i = 0;
+                            $links = $controller->linksPaginate;
+                            require 'table_cuotas.php';
+                            ?>
+                        </div>
                     </div>
                 </div>
 
