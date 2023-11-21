@@ -31,15 +31,18 @@ $('#cuotas_form').submit(function (e) {
 
     if (procesar){
         ajaxRequest({ url: 'procesar_cuotas.php', data: $(this).serialize() }, function (data) {
+
             if (data.result){
+
                 let table = $('#tabla_cuotas').DataTable();
 
                 if (data.nuevo){
+
                     let button = '<div class="btn-group btn-group-sm">\n' +
                         '                                <button type="button" class="btn btn-info" onclick="editCuota('+ data.id +')">\n' +
                         '                                    <i class="fas fa-edit"></i>\n' +
                         '                                </button>\n' +
-                        '                                <button type="button" class="btn btn-info" onclick="destroyCuota('+ data.id +')" id="btn_eliminar_cuotas_('+ data.id +')">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="destroyCuota('+ data.id +')" id="btn_eliminar_cuota_'+ data.id +'">\n' +
                         '                                    <i class="far fa-trash-alt"></i>\n' +
                         '                                </button>\n' +
                         '                            </div>';
@@ -59,15 +62,29 @@ $('#cuotas_form').submit(function (e) {
 
                     $('#paginate_leyenda').text(data.total);
                 }else{
+
                     let tr = $('#tr_item_cuota_' + data.id);
                     table
                         .cell(tr.find('.mes')).data(data.mes)
                         .cell(tr.find('.fecha')).data(data.fecha)
                         .draw();
+
                 }
 
-
                 resetCuota();
+
+            } else {
+
+                if (data.error_mes){
+                    mes.addClass('is-invalid');
+                    $('#error_cuotas_select_mes').text('El mes ya ha sido registrado.');
+                }
+
+                if (data.error_fecha){
+                    fecha.addClass('is-invalid');
+                    $('#error_cuotas_input_fecha').text('La fecha debe ser mayor a la ultima cuota establecida.');
+                }
+
             }
 
 
@@ -93,16 +110,15 @@ function editCuota(id) {
 function destroyCuota(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
-            ajaxRequest({ url: 'procesar_cuotas.php', data: {opcion: 'eliminar_cuotas', id: id} }, function (data) {
+            ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'eliminar_cuotas', id: id} }, function (data) {
                 if (data.result){
                     let table = $('#tabla_cuotas').DataTable();
-                    let items = $('#btn_eliminar_' + id).closest('tr');
+                    let item = $('#btn_eliminar_cuota_' + id).closest('tr');
                     table
-                        .row(items)
+                        .row(item)
                         .remove()
                         .draw();
                 }
-
                 $('#paginate_leyenda').text(data.total);
             });
         }
@@ -120,4 +136,4 @@ function resetCuota() {
     $('#cuotas_opcion').val('guardar_cuotas');
 
 }
-console.log('cuotasssss');
+console.log('cuotas');

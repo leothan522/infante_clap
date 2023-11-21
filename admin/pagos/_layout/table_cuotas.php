@@ -33,8 +33,8 @@
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button" class="btn btn-info"
-                                        id="btn_eliminar_(<?php echo $cuota['id']; ?>)"
-                                        onclick="destroyCuota(<?php echo $cuota['id']; ?>)" >
+                                        onclick="destroyCuota(<?php echo $cuota['id']; ?>)"
+                                        id="btn_eliminar_cuota_<?php echo $cuota['id']; ?>" >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>

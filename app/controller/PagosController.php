@@ -24,7 +24,7 @@ class PagosController extends Admin
     public function listarCuotas()
     {
         $model = new Cuota();
-        $limit = 15;
+        $limit = 10;
         $this->linksPaginate = paginate('procesar_cuotas.php', 'tabla_cuotas', $limit, $model->count(1), null, 'paginate', 'dataContainerCuotas')->createLinks();
         return $model->paginate($limit, null, 'fecha', 'DESC', 1);
     }

@@ -41,28 +41,82 @@ if ($_POST) {
                         !empty($_POST['cuotas_select_mes']) &&
                         !empty($_POST['cuotas_input_fecha'])
                     ){
+
                         $mes = $_POST['cuotas_select_mes'];
                         $fecha = $_POST['cuotas_input_fecha'];
 
-                        $data = [
-                            $mes,
-                            $fecha
-                        ];
+                        $existe = false;
+                        $error_mes = false;
+                        $error_fecha = false;
+                        $year = date("Y");
 
-                        $model->save($data);
-                        $response = crearResponse(
-                          false,
-                          true,
-                          'Guardado Exitosamente',
-                          'Se Guardo Exitosamente'
-                        );
-                        $cuota = $model->first('mes', '=', $mes);
-                        $response['id'] = $cuota['id'];
-                        $response['mes'] = mesEspanol($cuota['mes']);
-                        $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
-                        $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
-                        $response['nuevo'] = true;
-                        $response['total'] = $model->count(1);
+                        $listarCuotas = $model->getList('mes', '=', $mes, 1, 'mes', 'DESC');
+                        if ($listarCuotas){
+                            foreach ($listarCuotas as $cuota){
+                                $db_fecha = $cuota['fecha'];
+                                break;
+                            }
+                            $explode = explode('-', $db_fecha);
+                            if ($year == $explode[0]){
+                                $existe = true;
+                                $error_mes = true;
+                            }
+                        }
+
+                        $listarCuotas = $model->getAll(1, 'fecha', 'DESC');
+                        if ($listarCuotas){
+                            foreach ($listarCuotas as $cuota){
+                                $db_fecha = $cuota['fecha'];
+                                break;
+                            }
+                            if ($fecha < $db_fecha){
+                                $existe = true;
+                                $error_fecha = true;
+                            }
+                        }
+
+
+
+                        if (!$existe){
+                            $data = [
+                                $mes,
+                                $fecha
+                            ];
+
+                            $model->save($data);
+                            $response = crearResponse(
+                                false,
+                                true,
+                                'Guardado Exitosamente',
+                                'Se Guardo Exitosamente'
+                            );
+                            $cuota = $model->first('mes', '=', $mes);
+                            $response['id'] = $cuota['id'];
+                            $response['mes'] = mesEspanol($cuota['mes']);
+                            $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
+                            $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                            $response['nuevo'] = true;
+                            $response['total'] = $model->count(1);
+                        }else{
+
+                            $response = crearResponse(
+                                null,
+                                false,
+                                'JS',
+                                'JS',
+                                'warning',
+                                false,
+                                true
+                            );
+
+                            $response['error_mes'] = false;
+                            $response['error_fecha'] = false;
+                            if ($error_mes){ $response['error_mes'] = true; }
+                            if ($error_fecha){ $response['error_fecha'] = true; }
+
+                        }
+
+
 
                     }else{
                         $response = crearResponse('faltan_datos');
