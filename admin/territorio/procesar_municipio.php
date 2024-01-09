@@ -48,14 +48,27 @@ if ($_POST) {
                         //proceso
                         $nombre = ucwords($_POST['mun_municipio']);
                         $mini = $_POST['municipio_mini'];
+                        $asignacion = $_POST['municipio_asignacion'];
+
+                        if (empty($asignacion)) {
+                            if ($asignacion != 0) {
+                                $asignacion = null;
+                            }
+                            $asignacion_sql = "";
+                        } else {
+                            $asignacion_sql = "AND `familias` = '$asignacion'";
+                        }
+
 
                         $existeMunicipio = $model->existe('nombre', '=', $nombre, null);
                         $existeMini = $model->existe('mini', '=', $mini, null);
 
                         if (!$existeMunicipio && !$existeMini) {
+
                             $data = [
                                 $nombre,
                                 $mini,
+                                $asignacion,
                                 $hoy
                             ];
 
@@ -72,6 +85,7 @@ if ($_POST) {
                             $response['item'] = '<p> ' . $model->count() . '. </p>';
                             $response['nombre'] = $municipios['nombre'];
                             $response['mini'] = $municipios['mini'];
+                            $response['asignacion'] = '<p class="text-right">'.formatoMillares($municipios['familias'], 0).'</p>';
                             $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
@@ -130,6 +144,7 @@ if ($_POST) {
                         $response['id'] = $municipio['id'];
                         $response['nombre'] = $municipio['nombre'];
                         $response['mini'] = $municipio['mini'];
+                        $response['asignacion'] = $municipio['familias'];
 
                     } else {
                         $response = crearResponse('faltan_datos');
@@ -148,6 +163,7 @@ if ($_POST) {
                         $id = $_POST['id'];
                         $nombre = $_POST['mun_municipio'];
                         $mini = $_POST['municipio_mini'];
+                        $asignacion = $_POST['municipio_asignacion'];
 
                         $existeMunicipio = $model->existe('nombre', '=', $nombre, $id);
                         $existeMini = $model->existe('mini', '=', $mini, $id);
@@ -157,6 +173,7 @@ if ($_POST) {
                             $municipio = $model->find($id);
                             $db_nombre = $municipio['nombre'];
                             $db_mini = $municipio['mini'];
+                            $db_asignacion = $municipio['familias'];
                             $cambios = false;
 
                             if ($db_nombre != $nombre) {
@@ -168,6 +185,12 @@ if ($_POST) {
                             if ($db_mini != $mini) {
                                 $cambios = true;
                                 $model->update($id, 'mini', $mini);
+                                $model->update($id, 'updated_at', $hoy);
+                            }
+
+                            if ($db_asignacion != $asignacion) {
+                                $cambios = true;
+                                $model->update($id, 'familias', $asignacion);
                                 $model->update($id, 'updated_at', $hoy);
                             }
 
@@ -184,6 +207,7 @@ if ($_POST) {
                                 $response['id'] = $id;
                                 $response['nombre'] = $nombre;
                                 $response['mini'] = $mini;
+                                $response['asignacion'] = '<p class="text-right">'.formatoMillares($asignacion, 0).'</p>';
                                 $response['total'] = $model->count();
                                 $response['nuevo'] = false;
 

@@ -14,13 +14,14 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table mt-3">
+        <div class="table">
             <table class="table" id="tabla_municipios">
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Nombre</th>
                     <th>Abreviatura</th>
+                    <th style="width: 40px">Asignación</th>
                     <th style="width: 40px">Parroquias</th>
                     <th style="width: 5%">&nbsp;</th>
                 </tr>
@@ -34,6 +35,7 @@
                         <td class="text-center item"><?php echo $i; ?>.</td>
                         <td class="nombre text-uppercase"><?php echo $municipio['nombre']; ?></td>
                         <td class="mini text-uppercase"><?php echo $municipio['mini']; ?></td>
+                        <td class="asignacion text-right"> <?php echo formatoMillares($municipio['familias'], 0); ?> </td>
                         <td class="text-center parroquias">
                             <div class="btn-group btn-group-sm parroquia">
                                 <button type="button" class="btn btn-success"

@@ -32,16 +32,29 @@ if ($_POST) {
                         $numero = $_POST['bloques_numero'];
                         $nombre = $_POST['bloques_nombre'];
                         $municipios_id = $_POST['municipios_id'];
+                        $asignacion = $_POST['bloques_asignacion'];
                         $bloques = $model->first('municipios_id', '=', $municipios_id);
+
+                        if (empty($asignacion)) {
+                            if ($asignacion != 0) {
+                                $asignacion = null;
+                            }
+                            $asignacion_sql = "";
+                        } else {
+                            $asignacion_sql = "AND `familias` = '$asignacion'";
+                        }
 
 
                         $getBloques = $model->getList('municipios_id', '=', $municipios_id);
                         $existe = false;
                         $error_numero = false;
                         $error_nombre = false;
+                        $error_nombre = false;
+                        $error_asignacion = false;
                         foreach ($getBloques as $bloque) {
                             $db_nombre = $bloque['nombre'];
                             $db_numero = $bloque['numero'];
+                            $db_asignacion = $bloque['familias'];
                             if ($db_nombre == $nombre) {
                                 $existe = true;
                                 $error_nombre = true;
@@ -50,13 +63,19 @@ if ($_POST) {
                                 $existe = true;
                                 $error_numero = true;
                             }
+
+                            if ($db_asignacion == $asignacion && $db_asignacion != 0) {
+                                $existe = true;
+                                $error_asignacion = true;
+                            }
                         }
 
                         if (!$existe) {
                             $data = [
                                 $numero,
                                 $nombre,
-                                $municipios_id
+                                $municipios_id,
+                                $asignacion
                             ];
 
                             $model->save($data);
@@ -70,8 +89,9 @@ if ($_POST) {
                             $response['id'] = $bloque['id'];
                             $response['item'] = $model->count();
                             $response['numero'] = $bloque['numero'];
-                            $response['nombre'] = $bloque['nombre'];
+                            $response['nombre'] = '<p class="text-center">'.$bloque['nombre'].'</p>';
                             $response['municipios_id'] = $bloque['municipios_id'];
+                            $response['asignacion'] = '<p class="text-right">'.formatoMillares($bloque['familias']).'</p>';
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
                         } else {
@@ -85,6 +105,7 @@ if ($_POST) {
                             );
                             $response['error_nombre'] = $error_nombre;
                             $response['error_numero'] = $error_numero;
+                            $response['error_asignacion'] = $error_asignacion;
                         }
 
 
@@ -107,6 +128,7 @@ if ($_POST) {
                         $response['id'] = $bloque['id'];
                         $response['numero'] = $bloque['numero'];
                         $response['nombre'] = $bloque['nombre'];
+                        $response['asignacion'] = $bloque['familias'];
                         $response['municipios_id'] = $bloque['municipios_id'];
                     } else {
                         $response = crearResponse('faltan_datos');
@@ -123,6 +145,7 @@ if ($_POST) {
                         $cambios = true;
                         $numero = $_POST['bloques_numero'];
                         $nombre = $_POST['bloques_nombre'];
+                        $asignacion = $_POST['bloques_asignacion'];
                         $municipios_id = $_POST['municipios_id'];
                         $id = $_POST['id'];
                         $bloque = $model->find($id);
@@ -135,6 +158,11 @@ if ($_POST) {
                         if ($bloque['nombre'] != $nombre) {
                             $cambios = false;
                             $model->update($id, 'nombre', $nombre);
+                        }
+
+                        if ($bloque['familias'] != $asignacion) {
+                            $cambios = false;
+                            $model->update($id, 'familias', $asignacion);
                         }
 
                         if ($bloque['municipios_id'] != $municipios_id) {
@@ -153,6 +181,7 @@ if ($_POST) {
                             $response['id'] = $bloque['id'];
                             $response['numero'] = $bloque['numero'];
                             $response['nombre'] = $bloque['nombre'];
+                            $response['asignacion'] = $bloque['familias'];
                             $response['total'] = $model->count();
                             $response['nuevo'] = false;
                             $response['municipios_id'] = $bloque['municipios_id'];

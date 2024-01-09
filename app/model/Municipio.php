@@ -10,6 +10,7 @@ class Municipio extends Model
         $this->DATA = [
             'nombre',
             'mini',
+            'familias',
             'created_at'
         ];
     }

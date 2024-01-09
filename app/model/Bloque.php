@@ -11,7 +11,8 @@ class Bloque extends Model
         $this->DATA = [
             'numero',
             'nombre',
-            'municipios_id'
+            'municipios_id',
+            'familias'
         ];
     }
 }

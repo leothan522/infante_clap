@@ -1,6 +1,7 @@
 //validamos campos para los bloques
 inputmask('#bloques_input_nombre', 'alfanumerico', 4, 15);
 inputmask('#bloques_input_numero', 'numerico', 1, 3, '');
+inputmask('#bloques_input_asignacion', 'numerico', 1, 10, '');
 
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('bloques_tabla');
@@ -12,6 +13,7 @@ $('#bloques_form').submit(function (e) {
     let procesar = true;
     let numero = $('#bloques_input_numero');
     let nombre = $('#bloques_input_nombre');
+    let asignacion = $('#bloques_input_asignacion');
     let municipios = $('#bloques_select_municipios');
 
     if (numero.val().length <= 0) {
@@ -61,6 +63,7 @@ $('#bloques_form').submit(function (e) {
                     table.row.add([
                         data.numero,
                         data.nombre,
+                        data.asignacion,
                         buttons
                     ]).draw();
 
@@ -68,6 +71,7 @@ $('#bloques_form').submit(function (e) {
                     nuevo.attr('id', 'tr_item_' + data.id);
                     nuevo.find("td:eq(0)").addClass('numero');
                     nuevo.find("td:eq(1)").addClass('nombre');
+                    nuevo.find("td:eq(2)").addClass('asignacion');
 
                 }else{
                     //estoy editando
@@ -75,6 +79,7 @@ $('#bloques_form').submit(function (e) {
                     table
                         .cell(tr.find('.numero')).data(data.numero)
                         .cell(tr.find('.nombre')).data(data.nombre)
+                        .cell(tr.find('.asignacion')).data(data.asignacion)
                         .draw();
                 }
                 limpiarBloques(false);
@@ -96,6 +101,7 @@ function editBloque(id) {
         if (data.result) {
             $('#bloques_input_numero').val(data.numero);
             $('#bloques_input_nombre').val(data.nombre);
+            $('#bloques_input_asignacion').val(data.asignacion);
             $('#bloques_municipios_id').val($('#bloques_select_municipios').val());
             $('#bloques_id').val(data.id);
             $('#bloques_opcion').val('editar_bloque');
@@ -151,6 +157,7 @@ function limpiarBloques( municipio = true) {
         .removeClass('is-valid')
         .removeClass('is-invalid');
     $('#bloques_id').val('');
+    $('#bloques_input_asignacion').val('');
     $('#bloques_opcion').val('guardar_bloque');
 
     if (municipio){

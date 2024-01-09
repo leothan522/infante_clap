@@ -34,14 +34,27 @@
                 </select>
                 <div class="invalid-feedback" id="error_cuotas_select_mes"></div>
             </div>
-        </div>
 
-        <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputPassword1">Fecha de Inicio</label>
                 <input type="date" class="form-control" name="cuotas_input_fecha" id="cuotas_input_fecha">
                 <div class="invalid-feedback" id="error_cuotas_input_fecha"></div>
             </div>
+
+
+            <div class="form-group">
+                <label>Precio</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Precio del Modulo" name="cuotas_input_precio" id="cuotas_input_precio">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" id="error_cuotas_input_precio"></div>
+                </div>
+            </div>
+            
         </div>
 
 
@@ -49,7 +62,7 @@
 
         <div class="card-footer">
             <input type="hidden" placeholder="id" name="cuotas_id" id="cuotas_id">
-            <input type="hidden"  name="opcion" value="guardar_cuotas" id="cuotas_opcion">
+            <input type="hidden" name="opcion" value="guardar_cuotas" id="cuotas_opcion">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" class="btn btn-default float-right">Cancel</button>
         </div>

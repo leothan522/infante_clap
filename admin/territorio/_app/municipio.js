@@ -1,6 +1,7 @@
 //validamos campos para los municpios
 inputmask('#municipio_nombre', 'alfa', 5, 100, ' ');
 inputmask('#municipio_mini', 'alfa', 5, 50, ' ');
+inputmask('#municipio_asignacion', 'numerico', 3, 10, '');
 
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('tabla_municipios');
@@ -10,6 +11,7 @@ $('#form_territorio_municipio').submit(function (e) {
     e.preventDefault();
     let municipio = $('#municipio_nombre');
     let mini = $('#municipio_mini');
+    let asignacion = $('#municipio_asignacion');
     let procesar = true;
 
     if (!municipio.inputmask('isComplete')){
@@ -78,6 +80,7 @@ $('#form_territorio_municipio').submit(function (e) {
                         data.item,
                         data.nombre,
                         data.mini,
+                        data.asignacion,
                         button_parroquia,
                         buttons
                     ]).draw();
@@ -86,13 +89,15 @@ $('#form_territorio_municipio').submit(function (e) {
                     nuevo.attr('id', 'tr_item_' + data.id);
                     nuevo.find("td:eq(1)").addClass('nombre');
                     nuevo.find("td:eq(2)").addClass('mini');
-                    nuevo.find("td:eq(3)").addClass('parroquias');
+                    nuevo.find("td:eq(3)").addClass('asignacion');
+                    nuevo.find("td:eq(4)").addClass('parroquias');
                 }else {
                     //estoy editando
                     let tr = $('#tr_item_' + data.id);
                     table
                         .cell(tr.find('.nombre')).data(data.nombre)
                         .cell(tr.find('.mini')).data(data.mini)
+                        .cell(tr.find('.asignacion')).data(data.asignacion)
                         .draw();
                     //modifico el nombre municipio en parroquias vinculadas
                     let table_parroquias = $('#tabla_parroquias').DataTable();
@@ -160,6 +165,7 @@ function editMunicipio(id) {
             $('#municipio_opcion').val('editar_municipio');
             $('#municipio_btn_button').text('Guardar Cambios');
             $('#municipio_mini').val(data.mini);
+            $('#municipio_asignacion').val(data.asignacion);
         }else{
             $('#municipio_btn_reset').click();
         }

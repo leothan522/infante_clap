@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   `numero` int NOT NULL,
   `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `municipios_id` int DEFAULT NULL,
+  `familias` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -73,10 +74,10 @@ CREATE TABLE IF NOT EXISTS `entes` (
 CREATE TABLE IF NOT EXISTS `jefes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `cedula` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `telefono` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `telefono` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `genero` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `claps_id` int NOT NULL,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -87,32 +88,33 @@ CREATE TABLE IF NOT EXISTS `jefes` (
 -- Volcando estructura para tabla alguarisa_claps.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mini` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mini` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parroquias` int DEFAULT '0',
+  `familias` int unsigned DEFAULT NULL,
   `estatus` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla alguarisa_claps.municipios: ~15 rows (aproximadamente)
-INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `estatus`, `created_at`, `updated_at`) VALUES
-	(1, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO', 3, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(2, 'FRANCISCO DE MIRANDA', 'MIRANDA', 4, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(3, 'LEONARDO INFANTE', 'INFANTE', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(4, 'PEDRO ZARAZA', 'ZARAZA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(5, 'JOSE TADEO MONAGAS', 'MONAGAS', 7, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(6, 'JOSE FELIX RIBAS', 'RIBAS', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(7, 'CAMAGUAN', 'CAMAGUA', 3, 1, '2023-09-27 12:03:47', '2023-10-16 04:00:00'),
-	(8, 'JULIAN MELLADO', 'MELLADO', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(9, 'EL SOCORRO', 'EL SOCORRO', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(10, 'SANTA MARIA DE IPIRE', 'SANTA MARIA', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(11, 'CHAGUARAMAS', 'CHAGUARAMAS', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(12, 'JUAN JOSE RONDON', 'RONDON', 3, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(13, 'SAN JOSE DE GUARIBE', 'GUARIBE', 1, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(14, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL', 2, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47'),
-	(15, 'ORTIZ', 'ORTIZ', 4, 1, '2023-09-27 12:03:47', '2023-09-27 12:03:47');
+INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `familias`, `estatus`, `created_at`, `updated_at`) VALUES
+	(1, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO', 3, 32586, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(2, 'FRANCISCO DE MIRANDA', 'MIRANDA', 4, 34452, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(3, 'LEONARDO INFANTE', 'INFANTE', 2, 24811, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(4, 'PEDRO ZARAZA', 'ZARAZA', 2, 20063, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(5, 'JOSE TADEO MONAGAS', 'MONAGAS', 7, 14086, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(6, 'JOSE FELIX RIBAS', 'RIBAS', 2, 9551, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(7, 'CAMAGUAN', 'CAMAGUAN', 3, 1235, 1, '2023-10-23 18:47:26', '2024-01-09 04:00:00'),
+	(8, 'JULIAN MELLADO', 'MELLADO', 2, 6838, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(9, 'EL SOCORRO', 'EL SOCORRO', 1, 7146, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(10, 'SANTA MARIA DE IPIRE', 'SANTA MARIA', 2, 4631, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(11, 'CHAGUARAMAS', 'CHAGUARAMAS', 1, 1588, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(12, 'JUAN JOSE RONDON', 'RONDON', 3, 420, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(13, 'SAN JOSE DE GUARIBE', 'GUARIBE', 1, 2936, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(14, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL', 2, 7096, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
+	(15, 'ORTIZ', 'ORTIZ', 4, 6581, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26');
 
 -- Volcando estructura para tabla alguarisa_claps.pagos
 CREATE TABLE IF NOT EXISTS `pagos` (

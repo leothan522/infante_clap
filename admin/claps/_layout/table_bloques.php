@@ -3,7 +3,8 @@
         <thead>
         <tr>
             <th>Número</th>
-            <th>Nombre</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-right">Asignación</th>
             <th style="width: 5%">&nbsp;</th>
         </tr>
         </thead>
@@ -13,7 +14,8 @@
             ?>
             <tr id="tr_item_<?php echo $bloque['id']; ?>">
                 <td class="numero"> <?php echo $bloque['numero']; ?></td>
-                <td class="nombre"> <?php echo $bloque['nombre']; ?> </td>
+                <td class="nombre text-center"> <?php echo $bloque['nombre']; ?> </td>
+                <td class="asignacion text-right"><?php echo formatoMillares($bloque['familias'], 0) ?></td>
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="button" class="btn btn-info" onclick="editBloque(<?php echo $bloque['id']; ?>)">
