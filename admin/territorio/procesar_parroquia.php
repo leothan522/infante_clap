@@ -100,7 +100,7 @@ if ($_POST) {
                             $response['municipio'] = $municipio['nombre'];
                             $response['municipios_id'] = $municipio['id'];
                             $response['municipio_parroquias'] = $count;
-                            $response['parroquia'] = $parroquias['nombre'];
+                            $response['parroquia'] = '<p class="text-uppercase">'.$parroquias['nombre'].'</p>';
                             $response['mini'] = '<p class="text-center text-uppercase">'.$parroquias['mini'].'</p>';
                             $response['asignacion'] = '<p class="text-right">'.formatoMillares($parroquias['familias'], 0).'</p>';
                             $response['nuevo'] = true;
@@ -178,7 +178,8 @@ if ($_POST) {
                         !empty($_POST['parroquia_municipio']) &&
                         !empty($_POST['parroquia_nombre']) &&
                         !empty($_POST['id']) &&
-                        !empty($_POST['parroquia_mini'])
+                        !empty($_POST['parroquia_mini']) &&
+                        !empty($_POST['parroquia_asignacion'])
                     ) {
                         $municipio = $_POST['parroquia_municipio'];
                         $parroquia_nombre = $_POST['parroquia_nombre'];
@@ -186,15 +187,6 @@ if ($_POST) {
                         $mini = $_POST['parroquia_mini'];
                         $asignacion = $_POST['parroquia_asignacion'];
                         $procesar = false;
-
-                        if (empty($asignacion)) {
-                            if ($asignacion != 0) {
-                                $asignacion = null;
-                            }
-                            $asignacion_sql = "";
-                        } else {
-                            $asignacion_sql = "AND `familias` = '$asignacion'";
-                        }
 
                         $existeParroquia = $model->existe('nombre', '=', $parroquia_nombre, $id);
                         $existeMini = $model->existe('nombre', '=', $parroquia_nombre, $id);
@@ -253,8 +245,8 @@ if ($_POST) {
                                 $parroquias = $model->find($id);
                                 $municipio = $modelMunicipio->find($parroquias['municipios_id']);
                                 $response['id'] = $id;
-                                $response['municipio'] = $municipio['nombre'];
-                                $response['parroquia'] = $parroquia_nombre;
+                                $response['municipio'] = '<p class="text-uppercase">'.$municipio['nombre'].'</p>';
+                                $response['parroquia'] = '<p class="text-uppercase">'.$parroquia_nombre.'</p>';
                                 $response['total'] = $model->count();
                                 $response['mini'] = '<p class="text-center text-uppercase">'.$parroquias['mini'].'</p>';
                                 $response['asignacion'] = '<p class="text-right">'.formatoMillares($parroquias['familias'], 0).'</p>';

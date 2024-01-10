@@ -58,7 +58,7 @@
                                     <i class="fas fa-users"></i>
                                 </div>
                             </div>
-                            <div class="invalid-feedback" id="error_paroquia_asignacion"></div>
+                            <div class="invalid-feedback" id="error_parroquia_asignacion"></div>
                         </div>
 
 

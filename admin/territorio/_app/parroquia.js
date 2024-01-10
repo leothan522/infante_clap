@@ -4,7 +4,7 @@ datatable('tabla_parroquias');
 //inicializamos el inputmask
 inputmask('#parroquia_nombre', 'alfa', 5, 100, ' ');
 inputmask('#parroquia_mini', 'alfa', 5, 50, ' ');
-inputmask('#parroquia_asignacion', 'numerico', 1, 10, '');
+inputmask('#parroquia_asignacion', 'numerico', 3, 10, '');
 
 //Aqui se hace la solicitud ajax para registrar una nueva parroquia o editar una existente
 $('#form_parroquias').submit(function (e) {
@@ -40,6 +40,16 @@ $('#form_parroquias').submit(function (e) {
         $('#error_parroquia_mini').text('La abreviatura es obligatoria, debe tener al menos 5 caracteres.');
     }else {
         mini
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (!asignacion.inputmask('isComplete')){
+        procesar = false;
+        asignacion.addClass('is-invalid');
+        $('#error_parroquia_asignacion').text('La asignacion es obligatoria, debe tener al menos 3 digitos.');
+    }else {
+        asignacion
             .removeClass('is-invalid')
             .addClass('is-valid');
     }
@@ -216,7 +226,10 @@ function resetParroquia(){
         .removeClass('is-valid')
         .removeClass('is-invalid');
     $('#parroquia_id').val('');
-    $('#parroquia_asignacion').val('');
+    $('#parroquia_asignacion')
+        .val('')
+        .removeClass('is-valid')
+        .removeClass('is-invalid');
     $('#parroquia_opcion').val('guardar_parroquia');
     $('#title_parroquia').text('Crear Parroquia');
 }

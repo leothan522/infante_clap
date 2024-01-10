@@ -32,6 +32,15 @@ $('#form_territorio_municipio').submit(function (e) {
         mini.addClass('is-valid');
     }
 
+    if (!asignacion.inputmask('isComplete')){
+        procesar = false;
+        asignacion.addClass('is-invalid');
+        $('#error_municipio_asignacion').text('La asignacion es obligatoria, debe tener al menos 3 digitos.');
+    } else {
+        asignacion.removeClass('is-invalid');
+        asignacion.addClass('is-valid');
+    }
+
 
 
     if (procesar){
@@ -145,6 +154,10 @@ function resetMunicipio() {
         .removeClass('is-valid')
         .removeClass('is-invalid');
     $('#municipio_mini')
+        .val('')
+        .removeClass('is-invalid')
+        .removeClass('is-valid');
+    $('#municipio_asignacion')
         .val('')
         .removeClass('is-invalid')
         .removeClass('is-valid');

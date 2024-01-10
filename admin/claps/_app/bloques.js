@@ -1,7 +1,7 @@
 //validamos campos para los bloques
 inputmask('#bloques_input_nombre', 'alfanumerico', 4, 15);
 inputmask('#bloques_input_numero', 'numerico', 1, 3, '');
-inputmask('#bloques_input_asignacion', 'numerico', 1, 10, '');
+inputmask('#bloques_input_asignacion', 'numerico', 3, 10, '');
 
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('bloques_tabla');
@@ -41,6 +41,15 @@ $('#bloques_form').submit(function (e) {
     } else {
         municipios.removeClass('is-invalid');
         municipios.removeClass('is-valid');
+    }
+
+    if (!asignacion.inputmask('isComplete')){
+        procesar = false;
+        asignacion.addClass('is-invalid');
+        $('#error_bloques_asignacion').text('La asignacion es obligatoria, debe tener al menos 3 digitos.')
+    } else {
+        asignacion.removeClass('is-invalid');
+        asignacion.addClass('is-valid');
     }
 
     if (procesar) {
@@ -157,7 +166,10 @@ function limpiarBloques( municipio = true) {
         .removeClass('is-valid')
         .removeClass('is-invalid');
     $('#bloques_id').val('');
-    $('#bloques_input_asignacion').val('');
+    $('#bloques_input_asignacion')
+        .val('')
+        .removeClass('is-valid')
+        .removeClass('is-invalid');
     $('#bloques_opcion').val('guardar_bloque');
 
     if (municipio){

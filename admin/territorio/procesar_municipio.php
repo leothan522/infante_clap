@@ -44,21 +44,15 @@ if ($_POST) {
 
                 case 'guardar_municipio':
 
-                    if (!empty($_POST['mun_municipio']) && !empty($_POST['municipio_mini'])) {
+                    if (
+                        !empty($_POST['mun_municipio']) &&
+                        !empty($_POST['municipio_mini']) &&
+                        !empty($_POST['municipio_asignacion'])
+                    ) {
                         //proceso
                         $nombre = ucwords($_POST['mun_municipio']);
                         $mini = $_POST['municipio_mini'];
                         $asignacion = $_POST['municipio_asignacion'];
-
-                        if (empty($asignacion)) {
-                            if ($asignacion != 0) {
-                                $asignacion = null;
-                            }
-                            $asignacion_sql = "";
-                        } else {
-                            $asignacion_sql = "AND `familias` = '$asignacion'";
-                        }
-
 
                         $existeMunicipio = $model->existe('nombre', '=', $nombre, null);
                         $existeMini = $model->existe('mini', '=', $mini, null);
@@ -83,8 +77,8 @@ if ($_POST) {
                             //datos extras para el $response
                             $response['id'] = $municipios['id'];
                             $response['item'] = '<p> ' . $model->count() . '. </p>';
-                            $response['nombre'] = $municipios['nombre'];
-                            $response['mini'] = $municipios['mini'];
+                            $response['nombre'] = '<p class="text-uppercase">'.$municipios['nombre'].'</p>';
+                            $response['mini'] = '<p class="text-uppercase">'.$municipios['mini'].'</p>';
                             $response['asignacion'] = '<p class="text-right">'.formatoMillares($municipios['familias'], 0).'</p>';
                             $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
                             $response['nuevo'] = true;

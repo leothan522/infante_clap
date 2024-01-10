@@ -26,7 +26,8 @@ if ($_POST) {
                     if (
                         !empty($_POST['bloques_numero']) &&
                         !empty($_POST['bloques_nombre']) &&
-                        !empty($_POST['municipios_id'])
+                        !empty($_POST['municipios_id']) &&
+                        !empty($_POST['bloques_asignacion'])
                     ) {
                         //proceso
                         $numero = $_POST['bloques_numero'];
@@ -34,15 +35,6 @@ if ($_POST) {
                         $municipios_id = $_POST['municipios_id'];
                         $asignacion = $_POST['bloques_asignacion'];
                         $bloques = $model->first('municipios_id', '=', $municipios_id);
-
-                        if (empty($asignacion)) {
-                            if ($asignacion != 0) {
-                                $asignacion = null;
-                            }
-                            $asignacion_sql = "";
-                        } else {
-                            $asignacion_sql = "AND `familias` = '$asignacion'";
-                        }
 
 
                         $getBloques = $model->getList('municipios_id', '=', $municipios_id);
@@ -140,6 +132,7 @@ if ($_POST) {
                     if (
                         !empty($_POST['bloques_numero']) &&
                         !empty($_POST['bloques_nombre']) &&
+                        !empty($_POST['municipios_id']) &&
                         !empty($_POST['municipios_id'])
                     ) {
                         $cambios = true;
