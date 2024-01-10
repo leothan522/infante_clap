@@ -15,11 +15,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Volcando estructura de base de datos para alguarisa_claps
-CREATE DATABASE IF NOT EXISTS `alguarisa_claps` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `alguarisa_claps`;
+-- Volcando estructura de base de datos para alguarisa_distribucion
+CREATE DATABASE IF NOT EXISTS `alguarisa_distribucion` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `alguarisa_distribucion`;
 
--- Volcando estructura para tabla alguarisa_claps.bloques
+-- Volcando estructura para tabla alguarisa_distribucion.bloques
 CREATE TABLE IF NOT EXISTS `bloques` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `numero` int NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.bloques: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.bloques: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.claps
+-- Volcando estructura para tabla alguarisa_distribucion.claps
 CREATE TABLE IF NOT EXISTS `claps` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `claps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.claps: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.cuotas
+-- Volcando estructura para tabla alguarisa_distribucion.cuotas
 CREATE TABLE IF NOT EXISTS `cuotas` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `mes` int unsigned NOT NULL,
@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS `cuotas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.cuotas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.cuotas: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.entes
+-- Volcando estructura para tabla alguarisa_distribucion.entes
 CREATE TABLE IF NOT EXISTS `entes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -68,9 +68,9 @@ CREATE TABLE IF NOT EXISTS `entes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.entes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.jefes
+-- Volcando estructura para tabla alguarisa_distribucion.jefes
 CREATE TABLE IF NOT EXISTS `jefes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `cedula` int NOT NULL,
@@ -83,13 +83,13 @@ CREATE TABLE IF NOT EXISTS `jefes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.jefes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.jefes: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.municipios
+-- Volcando estructura para tabla alguarisa_distribucion.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mini` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mini` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parroquias` int DEFAULT '0',
   `familias` int unsigned DEFAULT NULL,
   `estatus` int NOT NULL DEFAULT '1',
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa_claps.municipios: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.municipios: ~15 rows (aproximadamente)
 INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `familias`, `estatus`, `created_at`, `updated_at`) VALUES
 	(1, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO', 3, 32586, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
 	(2, 'FRANCISCO DE MIRANDA', 'MIRANDA', 4, 34452, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
@@ -116,7 +116,7 @@ INSERT INTO `municipios` (`id`, `nombre`, `mini`, `parroquias`, `familias`, `est
 	(14, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL', 2, 7096, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26'),
 	(15, 'ORTIZ', 'ORTIZ', 4, 6581, 1, '2023-10-23 18:47:26', '2023-10-23 18:47:26');
 
--- Volcando estructura para tabla alguarisa_claps.pagos
+-- Volcando estructura para tabla alguarisa_distribucion.pagos
 CREATE TABLE IF NOT EXISTS `pagos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `monto` decimal(12,2) NOT NULL,
@@ -126,9 +126,9 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.pagos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.pagos: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.parametros
+-- Volcando estructura para tabla alguarisa_distribucion.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -137,9 +137,9 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.parametros: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla alguarisa_claps.parroquias
+-- Volcando estructura para tabla alguarisa_distribucion.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa_claps.parroquias: ~39 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.parroquias: ~39 rows (aproximadamente)
 INSERT INTO `parroquias` (`id`, `nombre`, `mini`, `municipios_id`, `familias`, `estatus`, `created_at`, `updated_at`) VALUES
 	(1, 'CAMAGUAN', NULL, 7, NULL, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
 	(2, 'PUERTO MIRANDA', NULL, 7, NULL, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
@@ -196,7 +196,7 @@ INSERT INTO `parroquias` (`id`, `nombre`, `mini`, `municipios_id`, `familias`, `
 	(38, 'SANTA MARIA', NULL, 10, NULL, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48'),
 	(39, 'ALTAMIRA', NULL, 10, NULL, 1, '2023-09-27 12:03:48', '2023-09-27 12:03:48');
 
--- Volcando estructura para tabla alguarisa_claps.users
+-- Volcando estructura para tabla alguarisa_distribucion.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_claps.users: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$q8sJLX5XG0nhyXybQn0wHej7Q7DdquAPy5da8tbANngGhk.SwXnFu', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-12', NULL, NULL, 0),
 	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$k0hDjkv2UVWA3Qp/OpesrOL5ruFtjBWHWxJVNEMt4yBi4bbuJQGYu', '(0412) 199-56.47', NULL, NULL, NULL, 100, 0, NULL, 1, 1, '2023-08-28', '2023-09-23', NULL, 0);
