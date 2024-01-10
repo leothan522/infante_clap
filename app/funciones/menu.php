@@ -31,7 +31,7 @@ function sidebar($modulo = null): ?string
             'url'           => '#',
             'active'        => $modulo == 'claps.index',
             'icono'         => '<i class="fas fa-users nav-icon"></i>',
-            'titulo'        => 'Censo CLAP',
+            'titulo'        => 'Distribución',
             'badge'         => null,
             'treeview'      => [
                 [
