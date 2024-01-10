@@ -50,6 +50,19 @@
                     </div>
 
 
+                        <label for="name">Asignación</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Ingrese la cantidad de familias" name="parroquia_asignacion" id="parroquia_asignacion">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" id="error_paroquia_asignacion"></div>
+                        </div>
+
+
+
 
                 </div>
             </div>

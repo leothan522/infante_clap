@@ -22,10 +22,10 @@
             <table class="table" id="tabla_parroquias">
                 <thead>
                 <tr>
-                    <th style="width: 10px">#</th>
+                    <th style="width: 15px">#</th>
                     <th>Nombre</th>
-                    <!--<th>Abreviatura</th>-->
-                    <th>Municipio</th>
+                    <th class="text-right">Asignación</th>
+                    <th class="text-center">Municipio</th>
                     <th style="width: 5%">&nbsp;</th>
                 </tr>
                 </thead>
@@ -37,8 +37,8 @@
                     <tr id="tr_item_p_<?php echo $parroquia['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>. </td>
                         <td class="parroquia"><?php echo $parroquia['nombre']; ?></td>
-                        <!--<td class="mini"><?php /*echo $parroquia['mini']; */?></td>-->
-                        <td class="municipio">
+                        <td class="asignacion text-right"><?php echo formatoMillares($parroquia['familias'], 0) ?></td>
+                        <td class="municipio text-center">
                             <?php echo $controller->getMunicipio($parroquia['municipios_id']); ?>
                         </td>
                         <td>

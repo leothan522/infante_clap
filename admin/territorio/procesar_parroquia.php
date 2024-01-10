@@ -56,6 +56,16 @@ if ($_POST) {
                         $municipio = $_POST['parroquia_municipio'];
                         $parroquia = ucwords($_POST['parroquia_nombre']);
                         $mini = $_POST['parroquia_mini'];
+                        $asignacion = $_POST['parroquia_asignacion'];
+
+                        if (empty($asignacion)) {
+                            if ($asignacion != 0) {
+                                $asignacion = null;
+                            }
+                            $asignacion_sql = "";
+                        } else {
+                            $asignacion_sql = "AND `familias` = '$asignacion'";
+                        }
 
                         $existeNombre = $model->existe('nombre', '=', $parroquia, null);
                         $existeMini = $model->existe('mini', '=', $mini, null);
@@ -66,6 +76,7 @@ if ($_POST) {
                                 $parroquia,
                                 $mini,
                                 $municipio,
+                                $asignacion,
                                 $hoy
                             ];
 
@@ -90,7 +101,8 @@ if ($_POST) {
                             $response['municipios_id'] = $municipio['id'];
                             $response['municipio_parroquias'] = $count;
                             $response['parroquia'] = $parroquias['nombre'];
-                            $response['mini'] = $parroquias['mini'];
+                            $response['mini'] = '<p class="text-center text-uppercase">'.$parroquias['mini'].'</p>';
+                            $response['asignacion'] = '<p class="text-right">'.formatoMillares($parroquias['familias'], 0).'</p>';
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
                             $response['btn_editar'] = validarPermisos('parroquias.edit');
@@ -152,6 +164,7 @@ if ($_POST) {
                         $response['municipios'] = $parroquia['municipios_id'];
                         $response['parroquia'] = $parroquia['nombre'];
                         $response['mini'] = $parroquia['mini'];
+                        $response['asignacion'] = $parroquia['familias'];
 
                     } else {
                         $response = crearResponse('faltan_datos');
@@ -171,7 +184,17 @@ if ($_POST) {
                         $parroquia_nombre = $_POST['parroquia_nombre'];
                         $id = $_POST['id'];
                         $mini = $_POST['parroquia_mini'];
+                        $asignacion = $_POST['parroquia_asignacion'];
                         $procesar = false;
+
+                        if (empty($asignacion)) {
+                            if ($asignacion != 0) {
+                                $asignacion = null;
+                            }
+                            $asignacion_sql = "";
+                        } else {
+                            $asignacion_sql = "AND `familias` = '$asignacion'";
+                        }
 
                         $existeParroquia = $model->existe('nombre', '=', $parroquia_nombre, $id);
                         $existeMini = $model->existe('nombre', '=', $parroquia_nombre, $id);
@@ -188,6 +211,7 @@ if ($_POST) {
                             $db_municipio = $parroquias['municipios_id'];
                             $db_parroquia = $parroquias['nombre'];
                             $db_mini = $parroquias['mini'];
+                            $db_asignacion = $parroquias['familias'];
                             $response['edit_municipio'] = false;
 
                             if ($db_municipio != $municipio) {
@@ -219,6 +243,12 @@ if ($_POST) {
                                 $model->update($id, 'updated_at', $hoy);
                             }
 
+                            if ($db_asignacion != $asignacion) {
+                                $procesar = true;
+                                $model->update($id, 'familias', $asignacion);
+                                $model->update($id, 'updated_at', $hoy);
+                            }
+
                             if ($procesar) {
                                 $parroquias = $model->find($id);
                                 $municipio = $modelMunicipio->find($parroquias['municipios_id']);
@@ -226,7 +256,8 @@ if ($_POST) {
                                 $response['municipio'] = $municipio['nombre'];
                                 $response['parroquia'] = $parroquia_nombre;
                                 $response['total'] = $model->count();
-                                $response['mini'] = $parroquias['mini'];
+                                $response['mini'] = '<p class="text-center text-uppercase">'.$parroquias['mini'].'</p>';
+                                $response['asignacion'] = '<p class="text-right">'.formatoMillares($parroquias['familias'], 0).'</p>';
                                 $response['nuevo'] = false;
                             } else {
                                 $response = crearResponse('no_cambios');
