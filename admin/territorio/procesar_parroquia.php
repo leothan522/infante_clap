@@ -191,6 +191,22 @@ if ($_POST) {
                         $existeParroquia = $model->existe('nombre', '=', $parroquia_nombre, $id);
                         $existeMini = $model->existe('nombre', '=', $parroquia_nombre, $id);
 
+                        $getMunicipio = $modelMunicipio->find($municipio);
+                        $asignacionMax = $getMunicipio['familias'];
+
+                        $getParroquias = $model->getList('municipios_id','=', $municipio);
+                        $suma = 0;
+                        foreach ($getParroquias as $getParroquia){
+                            if ($getParroquia['id'] != $id){
+                                $suma = $suma + $getParroquia['familias'];
+                            }
+                        }
+
+                        $asignacionCargar = $suma + $asignacion;
+
+
+
+
                         $response = crearResponse(
                             null,
                             true,
@@ -198,7 +214,7 @@ if ($_POST) {
                             'Parroquia editada exitosamente'
                         );
 
-                        if (!$existeParroquia && !$existeMini) {
+                        if (!$existeParroquia && !$existeMini && $asignacionMax >= $asignacionCargar) {
                             $parroquias = $model->find($id);
                             $db_municipio = $parroquias['municipios_id'];
                             $db_parroquia = $parroquias['nombre'];
@@ -279,6 +295,13 @@ if ($_POST) {
                                 $response['message_mini'] = 'La abreviatura ya esta registrada.';
                             } else {
                                 $response['error_mini'] = false;
+                            }
+
+                            if ($asignacionMax < $asignacionCargar){
+                                $response['error_asignacion'] = true;
+                                $response['message_asignacion'] = 'La Asignación de las parroquias no debe ser mayor a la del municipio.';
+                            }else{
+                                $response['error_asignacion'] = false;
                             }
 
                         }
