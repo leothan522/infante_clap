@@ -94,11 +94,20 @@ $('#bloques_form').submit(function (e) {
                 limpiarBloques(false);
             }else {
                 if (data.error_numero){
-                    numero.addClass('is-invalid');
+                    $('#bloques_input_numero').addClass('is-invalid');
+                    $('#error_bloques_numero').text(data.message);
                 }
                 if (data.error_nombre){
-                    nombre.addClass('is-invalid');
+                    $('#bloques_input_nombre').addClass('is-invalid');
+                    $('#error_bloques_nombre').text(data.message);
                 }
+
+                if (data.error_asignacion){
+                    $('#bloques_input_asignacion').addClass('is-invalid');
+                    $('#error_bloques_asignacion').text(data.message_asignacion);
+                }
+
+
             }
         });
     }

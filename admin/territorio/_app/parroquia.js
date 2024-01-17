@@ -4,7 +4,7 @@ datatable('tabla_parroquias');
 //inicializamos el inputmask
 inputmask('#parroquia_nombre', 'alfa', 5, 100, ' ');
 inputmask('#parroquia_mini', 'alfa', 5, 50, ' ');
-inputmask('#parroquia_asignacion', 'numerico', 3, 10, '');
+inputmask('#parroquia_asignacion', 'numerico', 1, 10, '');
 
 //Aqui se hace la solicitud ajax para registrar una nueva parroquia o editar una existente
 $('#form_parroquias').submit(function (e) {
@@ -122,6 +122,8 @@ $('#form_parroquias').submit(function (e) {
                         municipioParroquias(data.anterior_id, data.anterior_cantidad);
                         municipioParroquias(data.actual_id, data.actual_cantidad);
                     }
+
+
                 }
 
                 $('#parroquia_btn_cancelar').click();
@@ -136,6 +138,11 @@ $('#form_parroquias').submit(function (e) {
                 if (data.error_mini){
                     $('#parroquia_mini').addClass('is-invalid');
                     $('#error_parroquia_mini').text(data.message_mini);
+                }
+
+                if (data.error_asignacion){
+                    $('#parroquia_asignacion').addClass('is-invalid');
+                    $('#error_parroquia_asignacion').text(data.message_asignacion);
                 }
             }
 

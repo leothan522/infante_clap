@@ -23,6 +23,7 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
                 case 'guardar_bloque':
+                    $modelMunicipio = new Municipio();
                     if (
                         !empty($_POST['bloques_numero']) &&
                         !empty($_POST['bloques_nombre']) &&
@@ -62,7 +63,18 @@ if ($_POST) {
                             }
                         }
 
-                        if (!$existe) {
+                        $getMunicipio = $modelMunicipio->find($municipios_id);
+                        $asignacionMax = $getMunicipio['familias'];
+                        $getParroquias = $model->getList('municipios_id', '=', $municipios_id);
+                        $suma = 0;
+
+                        foreach ($getParroquias as $getParroquia){
+                            $suma = $suma + $getParroquia['familias'];
+                        }
+
+                        $asignacionCargar = $suma + $asignacion;
+
+                        if (!$existe && $asignacionMax >= $asignacionCargar) {
                             $data = [
                                 $numero,
                                 $nombre,
@@ -87,17 +99,43 @@ if ($_POST) {
                             $response['nuevo'] = true;
                             $response['total'] = $model->count();
                         } else {
-                            $response = crearResponse(
-                                'registro_dulicado',
-                                false,
-                                'Registro Duplicado.',
-                                'El nombre ó el municipio ya estan registrados.',
-                                'warning',
-                                true
-                            );
-                            $response['error_nombre'] = $error_nombre;
-                            $response['error_numero'] = $error_numero;
-                            $response['error_asignacion'] = $error_asignacion;
+
+                            if ($error_nombre){
+                                $response = crearResponse(
+                                    'registro_dulicado',
+                                    false,
+                                    'Nombre duplicado.',
+                                    'El nombre o el municipio ya estan registrados.',
+                                    'warning'
+                                );
+                                $response['error_nombre'] = true;
+                            }
+
+                            if ($error_numero){
+                                $response = crearResponse(
+                                    'registro_dulicado',
+                                    false,
+                                    'Número Duplicado.',
+                                    'El número ya esta registrado.',
+                                    'warning'
+                                );
+                                $response['error_numero'] = true;
+                            }
+
+                            if ($asignacionMax < $asignacionCargar){
+                                $response = crearResponse(
+                                    'registro_dulicado',
+                                    false,
+                                    'Revisar la Asignación.',
+                                    'El nombre ó el municipio ya estan registrados.',
+                                    'warning'
+                                );
+                                $response['error_asignacion'] = true;
+                                $response['message_asignacion'] = 'La Asignación de las parroquias no debe ser mayor a la del municipio.';
+                            }else{
+                                $response['error_asignacion'] = false;
+                            }
+
                         }
 
 

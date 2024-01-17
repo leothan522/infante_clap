@@ -70,7 +70,21 @@ if ($_POST) {
                         $existeNombre = $model->existe('nombre', '=', $parroquia, null);
                         $existeMini = $model->existe('mini', '=', $mini, null);
 
-                        if (!$existeNombre && !$existeMini) {
+                        $getMunicipio = $modelMunicipio->find($municipio);
+                        $asignacionMax = $getMunicipio['familias'];
+                        $getParroquias = $model->getList('municipios_id', '=', $municipio);
+                        $suma = 0;
+
+                        foreach ($getParroquias as $getParroquia){
+                            $suma = $suma + $getParroquia['familias'];
+                        }
+
+                        $asignacionCargar = $suma + $asignacion;
+
+
+
+
+                        if (!$existeNombre && !$existeMini && $asignacionMax >= $asignacionCargar) {
                             //se guarda
                             $data = [
                                 $parroquia,
@@ -112,17 +126,16 @@ if ($_POST) {
                         } else {
                             //la parroquia ya existe
 
-                            $response = crearResponse(
-                                'nombre_duplicado',
-                                false,
-                                'Nombre Duplicado.',
-                                'La parroquia ya esta registrada.',
-                                'warning'
-                            );
-
                             //datos extras para el $response
 
                             if ($existeNombre) {
+                                $response = crearResponse(
+                                    'nombre_duplicado',
+                                    false,
+                                    'Nombre Duplicado.',
+                                    'La parroquia ya esta registrada.',
+                                    'warning'
+                                );
                                 $response['error_nombre'] = true;
                                 $response['message_nombre'] = 'El nombre de la parroquia ya esta registrado.';
                             } else {
@@ -130,10 +143,31 @@ if ($_POST) {
                             }
 
                             if ($existeMini) {
+                                $response = crearResponse(
+                                    'nombre_duplicado',
+                                    false,
+                                    'Abreviatura Duplicada.',
+                                    'La parroquia ya esta registrada.',
+                                    'warning'
+                                );
                                 $response['error_mini'] = true;
                                 $response['message_mini'] = 'La abreviatura ya esta registrada.';
                             } else {
                                 $response['error_mini'] = false;
+                            }
+
+                            if ($asignacionMax < $asignacionCargar){
+                                $response = crearResponse(
+                                    'nombre_duplicado',
+                                    false,
+                                    'Revisar Asignacion.',
+                                    'La parroquia ya esta registrada.',
+                                    'warning'
+                                );
+                                $response['error_asignacion'] = true;
+                                $response['message_asignacion'] = 'La Asignación de las parroquias no debe ser mayor a la del municipio.';
+                            }else{
+                                $response['error_asignacion'] = false;
                             }
 
                         }
