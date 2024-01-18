@@ -194,6 +194,11 @@ $('#form_create_clap').submit(function (e) {
                     cedula.addClass('is-invalid');
                     $('#error_jefe_create_input_cedula').text('La cédula ya se encuentra registrada.')
                 }
+
+                if (data.error_asignacion){
+                    familias.addClass('is-invalid');
+                }
+
             }
 
         });
@@ -474,10 +479,14 @@ $('#form_edit_clap').submit(function (e) {
                         .draw();
                 }
 
+            }else {
+                if (data.error_edit_asignacion) {
+                    $('#clap_edit_input_familias').addClass('is-invalid');
+                }
             }
-
         });
     }
+
 });
 
 function editJefe(id_jefe = 0) {

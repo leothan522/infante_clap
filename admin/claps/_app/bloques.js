@@ -1,7 +1,7 @@
 //validamos campos para los bloques
 inputmask('#bloques_input_nombre', 'alfanumerico', 4, 15);
 inputmask('#bloques_input_numero', 'numerico', 1, 3, '');
-inputmask('#bloques_input_asignacion', 'numerico', 3, 10, '');
+inputmask('#bloques_input_asignacion', 'numerico', 1, 10, '');
 
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('bloques_tabla');

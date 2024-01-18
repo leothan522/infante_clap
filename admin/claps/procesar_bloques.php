@@ -167,6 +167,7 @@ if ($_POST) {
                     break;
 
                 case 'editar_bloque':
+                    $modelMunicipio = new Municipio();
                     if (
                         !empty($_POST['bloques_numero']) &&
                         !empty($_POST['bloques_nombre']) &&
@@ -201,7 +202,20 @@ if ($_POST) {
                             $model->update($id, 'municipios_id', $municipios_id);
                         }
 
-                        if (!$cambios) {
+                        $getMunicipio = $modelMunicipio->find($municipios_id);
+                        $asignacionMax = $getMunicipio['familias'];
+                        $getParroquias = $model->getList('municipios_id', '=', $municipios_id);
+                        $suma = 0;
+
+                        foreach ($getParroquias as $getParroquia){
+                            if ($getParroquia['id'] != $id){
+                                $suma = $suma + $getParroquia['familias'];
+                            }
+                        }
+
+                        $asignacionCargar = $suma + $asignacion;
+
+                        if (!$cambios && $asignacionMax >= $asignacionCargar) {
                             $bloque = $model->find($id);
                             $response = crearResponse(
                                 null,
@@ -218,6 +232,18 @@ if ($_POST) {
                             $response['municipios_id'] = $bloque['municipios_id'];
                         } else {
                             $response = crearResponse('no_cambios');
+
+                            if ($asignacionMax < $asignacionCargar){
+                                $response = crearResponse(
+                                    'registro_dulicado',
+                                    false,
+                                    'Revisar la Asignación.',
+                                    'El nombre ó el municipio ya estan registrados.',
+                                    'warning'
+                                );
+                                $response['error_asignacion'] = true;
+                                $response['message_asignacion'] = 'La Asignación de las parroquias no debe ser mayor a la del municipio.';
+                            }
                         }
 
 
