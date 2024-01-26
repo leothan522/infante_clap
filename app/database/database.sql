@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.bloques: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.bloques: ~1 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.claps
 CREATE TABLE IF NOT EXISTS `claps` (
@@ -42,12 +42,12 @@ CREATE TABLE IF NOT EXISTS `claps` (
   `bloques_id` int unsigned NOT NULL,
   `entes_id` int unsigned NOT NULL,
   `ubch` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
-  `token` text COLLATE utf8mb4_spanish_ci,
+  `token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.claps: ~1 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.cuotas
 CREATE TABLE IF NOT EXISTS `cuotas` (
@@ -67,9 +67,11 @@ CREATE TABLE IF NOT EXISTS `entes` (
   `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `band` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.entes: ~1 rows (aproximadamente)
+INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
+	(1, 'Alguarisa', 0);
 
 -- Volcando estructura para tabla alguarisa_distribucion.jefes
 CREATE TABLE IF NOT EXISTS `jefes` (
