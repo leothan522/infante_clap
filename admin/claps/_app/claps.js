@@ -18,7 +18,7 @@ inputmask('#jefe_edit_input_nombre', 'alfa', 3, 100);
 });*/
 
 
-//funcion para guardar o editar.
+//funcion para guardar
 $('#form_create_clap').submit(function (e) {
     e.preventDefault();
 
@@ -85,7 +85,8 @@ $('#form_create_clap').submit(function (e) {
             .addClass('is-valid');
     }
 
-    if (!familias.inputmask('isComplete')) {
+    if (!familias.inputmask('isComplete') || familias.val() == 0) {
+
         procesar = false;
         familias.addClass('is-invalid');
         $('.error_clap_create_input_familias').text('Obligatorio.');
@@ -242,6 +243,12 @@ function resetDatosClap(opcion = 'create') {
         .val('')
         .removeClass('is-invalid')
         .removeClass('is-valid');
+
+    $('#clap_' + opcion + '_input_ubch')
+        .val('')
+        .removeClass('is-invalid')
+        .removeClass('is-valid');
+
 }
 
 function resetDatosJefes(opcion = 'create') {
@@ -264,6 +271,13 @@ function resetDatosJefes(opcion = 'create') {
         .val('')
         .removeClass('is-invalid')
         .removeClass('is-valid');
+
+    $('#jefe_' + opcion + '_input_email')
+        .val('')
+        .removeClass('is-invalid')
+        .removeClass('is-valid');
+
+
 }
 
 //esta funsion sirve para resetear los datos del modal de clap
@@ -666,4 +680,4 @@ barra.text("75%");
 
 
 
-console.log('claps963963');
+console.log('clap');

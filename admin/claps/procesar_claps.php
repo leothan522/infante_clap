@@ -241,18 +241,9 @@ if ($_POST) {
 
                             $response['error_clap'] = false;
                             $response['error_jefe'] = false;
+                            $response['revisar_asignacion'] = false;
                             $response['message_clap'] = null;
                             $response['message_jefe'] = null;
-
-                            if ($existeClap) {
-                                $response['error_clap'] = true;
-                                $response['message_clap'] = 'El nombre del Clap ya se encuentra registrado en el municipio';
-                            }
-
-                            if ($existejefe) {
-                                $response['error_jefe'] = true;
-                                $response['message_jefe'] = 'La cédula ya se encuentra registrada';
-                            }
 
                             if ($asignacionMaxima < $asignacionCargar){
                                 $response = crearResponse(
@@ -265,7 +256,20 @@ if ($_POST) {
                                 );
                                 $response['error_asignacion'] = true;
 
+
                             }
+
+                            if ($existeClap) {
+                                $response['error_clap'] = true;
+                                $response['message_clap'] = 'El nombre del Clap ya se encuentra registrado en el municipio';
+                            }
+
+                            if ($existejefe) {
+                                $response['error_jefe'] = true;
+                                $response['message_jefe'] = 'La cédula ya se encuentra registrada';
+                            }
+
+
 
                         }
 
