@@ -117,6 +117,8 @@ if ($_POST) {
 
                 case 'guardar_clap':
                     $modelBloque = new Bloque();
+                    $modelMunicipio = new Municipio();
+
                     if (
                         !empty($_POST['clap_select_municipio']) &&
                         !empty($_POST['clap_select_parroquia']) &&
@@ -149,12 +151,16 @@ if ($_POST) {
                         $modelJefe = new Jefe();
                         $existejefe = $modelJefe->existe('cedula', '=', $cedula);
 
+
                         if (empty($ubch)) {
                             $ubch = null;
                         }
 
                         $getBloque = $modelBloque->find($bloque);
+                        $getMunicipio = $modelMunicipio->find($municipio);
                         $asignacionMaxima = $getBloque['familias'];
+                        $numBloque = $getBloque['numero'];
+                        $nombreMunicipio = $getMunicipio['mini'];
                         $getClaps = $model->getList('bloques_id', '=', $bloque);
                         $suma = 0;
 
@@ -163,6 +169,12 @@ if ($_POST) {
                         }
 
                         $asignacionCargar = $suma + $familias;
+
+                        do{
+                            $token =  generar_string_aleatorio(30);
+                            $exiteToken = $model->existe('token', '=', $token);
+                        }while($exiteToken);
+
 
                         if (!$existeClap && !$existejefe && $asignacionMaxima >= $asignacionCargar) {
                             //proceso
@@ -174,7 +186,8 @@ if ($_POST) {
                                 $parroquia,
                                 $bloque,
                                 $entes,
-                                $ubch
+                                $ubch,
+                                $token
                             ];
 
                             $model->save($data);
@@ -246,12 +259,12 @@ if ($_POST) {
                                     'revisar_asignacion',
                                     false,
                                     'Revisar la Asignacion de Famílias',
-                                    'La  Asignación de Familias de este CLAP ha superado a la Asignación del Bloque.',
+                                    'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio ,
                                     'warning',
-                                    true
+                                    true,
                                 );
                                 $response['error_asignacion'] = true;
-                                $response['message_asignacion'] = 'La Asignación del CLAP no debe ser mayor a la del Bloque.';
+
                             }
 
                         }
@@ -421,6 +434,7 @@ if ($_POST) {
 
                 case 'editar_clap':
                     $modelBloque = new Bloque();
+                    $modelMunicipio = new Municipio();
                     if (
                         !empty($_POST['clap_edit_select_municipio']) &&
                         !empty($_POST['clap_edit_select_parroquia']) &&
@@ -458,6 +472,9 @@ if ($_POST) {
                        $db_id = $clap['id'];
 
                         $getBloque = $modelBloque->find($bloque);
+                        $getMunicipio = $modelMunicipio->find($municipio);
+                        $numBloque = $getBloque['numero'];
+                        $nombreMunicipio = $getMunicipio['mini'];
                         $asignacionMaxima = $getBloque['familias'];
                         $getClaps = $model->getList('bloques_id', '=', $bloque);
                         $suma = 0;
@@ -556,12 +573,12 @@ if ($_POST) {
                                    'revisar_asignacion',
                                    false,
                                    'Revisar la Asignacion de Famílias',
-                                   'La Asignación de Familias del CLAP no debe ser mayor a la Asignación del Bloque.',
+                                   'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio ,
                                    'warning',
                                    true
                                );
                                $response['error_edit_asignacion'] = true;
-                               $response['message_asignacion'] = 'La Asignación de Familias del CLAP no debe ser mayor a la Asignación del Bloque.';
+                               $response['message_asignacion'] = 'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio;
                            }
                        }
 

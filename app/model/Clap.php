@@ -16,7 +16,8 @@ class Clap extends Model
             'parroquias_id',
             'bloques_id',
             'entes_id',
-            'ubch'
+            'ubch',
+            'token'
         ];
     }
 }

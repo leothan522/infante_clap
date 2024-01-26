@@ -655,4 +655,15 @@ function showClapJefe(id) {
     });
 }
 
+// Seleccionar la barra de progreso
+var barra = $(".progress-bar");
+
+// Animar el ancho de la barra al 75%
+barra.animate({width: "75%"}, 1000);
+
+// Cambiar el texto de la barra al 75%
+barra.text("75%");
+
+
+
 console.log('claps963963');
