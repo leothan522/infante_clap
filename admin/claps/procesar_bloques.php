@@ -26,7 +26,6 @@ if ($_POST) {
                     $modelMunicipio = new Municipio();
                     if (
                         !empty($_POST['bloques_numero']) &&
-                        !empty($_POST['bloques_nombre']) &&
                         !empty($_POST['municipios_id']) &&
                         !empty($_POST['bloques_asignacion'])
                     ) {
@@ -73,6 +72,10 @@ if ($_POST) {
                         }
 
                         $asignacionCargar = $suma + $asignacion;
+
+                        if (empty($nombre)){
+                            $nombre = 'Bloque ' . $numero;
+                        }
 
                         if (!$existe && $asignacionMax >= $asignacionCargar) {
                             $data = [

@@ -583,6 +583,7 @@ $('#form_edit_jefe').submit(function (e) {
 
     if (procesar) {
         ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
+
             if (data.result) {
                 cerrarModal('#editar-jefe');
 
@@ -599,6 +600,13 @@ $('#form_edit_jefe').submit(function (e) {
                         .draw();
                 }
 
+
+            }else {
+
+                if (data.error_cedula){
+                    $('#jefe_edit_input_cedula').addClass('is-invalid');
+                    $('#error_jefe_edit_input_cedula').text(data.message_cedula);
+                }
 
             }
         });

@@ -25,14 +25,14 @@ $('#bloques_form').submit(function (e) {
         numero.addClass('is-valid');
     }
 
-    if (!nombre.inputmask('isComplete')) {
+    /*if (!nombre.inputmask('isComplete')) {
         procesar = false;
         nombre.addClass('is-invalid');
         $('#error_bloques_nombre').text('El nombre del bloque es obligatorio')
     } else {
         nombre.removeClass('is-invalid');
         nombre.addClass('is-valid');
-    }
+    }*/
 
     if (municipios.val().length <= 0){
         procesar = false;

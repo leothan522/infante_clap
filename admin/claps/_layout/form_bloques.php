@@ -26,17 +26,19 @@
                 <input type="text" class="form-control" placeholder="Introduce el número" name="bloques_numero" id="bloques_input_numero">
                 <div class="invalid-feedback" id="error_bloques_numero"></div>
             </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Nombre</label>
-                <input type="text" class="form-control" placeholder="Introduce el nombre" name="bloques_nombre" id="bloques_input_nombre">
-                <div class="invalid-feedback" id="error_bloques_nombre"></div>
-            </div>
 
             <div class="form-group">
                 <label for="exampleInputPassword1">Asignación</label>
                 <input type="text" class="form-control" placeholder="Asignacion de familias" name="bloques_asignacion" id="bloques_input_asignacion">
                 <div class="invalid-feedback" id="error_bloques_asignacion"></div>
             </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Nombre <small class="text-muted"> <em>(Opcional)</em></small></label>
+                <input type="text" class="form-control" placeholder="Introduce el nombre" name="bloques_nombre" id="bloques_input_nombre">
+                <div class="invalid-feedback" id="error_bloques_nombre"></div>
+            </div>
+
         </div>
         <!-- /.card-body -->
 

@@ -416,6 +416,7 @@ if ($_POST) {
 
 
                         } else {
+
                             $response = crearResponse(
                                 'datos_duplicados',
                                 false,
@@ -423,6 +424,20 @@ if ($_POST) {
                                 'Datos Duplicados',
                                 'warning'
                             );
+
+                            if ($db_cedula = $cedula){
+                                $response = crearResponse(
+                                    'datos-duplicados',
+                                    false,
+                                    'Datos Duplicados',
+                                    'La cédula ya se encuentra registrada.',
+                                    'warning'
+                                );
+                                $response['error_cedula'] = true;
+                                $response['message_cedula'] = 'La cédula ya se encuentra registrada.';
+                            }
+
+
                         }
 
                     } else {
