@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   `bloques_id` int unsigned NOT NULL,
   `entes_id` int unsigned NOT NULL,
   `ubch` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+  `token` text COLLATE utf8mb4_spanish_ci,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
