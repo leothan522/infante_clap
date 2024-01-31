@@ -712,49 +712,39 @@ if ($_POST) {
                         $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
                         $listarClap = $model->paginate($limit, null, 'id', 'DESC', 1, 'municipios_id', '=', $id);
 
-                        echo '
-                       <div class="card-header">
-                            <h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>
-                            <div class="card-tools">
-                                <button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps">
-                                    <i class="far fa-file-alt"></i> Nuevo
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body" >';
-                        require "_layout/table_claps.php";
-                        echo '
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix" id="claps_listar_footer">
-                            '.$links.'
-                        </div>
-                        '.verCargando().'
-                        ';
+                        echo '<div class="card-header">';
+                        echo      '<h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>';
+                        echo         '<div class="card-tools">';
+                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps">';
+                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
+                        echo             '</button>';
+                        echo         '</div>';
+                        echo '</div>';
+                        echo '<div class="card-body" >';
+                                  require "_layout/table_claps.php";
+                        echo '</div>';
+                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
+                        echo      $links;
+                        echo '</div>';
+                        echo verCargando();
+
 
                     } else {
-                        echo  '
-                                <div class="card-header">
-                                    <h3 class="card-title">Claps Registrados</h3>
-                            
-                                    <div class="card-tools">
-                                        <button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>
-                                            <i class="far fa-file-alt"></i> Nuevo
-                                        </button>
-                                    </div>
-                            
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body" >
-                                    Seleccione un <strong>Municipio</strong> para empezar...
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer clearfix" id="claps_listar_footer">
-                                    
-                                </div>
-                                '.verCargando().'
-                        ';
+                        echo '<div class="card-header">';
+                        echo     '<h3 class="card-title">Claps Registrados</h3>';
+                        echo         '<div class="card-tools">';
+                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>';
+                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
+                        echo             '</button>';
+                        echo         '</div>';
+                        echo '</div>';
+                        echo '<div class="card-body" >';
+                        echo      'Seleccione un <strong>Municipio</strong> para empezar...';
+                        echo '</div>;';
+                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
+                        echo '</div>';
+                        echo verCargando();
+
                     }
 
                     break;
