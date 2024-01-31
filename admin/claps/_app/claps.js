@@ -677,14 +677,22 @@ function showClapJefe(id) {
     });
 }
 
-// Seleccionar la barra de progreso
-var barra = $(".progress-bar");
+function getClapsMunicipio(id) {
+    ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
-// Animar el ancho de la barra al 75%
-barra.animate({width: "75%"}, 1000);
+    $('#claps_listar_card').html(data);
+    datatable('tabla_claps');
 
-// Cambiar el texto de la barra al 75%
-barra.text("75%");
+    });
+}
+
+$('#claps_select_id_municipio').change(function (e) {
+   e.preventDefault();
+   let id = $(this).val()
+   getClapsMunicipio(id);
+});
+
+
 
 
 

@@ -7,6 +7,7 @@ use app\model\Bloque;
 use app\model\Ente;
 use app\model\Clap;
 use app\model\Jefe;
+use app\model\Municipio;
 
 class ClapsController extends Admin
 {
@@ -47,6 +48,13 @@ class ClapsController extends Admin
         $limit = 30;
         $this->linksPaginate = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
         return $model->paginate($limit, null, 'id', 'DESC', 1);
+    }
+
+    public function listarmunicipios()
+    {
+        $model = new Municipio();
+        $listarMunicipio = $model->getAll();
+        return $listarMunicipio;
     }
 
 

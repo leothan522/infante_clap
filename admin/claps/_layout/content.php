@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-12">
-        <div id="dataContainerClap">
+        <div id="">
             <?php
-            use app\model\Jefe;
+            /*use app\model\Jefe;
             function getJefe($id)
             {
                 $model = new Jefe();
@@ -11,8 +11,8 @@
             }
             $listarClap = $controller->listarClaps();
             $i = 0;
-            $links = $controller->linksPaginate;
-            require "table_claps.php";
+            $links = $controller->linksPaginate;*/
+            require "card_listar_claps.php";
             ?>
         </div>
     </div>

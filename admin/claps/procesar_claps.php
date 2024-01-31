@@ -43,7 +43,7 @@ if ($_POST) {
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
                     $listarClap = $model->paginate($limit, $offset, 'id', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerClap', )->createLinks();
+                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerClap',)->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerClap">';
                     require "_layout/table_claps.php";
@@ -164,16 +164,16 @@ if ($_POST) {
                         $getClaps = $model->getList('bloques_id', '=', $bloque);
                         $suma = 0;
 
-                        foreach ($getClaps as $getClap){
+                        foreach ($getClaps as $getClap) {
                             $suma = $suma + $getClap['familias'];
                         }
 
                         $asignacionCargar = $suma + $familias;
 
-                        do{
-                            $token =  generar_string_aleatorio(30);
+                        do {
+                            $token = generar_string_aleatorio(30);
                             $exiteToken = $model->existe('token', '=', $token);
-                        }while($exiteToken);
+                        } while ($exiteToken);
 
 
                         if (!$existeClap && !$existejefe && $asignacionMaxima >= $asignacionCargar) {
@@ -220,11 +220,11 @@ if ($_POST) {
                                 'El Clap se ha guardado Exitosamente.'
                             );
                             $response['id'] = $clapNuevo['id'];
-                            $response['nombre_clap'] = '<p class="text-uppercase">'. $clapNuevo['nombre'] .'</p>';
-                            $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefeNuevo['nombre'] .'</p>';
-                            $response['cedula'] = '<p class="text-right">'. formatoMillares($jefeNuevo['cedula'], 0) .'</p>';
-                            $response['telefono'] = '<p class="text-center">'. $jefeNuevo['telefono'] .'</p>';
-                            $response['familias'] = '<p class="text-right">' .formatoMillares($clapNuevo['familias'], 0). '</p>';
+                            $response['nombre_clap'] = '<p class="text-uppercase">' . $clapNuevo['nombre'] . '</p>';
+                            $response['nombre_jefe'] = '<p class="text-uppercase">' . $jefeNuevo['nombre'] . '</p>';
+                            $response['cedula'] = '<p class="text-right">' . formatoMillares($jefeNuevo['cedula'], 0) . '</p>';
+                            $response['telefono'] = '<p class="text-center">' . $jefeNuevo['telefono'] . '</p>';
+                            $response['familias'] = '<p class="text-right">' . formatoMillares($clapNuevo['familias'], 0) . '</p>';
                             $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
                             $response['nuevo'] = true;
                             $response['total'] = $model->count(1);
@@ -245,12 +245,12 @@ if ($_POST) {
                             $response['message_clap'] = null;
                             $response['message_jefe'] = null;
 
-                            if ($asignacionMaxima < $asignacionCargar){
+                            if ($asignacionMaxima < $asignacionCargar) {
                                 $response = crearResponse(
                                     'revisar_asignacion',
                                     false,
                                     'Revisar la Asignacion de Famílias',
-                                    'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio ,
+                                    'Se ha superado la Asignación de famílias para el Bloque N° ' . $numBloque . ' del Municipio ' . $nombreMunicipio,
                                     'warning',
                                     true,
                                 );
@@ -268,7 +268,6 @@ if ($_POST) {
                                 $response['error_jefe'] = true;
                                 $response['message_jefe'] = 'La cédula ya se encuentra registrada';
                             }
-
 
 
                         }
@@ -395,11 +394,11 @@ if ($_POST) {
                                 $claps = $model->first('id', '=', $jefes['claps_id']);
                                 $response['id_clap'] = $claps['id'];
                                 $response['id_jefe'] = $jefes['id'];
-                                $response['nombre_clap'] = '<p class="text-uppercase">'. $claps['nombre'] .'</p>';
-                                $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefes['nombre'] .'</p>';
-                                $response['cedula'] = '<p class="text-right">'. formatoMillares($jefes['cedula'], 0) .'</p>';
-                                $response['telefono'] = '<p class="text-center">'. $jefes['telefono'] .'</p>';
-                                $response['familias'] = '<p class="text-right">' .formatoMillares($claps['familias']). '</p>';
+                                $response['nombre_clap'] = '<p class="text-uppercase">' . $claps['nombre'] . '</p>';
+                                $response['nombre_jefe'] = '<p class="text-uppercase">' . $jefes['nombre'] . '</p>';
+                                $response['cedula'] = '<p class="text-right">' . formatoMillares($jefes['cedula'], 0) . '</p>';
+                                $response['telefono'] = '<p class="text-center">' . $jefes['telefono'] . '</p>';
+                                $response['familias'] = '<p class="text-right">' . formatoMillares($claps['familias']) . '</p>';
                                 $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
                                 $response['editar_jefe'] = true;
 
@@ -425,7 +424,7 @@ if ($_POST) {
                                 'warning'
                             );
 
-                            if ($db_cedula = $cedula){
+                            if ($db_cedula = $cedula) {
                                 $response = crearResponse(
                                     'datos-duplicados',
                                     false,
@@ -462,7 +461,7 @@ if ($_POST) {
                         !empty($_POST['clap_edit_input_nombre']) &&
                         !empty($_POST['clap_edit_input_familias']) &&
                         !empty($_POST['clap_edit_select_entes'])
-                    ){
+                    ) {
                         $municipio = $_POST['clap_edit_select_municipio'];
                         $parroquia = $_POST['clap_edit_select_parroquia'];
                         $bloque = $_POST['clap_edit_select_bloque'];
@@ -480,15 +479,15 @@ if ($_POST) {
                         $modelJefe = new Jefe();
                         $jefe = $modelJefe->first('claps_id', '=', $clap['id']);
 
-                       $db_municipio = $clap['municipios_id'];
-                       $db_parroquia = $clap['parroquias_id'];
-                       $db_bloque = $clap['bloques_id'];
-                       $db_estracto = $clap['estracto'];
-                       $db_nombre = $clap['nombre'];
-                       $db_familias = $clap['familias'];
-                       $db_entes = $clap['entes_id'];
-                       $db_ubch = $clap['ubch'];
-                       $db_id = $clap['id'];
+                        $db_municipio = $clap['municipios_id'];
+                        $db_parroquia = $clap['parroquias_id'];
+                        $db_bloque = $clap['bloques_id'];
+                        $db_estracto = $clap['estracto'];
+                        $db_nombre = $clap['nombre'];
+                        $db_familias = $clap['familias'];
+                        $db_entes = $clap['entes_id'];
+                        $db_ubch = $clap['ubch'];
+                        $db_id = $clap['id'];
 
                         $getBloque = $modelBloque->find($bloque);
                         $getMunicipio = $modelMunicipio->find($municipio);
@@ -498,111 +497,111 @@ if ($_POST) {
                         $getClaps = $model->getList('bloques_id', '=', $bloque);
                         $suma = 0;
 
-                        foreach ($getClaps as $getClap){
-                            if ($getClap['id'] != $id){
+                        foreach ($getClaps as $getClap) {
+                            if ($getClap['id'] != $id) {
                                 $suma = $suma + $getClap['familias'];
                             }
                         }
 
                         $asignacionCargar = $suma + $familias;
 
-                       if (!$existe && $asignacionMaxima >= $asignacionCargar){
+                        if (!$existe && $asignacionMaxima >= $asignacionCargar) {
 
-                           if ($db_municipio != $municipio){
-                               $cambios = true;
-                               $model->update($id, 'municipios_id', $municipio);
-                           }
+                            if ($db_municipio != $municipio) {
+                                $cambios = true;
+                                $model->update($id, 'municipios_id', $municipio);
+                            }
 
-                           if ($db_parroquia != $parroquia){
-                               $cambios = true;
-                               $model->update($id, 'parroquias_id', $parroquia);
-                           }
+                            if ($db_parroquia != $parroquia) {
+                                $cambios = true;
+                                $model->update($id, 'parroquias_id', $parroquia);
+                            }
 
-                           if ($db_bloque != $bloque){
-                               $cambios = true;
-                               $model->update($id, 'bloques_id', $bloque);
-                           }
+                            if ($db_bloque != $bloque) {
+                                $cambios = true;
+                                $model->update($id, 'bloques_id', $bloque);
+                            }
 
-                           if ($db_estracto != $estracto){
-                               $cambios = true;
-                               $model->update($id, 'estracto', $estracto);
-                           }
+                            if ($db_estracto != $estracto) {
+                                $cambios = true;
+                                $model->update($id, 'estracto', $estracto);
+                            }
 
-                           if ($db_nombre != $nombre){
-                               $cambios = true;
-                               $model->update($id, 'nombre', $nombre);
-                           }
+                            if ($db_nombre != $nombre) {
+                                $cambios = true;
+                                $model->update($id, 'nombre', $nombre);
+                            }
 
-                           if ($db_familias != $familias){
-                               $cambios = true;
-                               $model->update($id, 'familias', $familias);
-                           }
-
-
-                           if ($db_entes != $entes){
-                               $cambios = true;
-                               $model->update($id, 'entes_id', $entes);
-                           }
-
-                           if ($db_ubch != $ubch){
-                               $cambios = true;
-                               $model->update($id, 'ubch', $ubch);
-                           }
-
-                           if ($cambios){
-                               $response = crearResponse(
-                                   null,
-                                   true,
-                                   'Editado Exitosamente.',
-                                   'El Clap se ha editado Exitosamente.'
-                               );
-                               $claps = $model->find($id);
-                               $jefes = $modelJefe->first('claps_id', '=', $clap['id']);
-                               $response['id'] = $clap['id'];
-                               $response['nombre_clap'] = '<p class="text-uppercase">'. $claps['nombre'] .'</p>';
-                               $response['nombre_jefe'] = '<p class="text-uppercase">'. $jefes['nombre'] .'</p>';
-                               $response['cedula'] = '<p class="text-right">'. formatoMillares($jefes['cedula'], 0) .'</p>';
-                               $response['telefono'] = '<p class="text-center">'. $jefes['telefono'] .'</p>';
-                               $response['familias'] = '<p class="text-right">' .formatoMillares($claps['familias'], 0). '</p>';
-                               $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
-                               $response['edit_clap'] = true;
-                           }else{
-                               $response = crearResponse(
-                                   'sin_cambios',
-                                   false,
-                                   'Sin cambios',
-                                   'no se realizó ningun cambio',
-                                   'info',
-                                   true
-                               );
-                           }
+                            if ($db_familias != $familias) {
+                                $cambios = true;
+                                $model->update($id, 'familias', $familias);
+                            }
 
 
-                       }else{
-                           $response = crearResponse(
-                               'datos_duplicados',
-                               false,
-                               'Datos Duplicados',
-                               'Datos Duplicados',
-                               'warning'
-                           );
+                            if ($db_entes != $entes) {
+                                $cambios = true;
+                                $model->update($id, 'entes_id', $entes);
+                            }
 
-                           if ($asignacionMaxima < $asignacionCargar){
-                               $response = crearResponse(
-                                   'revisar_asignacion',
-                                   false,
-                                   'Revisar la Asignacion de Famílias',
-                                   'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio ,
-                                   'warning',
-                                   true
-                               );
-                               $response['error_edit_asignacion'] = true;
-                               $response['message_asignacion'] = 'Se ha superado la Asignación de famílias para el Bloque N° '. $numBloque . ' del Municipio ' .$nombreMunicipio;
-                           }
-                       }
+                            if ($db_ubch != $ubch) {
+                                $cambios = true;
+                                $model->update($id, 'ubch', $ubch);
+                            }
+
+                            if ($cambios) {
+                                $response = crearResponse(
+                                    null,
+                                    true,
+                                    'Editado Exitosamente.',
+                                    'El Clap se ha editado Exitosamente.'
+                                );
+                                $claps = $model->find($id);
+                                $jefes = $modelJefe->first('claps_id', '=', $clap['id']);
+                                $response['id'] = $clap['id'];
+                                $response['nombre_clap'] = '<p class="text-uppercase">' . $claps['nombre'] . '</p>';
+                                $response['nombre_jefe'] = '<p class="text-uppercase">' . $jefes['nombre'] . '</p>';
+                                $response['cedula'] = '<p class="text-right">' . formatoMillares($jefes['cedula'], 0) . '</p>';
+                                $response['telefono'] = '<p class="text-center">' . $jefes['telefono'] . '</p>';
+                                $response['familias'] = '<p class="text-right">' . formatoMillares($claps['familias'], 0) . '</p>';
+                                $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                                $response['edit_clap'] = true;
+                            } else {
+                                $response = crearResponse(
+                                    'sin_cambios',
+                                    false,
+                                    'Sin cambios',
+                                    'no se realizó ningun cambio',
+                                    'info',
+                                    true
+                                );
+                            }
 
 
-                    }else{
+                        } else {
+                            $response = crearResponse(
+                                'datos_duplicados',
+                                false,
+                                'Datos Duplicados',
+                                'Datos Duplicados',
+                                'warning'
+                            );
+
+                            if ($asignacionMaxima < $asignacionCargar) {
+                                $response = crearResponse(
+                                    'revisar_asignacion',
+                                    false,
+                                    'Revisar la Asignacion de Famílias',
+                                    'Se ha superado la Asignación de famílias para el Bloque N° ' . $numBloque . ' del Municipio ' . $nombreMunicipio,
+                                    'warning',
+                                    true
+                                );
+                                $response['error_edit_asignacion'] = true;
+                                $response['message_asignacion'] = 'Se ha superado la Asignación de famílias para el Bloque N° ' . $numBloque . ' del Municipio ' . $nombreMunicipio;
+                            }
+                        }
+
+
+                    } else {
                         $response = crearResponse(
                             "fantan_datos",
                             false,
@@ -654,7 +653,7 @@ if ($_POST) {
                     $modelEnte = new Ente();
                     $modelJefe = new Jefe();
 
-                    if (!empty($_POST['id'])){
+                    if (!empty($_POST['id'])) {
 
                         $id = $_POST['id'];
                         $clap = $model->find($id);
@@ -691,11 +690,75 @@ if ($_POST) {
                         $response['jefe_email'] = $jefe['email'];
 
 
-
-                    }else{
+                    } else {
                         $response = crearResponse('faltan_datos');
                     }
                     break;
+
+                case 'get_claps_municipio':
+
+                    $paginate = true;
+
+                    $modelMunicipio = new Municipio();
+
+                    if (!empty($_POST['id'])) {
+                        //proceso
+                        $id = $_POST['id'];
+
+                        //traer todos los datos del municipio
+                        $municipio = $modelMunicipio->find($id);
+                        $limit = 30;
+                        $i = 0;
+                        $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
+                        $listarClap = $model->paginate($limit, null, 'id', 'DESC', 1, 'municipios_id', '=', $id);
+
+                        echo '
+                       <div class="card-header">
+                            <h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>
+                            <div class="card-tools">
+                                <button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps">
+                                    <i class="far fa-file-alt"></i> Nuevo
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body" >';
+                        require "_layout/table_claps.php";
+                        echo '
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix" id="claps_listar_footer">
+                            '.$links.'
+                        </div>
+                        '.verCargando().'
+                        ';
+
+                    } else {
+                        echo  '
+                                <div class="card-header">
+                                    <h3 class="card-title">Claps Registrados</h3>
+                            
+                                    <div class="card-tools">
+                                        <button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>
+                                            <i class="far fa-file-alt"></i> Nuevo
+                                        </button>
+                                    </div>
+                            
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body" >
+                                    Seleccione un <strong>Municipio</strong> para empezar...
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer clearfix" id="claps_listar_footer">
+                                    
+                                </div>
+                                '.verCargando().'
+                        ';
+                    }
+
+                    break;
+
 
                 //Por defecto
                 default:
