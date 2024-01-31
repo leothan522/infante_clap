@@ -727,8 +727,7 @@ if ($_POST) {
                         echo      $links;
                         echo '</div>';
                         echo verCargando();
-
-
+                        
                     } else {
                         echo '<div class="card-header">';
                         echo     '<h3 class="card-title">Claps Registrados</h3>';
