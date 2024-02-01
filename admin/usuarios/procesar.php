@@ -526,6 +526,56 @@ if ($_POST) {
 
                     break;
 
+                case 'guarda_acceso':
+
+                    if (validarPermisos()){
+
+                        if (!empty($_POST['id'])){
+
+                            $id = $_POST['id'];
+                            $user = $model->find($id);
+                            $hiola = null;
+
+                            $contador = $_POST['contador'];
+                            $permisos = array();
+                            for ($i = 1; $i <= $contador; $i++){
+                                if (isset($_POST['permiso_'.$i])){
+                                    $permiso = $_POST['permiso_'.$i];
+                                    $permisos[] = $permiso;
+                                }
+                            }
+
+                            $model->update($id, 'permisos', crearJson($permisos));
+
+                            $response = crearResponse(
+                                null,
+                                true,
+                                'Permisos Guardados.',
+                                "Mostrando Usuario " . $user['name']
+                            );
+                            //datos extras para el response
+                            $response['id'] = $user['id'];
+                            $response['name'] = $user['name'];
+                            $response['email'] = $user['email'];
+                            $response['tipo'] = verRoleUsuario($user['role']);
+                            if (!is_null($user['permisos'])){
+                                $response['user_permisos'] = json_decode($user['permisos']);
+                            }else{
+                                $response['user_permisos'] = null;
+                            }
+                            $permisos = verPermisos();
+                            $response['permisos'] = $permisos[1];
+
+                        }else{
+                            $response = crearResponse('faltas_datos');
+                        }
+
+                    }else{
+                        $response = crearResponse('no_permisos');
+                    }
+
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);
