@@ -44,6 +44,9 @@ $controller->isAdmin();
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2/css/select2.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); ?>">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
@@ -121,6 +124,16 @@ $controller->isAdmin();
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
+<!-- Select2 -->
+<script src="<?php asset('app/resources/adminlte/plugins/select2/js/select2.full.min.js'); ?>"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4',
+        })
+    });
+</script>
 
 <script src="_app/usuarios.js"></script>
 </body>

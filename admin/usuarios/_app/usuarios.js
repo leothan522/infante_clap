@@ -472,57 +472,6 @@ function getPermisos(id) {
         }
 
     });
-
-    /*verSpinner(true);
-    $.ajax({
-        type: 'POST',
-        url: 'procesar.php',
-        data: {
-            opcion: 'get_permisos',
-            id: id
-        },
-        success: function (response) {
-            let data = JSON.parse(response);
-
-            if (data.result){
-
-                $('#li_permisos_nombre').text(data.name);
-                $('#li_permisos_email').text(data.email);
-                $('#li_permisos_role').text(data.tipo);
-                $('#input_permisos_id').val(data.id);
-
-                if (data.permisos != null){
-                    data.permisos.forEach((key, value) => {
-                        key = key.replace('.', '_');
-                        $('#' + key).removeAttr('checked');
-                    });
-                }
-
-                if (data.user_permisos != null){
-                    Object.entries(data.user_permisos).forEach(([key, value]) => {
-                        key = key.replace('.', '_');
-                        $('#' + key).attr('checked', 'checked');
-                    });
-                }
-
-            }
-
-
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });
-            }
-            verSpinner(false);
-        }
-    });*/
 }
 
 //Guardar los Permisos del usuario
@@ -558,4 +507,18 @@ $('#form_permisos_usuario').submit(function (e) {
     });*/
 });
 
-console.log('hi!');
+function getUsuariosMunicipios() {
+
+    ajaxRequest({ url: 'procesar.php', data:{ opcion:'get_usuarios_municipios' } }, function (data) {
+
+    });
+}
+
+function getAccesosMunicipio() {
+    ajaxRequest({ url: 'procesar.php', data:{ opcion: 'get_acceso_municipios' }, html: 'si' }, function (data) {
+        $('#usuario_card_table').html(data);
+        datatable('usuario_table');
+    });
+}
+
+console.log('hidd!');

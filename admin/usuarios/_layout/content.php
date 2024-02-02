@@ -20,5 +20,6 @@
         </div>
         <?php require_once "modal_edit.php"; ?>
         <?php require_once "modal_permisos.php"; ?>
+        <?php require_once "modal_acceso.php"; ?>
     </div>
 </div>

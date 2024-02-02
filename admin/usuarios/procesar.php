@@ -4,6 +4,7 @@ require_once "../../vendor/autoload.php";
 
 use app\model\User;
 use app\controller\UsersController;
+use app\model\Municipio;
 
 $response = array();
 $paginate = false;
@@ -573,6 +574,31 @@ if ($_POST) {
                     }else{
                         $response = crearResponse('no_permisos');
                     }
+
+                    break;
+
+                case 'get_usuarios_municipios':
+                    $modelmunicipio = new municipio();
+
+                    $response = crearResponse(null, true, null, null, 'success', false, true);
+
+                    foreach ($modelmunicipio->getAll() as $municipio) {
+                        $id = $municipio['id'];
+                        $nombre = $municipio['mini'];
+                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                    }
+
+                    foreach ($model->getAll(1) as $user){
+                        $id = $user['id'];
+                        $email = $user['email'];
+                        $nombre = $user['name'];
+                        $response['usuarios'][] = array("id" => $id, "email" => $email, "name" => $nombre);
+                    }
+                    break;
+
+                case 'get_acceso_municipios':
+                    $paginate = true;
+                    require_once '_layout/card_table_acceso.php';
 
                     break;
 
