@@ -8,7 +8,7 @@ use app\model\Municipio;
 
 $response = array();
 $paginate = false;
-
+$controller = new UsersController();
 
 if ($_POST) {
 
@@ -41,6 +41,24 @@ if ($_POST) {
                     require_once "_layout/card_table.php";
                     echo '</div>';
 
+                    $paginate = true;
+
+                    break;
+
+                case 'paginate_acceso':
+                    //$controller = new UsersController();.
+                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
+                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
+                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
+                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
+                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+
+                    $listarUsuarios = $model->paginate($limit, $offset, 'id', 'DESC', 1, 'acceso_municipio', '!=', 'null');
+                    $links = paginate('procesar.php', 'usuario_table_acceso', $limit, $model->count(1, 'acceso_municipio', '!=', 'null'), $offset, 'paginate_acceso','usuario_card_table_acceso')->createLinks();
+                    $i = $offset;
+                    echo '<div id="usuario_card_table_acceso">';
+                    require_once "_layout/card_table_acceso.php";
+                    echo '</div>';
                     $paginate = true;
 
                     break;
@@ -598,8 +616,14 @@ if ($_POST) {
 
                 case 'get_acceso_municipios':
                     $paginate = true;
-                    require_once '_layout/card_table_acceso.php';
+                    $i = 0;
+                    $limit = 1;
+                    $listarUsuarios = $model->paginate($limit, null, 'id', 'DESC', 1, 'acceso_municipio', '!=', 'null');
+                    $links = paginate('procesar.php', 'usuario_table_acceso', $limit, $model->count(1, 'acceso_municipio', '!=', 'null'), null, 'paginate_acceso','usuario_card_table_acceso')->createLinks();
 
+                    echo '<div id="usuario_card_table_acceso">';
+                    require '_layout/card_table_acceso.php';
+                    echo '</div>';
                     break;
 
                 //Por defecto

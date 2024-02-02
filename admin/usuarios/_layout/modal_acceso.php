@@ -11,7 +11,7 @@
             <div class="modal-body">
 
                 <div class="row">
-                    <div class="col-md 4">
+                    <div class="col-md-4">
                         <?php require_once 'card_form_acceso.php'; ?>
                     </div>
 

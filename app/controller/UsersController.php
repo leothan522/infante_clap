@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\middleware\Admin;
+use app\model\Municipio;
 use app\model\User;
 
 class UsersController extends Admin
@@ -29,6 +30,11 @@ class UsersController extends Admin
         return $model->paginate($limit, null, 'role', 'DESC', 1);
     }
 
-
+    public function getMunicipio($id)
+    {
+        $model = new Municipio();
+        $municipio = $model->find($id);
+        return $municipio['mini'];
+    }
 
 }

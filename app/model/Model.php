@@ -78,12 +78,12 @@ class Model
         }
         $contar = null;
         if (!is_null($campo) && !is_null($operador) && !is_null($campo)){
-            $contar ="WHERE `$campo` $operador $valor";
+            $contar ="WHERE `$campo` $operador '$valor'";
         }
 
         if (!is_null($extra) && !is_null($contar)){
             $extra = "WHERE ";
-            $contar = "`$campo` $operador $valor AND `band`= $band";
+            $contar = "`$campo` $operador '$valor' AND `band`= $band";
         }
 
         $query = new Query();

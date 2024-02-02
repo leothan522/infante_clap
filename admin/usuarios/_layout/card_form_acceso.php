@@ -24,33 +24,25 @@
 
             <div class="row">
 
-                <div class="col-12 form-group">
-                    <label for="exampleInputEmail1">Usuario</label>
-                    <select class="select2bs4" data-placeholder="Seleccionar">
-                        <option>Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
-                    </select>
-                    <div class="invalid-feedback" id="error_1"></div>
-                </div>
-                <div class="col-12 form-group">
-                    <label for="exampleInputEmail1">Municipios</label>
-                    <select class="select2bs4" multiple="multiple" data-placeholder="Municipios">
-                        <option>Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
-                    </select>
-                    <div class="invalid-feedback" id="error_1"></div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Usuario</label>
+                        <select class="select2bs4" data-placeholder="Seleccionar" id="usuarios_select_usuarios">
+                            <!--JS-->
+                        </select>
+                        <div class="invalid-feedback" id="error_1"></div>
+                    </div>
                 </div>
 
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Municipios</label>
+                        <select class="select2bs4" multiple="multiple" data-placeholder="Municipios" id="usuarios_select_municipios">
+                            <!--JS-->
+                        </select>
+                        <div class="invalid-feedback" id="error_1"></div>
+                    </div>
+                </div>
 
             </div>
 

@@ -508,8 +508,28 @@ $('#form_permisos_usuario').submit(function (e) {
 });
 
 function getUsuariosMunicipios() {
-
     ajaxRequest({ url: 'procesar.php', data:{ opcion:'get_usuarios_municipios' } }, function (data) {
+
+        if (data.result) {
+            let selectUsuarios = $('#usuarios_select_usuarios');
+            let selectMunicipios = $('#usuarios_select_municipios');
+            let municipios = data.municipios.length;
+            selectMunicipios.empty();
+            selectMunicipios.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < municipios; i++) {
+                let id = data.municipios[i]['id'];
+                let nombre = data.municipios[i]['nombre'];
+                selectMunicipios.append('<option value="' + id + '">' + nombre + '</option>');
+            }
+            let usuarios = data.usuarios.length;
+            selectUsuarios.empty();
+            selectUsuarios.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < usuarios; i++) {
+                let id = data.usuarios[i]['id'];
+                let nombre = data.usuarios[i]['email'];
+                selectUsuarios.append('<option value="' + id + '">' + nombre + '</option>');
+            }
+        }
 
     });
 }
@@ -517,8 +537,8 @@ function getUsuariosMunicipios() {
 function getAccesosMunicipio() {
     ajaxRequest({ url: 'procesar.php', data:{ opcion: 'get_acceso_municipios' }, html: 'si' }, function (data) {
         $('#usuario_card_table').html(data);
-        datatable('usuario_table');
+        datatable('usuario_table_acceso');
     });
 }
 
-console.log('hidd!');
+console.log('Clapsddd!');
