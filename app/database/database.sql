@@ -19,18 +19,6 @@
 CREATE DATABASE IF NOT EXISTS `alguarisa_distribucion` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `alguarisa_distribucion`;
 
--- Volcando estructura para tabla alguarisa_distribucion.bloques
-CREATE TABLE IF NOT EXISTS `bloques` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `numero` int NOT NULL,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
-  `municipios_id` int DEFAULT NULL,
-  `familias` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
--- Volcando datos para la tabla alguarisa_distribucion.bloques: ~0 rows (aproximadamente)
-
 -- Volcando estructura para tabla alguarisa_distribucion.claps
 CREATE TABLE IF NOT EXISTS `claps` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -47,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.claps: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.claps: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.cuotas
 CREATE TABLE IF NOT EXISTS `cuotas` (
@@ -71,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `entes` (
 
 -- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
 INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
-	(1, 'Alguarisa', 0);
+	(1, 'Alguarisa', 1);
 
 -- Volcando estructura para tabla alguarisa_distribucion.jefes
 CREATE TABLE IF NOT EXISTS `jefes` (
@@ -86,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `jefes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.jefes: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.jefes: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
