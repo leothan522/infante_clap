@@ -12,9 +12,14 @@
                     <option value="">MUNICIPIOS</option>
                     <?php
                     foreach ($controller->listarmunicipios() as $listarmunicipio)
-                    { ?>
+                    {
+                        if (validarAccesoMunicipio($listarmunicipio['id'])){
+                    ?>
                         <option value="<?php echo $listarmunicipio['id']; ?>"> <?php echo $listarmunicipio['nombre'] ?> </option>
-                    <?php } ?>
+                    <?php
+                        }
+                    }
+                    ?>
                 </select>
             </ol>
         </div>

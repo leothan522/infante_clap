@@ -645,4 +645,4 @@ function resetFormAcceso() {
         .trigger('change');
 }
 
-console.log('Usuarios ugfuyg!');
+console.log('Usuarios!');

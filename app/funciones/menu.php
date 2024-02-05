@@ -30,8 +30,8 @@ function sidebar($modulo = null): ?string
             'permiso'       => validarPermisos('claps.index'),
             'url'           => '#',
             'active'        => $modulo == 'claps.index',
-            'icono'         => '<i class="fas fa-users nav-icon"></i>',
-            'titulo'        => 'Distribución',
+            'icono'         => '<i class="fas fa-boxes nav-icon"></i> ',
+            'titulo'        => '  Distribución',
             'badge'         => null,
             'treeview'      => [
                 [
@@ -69,7 +69,7 @@ function sidebar($modulo = null): ?string
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',
-                    'icono' => '<i class="fas fa-users"></i> ',
+                    'icono' => '<i class="fas fa-users-cog nav-icon"></i>',
                     'titulo' => 'Usuarios'
                 ],
                 [

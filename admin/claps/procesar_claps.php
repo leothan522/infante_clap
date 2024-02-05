@@ -67,7 +67,9 @@ if ($_POST) {
                     foreach ($modelMunicipio->getAll() as $municipio) {
                         $id = $municipio['id'];
                         $nombre = $municipio['mini'];
-                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                        if (validarAccesoMunicipio($id)) {
+                            $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                        }
                     }
 
                     $modelEnte = new Ente();

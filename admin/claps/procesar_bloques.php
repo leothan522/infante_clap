@@ -282,7 +282,9 @@ if ($_POST) {
                     foreach ($model->getAll() as $municipio) {
                         $id = $municipio['id'];
                         $nombre = $municipio['mini'];
-                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                        if (validarAccesoMunicipio($id)){
+                            $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                        }
                     }
                     break;
 
