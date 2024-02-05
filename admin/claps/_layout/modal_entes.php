@@ -10,10 +10,17 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <?php
+                    $col = 12;
+                    if (validarPermisos("entes.create")){
+                    $col = 8;
+                    ?>
                     <div class="col-md-4">
                         <?php require_once "form_entes.php" ?>
                     </div>
-                    <div class="col-md-8" id="mostrar_entes">
+                    <?php } ?>
+
+                    <div class="col-md-<?php echo $col; ?>" id="mostrar_entes">
                         <!--se cargara por JAVASCRITP-->
                     </div>
                 </div>

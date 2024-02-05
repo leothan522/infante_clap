@@ -24,7 +24,11 @@
                 <div class="modal-footer justify-content-between">
                     <input type="hidden" placeholder="id_clap" id="show_id_clap">
                     <input type="hidden" placeholder="id_jefe" id="show_id_jefe">
-                    <button type="button" class="btn btn-danger btn-sm" onclick="destroyClap(0)"><i class="fas fa-trash-alt"></i> Eliminar CLAP</button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            onclick="destroyClap(0)"
+                        <?php if (!validarPermisos("claps.destroy")){ echo 'disabled';} ?>  >
+                        <i class="fas fa-trash-alt"> </i> Eliminar CLAP
+                    </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 <?php verCargando(); ?>

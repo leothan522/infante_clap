@@ -3,7 +3,9 @@
         <h3 class="card-title">Datos de CLAPS</h3>
 
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#editar-clap" onclick="editClap(0)">
+            <button type="button" class="btn btn-tool" data-toggle="modal"
+                    data-target="#editar-clap" onclick="editClap(0)"
+                    <?php if (!validarPermisos("claps.edit")){ echo 'disabled'; } ?>   >
                 <i class="far fa-edit"></i> Editar
             </button>
         </div>

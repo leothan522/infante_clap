@@ -260,6 +260,54 @@ function verPermisos(): array
             ]
         ],
 
+        [ 'permiso' => 'claps.index',
+            'text' => 'Distribución',
+            'opciones' => [
+                [
+                    'permiso' => 'jefes.edit',
+                    'text' => 'Editar Jefes'
+                ],
+                [
+                    'permiso' => 'claps.create',
+                    'text' => 'Crear Claps'
+                ],
+                [
+                    'permiso' => 'claps.edit',
+                    'text' => 'Editar Claps'
+                ],
+                [
+                    'permiso' => 'claps.destroy',
+                    'text' => 'Eliminar Claps'
+                ]
+            ]
+        ],
+        [ 'permiso' => 'bloques.index',
+            'text' => 'Bloques',
+            'opciones' => [
+                [
+                    'permiso' => 'bloques.create',
+                    'text' => 'Crear Bloques'
+                ],
+                [
+                    'permiso' => 'bloques.destroy',
+                    'text' => 'Eliminar Bloques'
+                ]
+            ]
+        ],
+        [ 'permiso' => 'entes.index',
+            'text' => 'Entes',
+            'opciones' => [
+                [
+                    'permiso' => 'entes.create',
+                    'text' => 'Crear Entes'
+                ],
+                [
+                    'permiso' => 'entes.destroy',
+                    'text' => 'Eliminar Entes'
+                ]
+            ]
+        ]
+
         /*
          * Ejemplo de permiso
          *

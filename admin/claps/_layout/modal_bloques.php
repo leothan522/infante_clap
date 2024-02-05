@@ -9,11 +9,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row justify-content-center">
+                    <?php
+                    $col = 12;
+                    if (validarPermisos("bloques.create")){
+                        $col = 8;
+                    ?>
                     <div class="col-md-4">
                         <?php require_once "form_bloques.php" ?>
                     </div>
-                    <div class="col-md-8">
+                    <?php } ?>
+
+                    <div class="col-md-<?php echo $col; ?>">
                         <?php require_once "card_bloques.php" ?>
                     </div>
                 </div>

@@ -3,7 +3,9 @@
         <h3 class="card-title">Claps Registrados</h3>
 
         <div class="card-tools">
-            <button class="btn btn-tool" data-toggle="modal" onclick="resetClap('clap_create_select_municipio', 'clap_create_select_entes')" data-target="#modal-claps" disabled>
+            <button class="btn btn-tool" data-toggle="modal"
+                    onclick="resetClap('clap_create_select_municipio', 'clap_create_select_entes')"
+                    data-target="#modal-claps" disabled >
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>

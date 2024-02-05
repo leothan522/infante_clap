@@ -18,10 +18,15 @@
                 <td class="asignacion text-right"><?php echo formatoMillares($bloque['familias'], 0) ?></td>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-info" onclick="editBloque(<?php echo $bloque['id']; ?>)">
+                        <button type="button" class="btn btn-info"
+                                onclick="editBloque(<?php echo $bloque['id']; ?>)"
+                                <?php if (!validarPermisos("bloques.create")){ echo 'disabled'; } ?>  >
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-info" onclick="eliminarBloque(<?php echo $bloque['id']; ?>)" id="btn_eliminar_<?php echo $bloque['id']; ?>">
+                        <button type="button" class="btn btn-info"
+                                onclick="eliminarBloque(<?php echo $bloque['id']; ?>)"
+                                id="btn_eliminar_<?php echo $bloque['id']; ?>"
+                                <?php if (!validarPermisos("bloques.destroy")){ echo 'disabled'; } ?>  >
                             <i class="far fa-trash-alt"></i>
                         </button>
                     </div>

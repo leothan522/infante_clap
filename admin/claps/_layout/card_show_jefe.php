@@ -2,7 +2,9 @@
     <div class="card-header">
         <h3 class="card-title">Jefe de Comunidad</h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#editar-jefe" onclick="editJefe(0)">
+            <button type="button" class="btn btn-tool" data-toggle="modal"
+                    data-target="#editar-jefe" onclick="editJefe(0)"
+                <?php if (!validarPermisos("jefes.edit")){ echo 'disabled'; } ?>  >
                 <i class="fas fa-user-edit"></i> Editar
             </button>
         </div>
