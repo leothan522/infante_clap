@@ -1,4 +1,4 @@
-<form>
+<form id="modal_acceso_form">
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Configurar Acceso</h3>
@@ -27,20 +27,20 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Usuario</label>
-                        <select class="select2bs4" data-placeholder="Seleccionar" id="usuarios_select_usuarios">
+                        <select class="select2bs4" name="usuario" data-placeholder="Seleccionar" id="usuarios_select_usuarios">
                             <!--JS-->
                         </select>
-                        <div class="invalid-feedback" id="error_1"></div>
+                        <div class="invalid-feedback" id="error_usuarios_select_usuarios"></div>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Municipios</label>
-                        <select class="select2bs4" multiple="multiple" data-placeholder="Municipios" id="usuarios_select_municipios">
+                        <select class="select2bs4" name="municipios[]" multiple="multiple" data-placeholder="Municipios" id="usuarios_select_municipios">
                             <!--JS-->
                         </select>
-                        <div class="invalid-feedback" id="error_1"></div>
+                        <div class="invalid-feedback" id="error_usuarios_select_municipios"></div>
                     </div>
                 </div>
 
@@ -50,8 +50,9 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
+            <input type="hidden" name="opcion" value="set_acceso_municipios" id="opcion">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-default float-right">Cancelar</button>
+            <button type="reset" class="btn btn-default float-right" onclick="resetFormAcceso()" id="btn_reset_acceso_municipio">Cancelar</button>
         </div>
     </div>
 </form>

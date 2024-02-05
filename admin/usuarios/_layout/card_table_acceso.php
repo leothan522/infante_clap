@@ -35,7 +35,8 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" id="btn_eliminar_<?php echo $user['id'] ?>">
+                                <button type="button" class="btn btn-info" onclick="destroyAcceso(<?php echo $user['id']; ?>)"
+                                        id="btn_eliminar_acceso_<?php echo $user['id'] ?>">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
