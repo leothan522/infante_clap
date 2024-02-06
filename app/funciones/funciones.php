@@ -294,6 +294,11 @@ function validateJSON(string $json): bool
     }
 }
 
+function verUtf8($string){
+    //$utf8_string = "Some UTF-8 encoded BATE QUEBRADO ÑñíÍÁÜ niño ó Ó string: é, ö, ü";
+    return mb_convert_encoding($string, 'UTF-8');
+}
+
 
 /*
 //Comportamiento similar como una redirección HTTP

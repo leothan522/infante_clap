@@ -39,7 +39,7 @@ if ($_POST) {
 
 
                             //definir variables
-                            $asunto = utf8_decode('Reestablecimiento de Contraseña');
+                            $asunto = verUtf8('Reestablecimiento de Clave');
                             $html = 'Para restablecer su contraseña siga el siguiente enlace: <strong><a href=' . $url . '>Restablecer Contraseña</a></strong>';
                             $noHtml = 'Para restablecer su contraseña siga el siguiente enlace: ' . $url;
 
