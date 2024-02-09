@@ -16,7 +16,8 @@
             "app/funciones/funciones.php",
             "app/funciones/menu.php",
             "app/funciones/permisos.php",
-            "app/funciones/paginate.php"
+            "app/funciones/paginate.php",
+            "app/funciones/styles_excel.php"
         ]
     }
 }

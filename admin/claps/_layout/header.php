@@ -21,6 +21,9 @@
                     }
                     ?>
                 </select>
+                <form method="POST" action="_export/export_claps.php" id="form_claps_excel">
+                    <input type="hidden" placeholder="municipio_id" name="clap_input_municipio_id" id="clap_input_municipio_id">
+                </form>
             </ol>
         </div>
     </div>

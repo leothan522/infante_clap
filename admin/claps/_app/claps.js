@@ -682,6 +682,7 @@ function getClapsMunicipio(id) {
 
     $('#claps_listar_card').html(data);
     datatable('tabla_claps');
+    $('#clap_input_municipio_id').val(id);
 
     });
 }
@@ -692,6 +693,9 @@ $('#claps_select_id_municipio').change(function (e) {
    getClapsMunicipio(id);
 });
 
+function clickDescargarClaps() {
+    $('#form_claps_excel').submit();
+}
 
 
 

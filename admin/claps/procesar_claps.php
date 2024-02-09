@@ -723,6 +723,9 @@ if ($_POST) {
                         echo '<div class="card-header">';
                         echo      '<h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>';
                         echo         '<div class="card-tools">';
+                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel">';
+                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
+                        echo         '</button>';
                         echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps"'.$disabled.'>';
                         echo                 '<i class="far fa-file-alt"></i> Nuevo';
                         echo             '</button>';
@@ -740,6 +743,10 @@ if ($_POST) {
                         echo '<div class="card-header">';
                         echo     '<h3 class="card-title">Claps Registrados</h3>';
                         echo         '<div class="card-tools">';
+                        if (!validarPermisos()){ $disabled = 'disabled'; }else{ $disabled = null; }
+                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel"'.$disabled.' >';
+                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
+                        echo         '</button>';
                         echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>';
                         echo                 '<i class="far fa-file-alt"></i> Nuevo';
                         echo             '</button>';

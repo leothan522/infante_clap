@@ -57,5 +57,11 @@ class ClapsController extends Admin
         return $listarMunicipio;
     }
 
+    public function getJefe($id){
+        $modelJefe = new Jefe();
+        $jefe = $modelJefe->first('claps_id', '=', $id);
+        return $jefe;
+    }
+
 
 }
