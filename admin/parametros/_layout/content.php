@@ -12,4 +12,9 @@
         ?>
         </div>
     </div>
+    <div class="col-12">
+        <ul>
+            <li>numRowsPaginate[null|int]</li>
+        </ul>
+    </div>
 </div>
