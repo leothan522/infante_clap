@@ -17,6 +17,7 @@ inputmask('#jefe_edit_input_nombre', 'alfa', 3, 100);
     theme: 'bootstrap4'
 });*/
 
+$('#navbar_buscar').removeClass('d-none');
 
 //funcion para guardar
 $('#form_create_clap').submit(function (e) {
@@ -162,24 +163,50 @@ $('#form_create_clap').submit(function (e) {
                         '                            </div>';
 
 
-                    table.row.add([
-                        data.item,
-                        data.nombre_clap,
-                        data.nombre_jefe,
-                        data.cedula,
-                        data.telefono,
-                        data.familias,
-                        buttons
-                    ]).draw();
+                    let municipio = $('#clap_input_municipio_id').val();
 
-                    let nuevo = $('#tabla_claps tr:last');
-                    nuevo.attr('id', 'tr_item_claps_' + data.id);
-                    nuevo.find("td:eq(0)").addClass('item');
-                    nuevo.find("td:eq(1)").addClass('nombre_clap');
-                    nuevo.find("td:eq(2)").addClass('nombre_jefe');
-                    nuevo.find("td:eq(3)").addClass('cedula');
-                    nuevo.find("td:eq(4)").addClass('telefono');
-                    nuevo.find("td:eq(5)").addClass('familias');
+                    if (municipio === ""){
+                        table.row.add([
+                            data.item,
+                            data.nombre_municipio,
+                            data.nombre_clap,
+                            data.nombre_jefe,
+                            data.cedula,
+                            data.telefono,
+                            data.familias,
+                            buttons
+                        ]).draw();
+
+                        let nuevo = $('#tabla_claps tr:last');
+                        nuevo.attr('id', 'tr_item_claps_' + data.id);
+                        nuevo.find("td:eq(0)").addClass('item');
+                        nuevo.find("td:eq(1)").addClass('nombre_municipio');
+                        nuevo.find("td:eq(2)").addClass('nombre_clap');
+                        nuevo.find("td:eq(3)").addClass('nombre_jefe');
+                        nuevo.find("td:eq(4)").addClass('cedula');
+                        nuevo.find("td:eq(5)").addClass('telefono');
+                        nuevo.find("td:eq(6)").addClass('familias');
+                    }else {
+                        table.row.add([
+                            data.item,
+                            data.nombre_clap,
+                            data.nombre_jefe,
+                            data.cedula,
+                            data.telefono,
+                            data.familias,
+                            buttons
+                        ]).draw();
+
+                        let nuevo = $('#tabla_claps tr:last');
+                        nuevo.attr('id', 'tr_item_claps_' + data.id);
+                        nuevo.find("td:eq(0)").addClass('item');
+                        nuevo.find("td:eq(1)").addClass('nombre_clap');
+                        nuevo.find("td:eq(2)").addClass('nombre_jefe');
+                        nuevo.find("td:eq(3)").addClass('cedula');
+                        nuevo.find("td:eq(4)").addClass('telefono');
+                        nuevo.find("td:eq(5)").addClass('familias');
+                    }
+
 
                 }
 
@@ -484,13 +511,27 @@ $('#form_edit_clap').submit(function (e) {
 
                 if (data.edit_clap) {
                     let tr = $('#tr_item_claps_' + data.id);
-                    table
-                        .cell(tr.find('.nombre_clap')).data(data.nombre_clap)
-                        .cell(tr.find('.nombre_jefe')).data(data.nombre_jefe)
-                        .cell(tr.find('.cedula')).data(data.cedula)
-                        .cell(tr.find('.telefono')).data(data.telefono)
-                        .cell(tr.find('.familias')).data(data.familias)
-                        .draw();
+                    let municipio = $('#clap_input_municipio_id').val();
+
+                    if (municipio === ""){
+                        table
+                            .cell(tr.find('.nombre_municipio')).data(data.nombre_municipio)
+                            .cell(tr.find('.nombre_clap')).data(data.nombre_clap)
+                            .cell(tr.find('.nombre_jefe')).data(data.nombre_jefe)
+                            .cell(tr.find('.cedula')).data(data.cedula)
+                            .cell(tr.find('.telefono')).data(data.telefono)
+                            .cell(tr.find('.familias')).data(data.familias)
+                            .draw();
+                    }else {
+                        table
+                            .cell(tr.find('.nombre_clap')).data(data.nombre_clap)
+                            .cell(tr.find('.nombre_jefe')).data(data.nombre_jefe)
+                            .cell(tr.find('.cedula')).data(data.cedula)
+                            .cell(tr.find('.telefono')).data(data.telefono)
+                            .cell(tr.find('.familias')).data(data.familias)
+                            .draw();
+                    }
+
                 }
 
             }else {
@@ -696,6 +737,28 @@ $('#claps_select_id_municipio').change(function (e) {
 function clickDescargarClaps() {
     $('#form_claps_excel').submit();
 }
+
+$('#navbar_form_buscar').submit(function (e) {
+    e.preventDefault();
+    let id = $('#claps_select_id_municipio').val();
+
+    let html = '<input type="hidden" name="opcion" value="nabvar_buscar" id="nabvar_temp_opcion">';
+    html += '<input type="hidden" name="id" value="'+ id +'" id="nabvar_temp_municipio">';
+
+    $(this).append(html);
+
+    ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize(), html:'si' }, function (data) {
+
+        $('#claps_listar_card').html(data);
+        datatable('tabla_claps');
+        $('#clap_input_municipio_id').val(id);
+
+    });
+
+    $('#nabvar_temp_opcion').remove();
+    $('#nabvar_temp_municipio').remove();
+    $('#nabvar_x_cerrar').click();
+});
 
 
 

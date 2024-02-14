@@ -22,12 +22,12 @@
             <div class="navbar-search-block">
                 <form class="form-inline" id="navbar_form_buscar">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search" name="buscar" id="navbar_input_buscar">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Buscar"  aria-label="Search" name="keyword" id="navbar_input_buscar" required>
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
-                            <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                            <button class="btn btn-navbar" type="button" data-widget="navbar-search" id="nabvar_x_cerrar">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>

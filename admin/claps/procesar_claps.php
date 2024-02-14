@@ -222,6 +222,7 @@ if ($_POST) {
                                 'El Clap se ha guardado Exitosamente.'
                             );
                             $response['id'] = $clapNuevo['id'];
+                            $response['nombre_municipio'] = '<p class="text-uppercase">' . $nombreMunicipio . '</p>';
                             $response['nombre_clap'] = '<p class="text-uppercase">' . $clapNuevo['nombre'] . '</p>';
                             $response['nombre_jefe'] = '<p class="text-uppercase">' . $jefeNuevo['nombre'] . '</p>';
                             $response['cedula'] = '<p class="text-right">' . formatoMillares($jefeNuevo['cedula'], 0) . '</p>';
@@ -560,6 +561,7 @@ if ($_POST) {
                                 $claps = $model->find($id);
                                 $jefes = $modelJefe->first('claps_id', '=', $clap['id']);
                                 $response['id'] = $clap['id'];
+                                $response['nombre_municipio'] = '<p class="text-uppercase">' . $nombreMunicipio . '</p>';
                                 $response['nombre_clap'] = '<p class="text-uppercase">' . $claps['nombre'] . '</p>';
                                 $response['nombre_jefe'] = '<p class="text-uppercase">' . $jefes['nombre'] . '</p>';
                                 $response['cedula'] = '<p class="text-right">' . formatoMillares($jefes['cedula'], 0) . '</p>';
@@ -720,6 +722,12 @@ if ($_POST) {
                             $disabled = null;
                         }
 
+                        $ver = true;
+                        $col_municipio = true;
+                        if (!empty($id)){
+                            $col_municipio = false;
+                        }
+
                         echo '<div class="card-header">';
                         echo      '<h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>';
                         echo         '<div class="card-tools">';
@@ -739,6 +747,85 @@ if ($_POST) {
                         echo '</div>';
                         verCargando();
                         
+                    } else {
+                        echo '<div class="card-header">';
+                        echo     '<h3 class="card-title">Claps Registrados</h3>';
+                        echo         '<div class="card-tools">';
+                        if (!validarPermisos()){ $disabled = 'disabled'; }else{ $disabled = null; }
+                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel"'.$disabled.' >';
+                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
+                        echo         '</button>';
+                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>';
+                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
+                        echo             '</button>';
+                        echo         '</div>';
+                        echo '</div>';
+                        echo '<div class="card-body" >';
+                        echo      'Seleccione un <strong>Municipio</strong> para empezar...';
+                        echo '</div>';
+                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
+                        echo '</div>';
+                        verCargando();
+
+                    }
+
+                    break;
+
+                case 'nabvar_buscar':
+
+                    $paginate = true;
+
+                    $modelMunicipio = new Municipio();
+
+                    if (!empty($_POST['keyword'])) {
+                        //proceso
+                        $id = $_POST['id'];
+                        $keyword = $_POST['keyword'];
+
+                        //traer todos los datos del municipio
+                        $texto = null;
+                        if (!empty($id) && !validarAccesoMunicipio()){
+                            $municipio = $modelMunicipio->find($id);
+                            $texto = 'del municipio [<strong class="text-danger">'.mb_strtoupper($municipio['mini']).'</strong>]';
+                        }
+
+                        $limit = 100;
+                        $i = 0;
+                        $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1, 'nombre', 'LIKE', "%$keyword%"), null, 'paginate', 'dataContainerClap')->createLinks();
+
+                        $listarClap = $model->paginate($limit, null, 'id', 'DESC', 1, 'nombre', 'LIKE', "%$keyword%");
+
+                        if (!validarPermisos("claps.create")) {
+                            $disabled = 'disabled';
+                        }else{
+                            $disabled = null;
+                        }
+
+                        $ver = true;
+                        $col_municipio = true;
+                        if (!empty($id)){
+                            $col_municipio = false;
+                        }
+
+                        echo '<div class="card-header">';
+                        echo      '<h3 class="card-title">Resultados para la busqueda: [ <strong class="text-danger">'.$keyword.'</strong> ] '.$texto.'</h3>';
+                        echo         '<div class="card-tools">';
+                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel">';
+                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
+                        echo         '</button>';
+                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps"'.$disabled.'>';
+                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
+                        echo             '</button>';
+                        echo         '</div>';
+                        echo '</div>';
+                        echo '<div class="card-body" >';
+                                  require "_layout/table_claps.php";
+                        echo '</div>';
+                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
+                        echo      $links;
+                        echo '</div>';
+                        verCargando();
+
                     } else {
                         echo '<div class="card-header">';
                         echo     '<h3 class="card-title">Claps Registrados</h3>';

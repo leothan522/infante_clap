@@ -28,9 +28,13 @@ if ($_POST){
     if (!empty($_POST['clap_input_municipio_id'])) {
         $id = $_POST['clap_input_municipio_id'];
         $listarClap = $model->getList('municipios_id', '=', $id);
+        $municipio = $modelMunicipio->find($id);
+        $title = $municipio['nombre'];
     }else {
         $listarClap = $model->getAll(1);
+        $title = 'ESTADO GUÁRICO';
     }
+
 # Agregar contenido al archivo Excel
     $spreadsheet = new Spreadsheet();
     $activeWorksheet = $spreadsheet->getActiveSheet();
@@ -55,7 +59,11 @@ if ($_POST){
     $activeWorksheet->setTitle('Claps');
     $activeWorksheet->setCellValue('A1', 'Fecha: '. date('d-m-Y H:i'));
     $activeWorksheet->setCellValue('A2', 'Usuario: '. $controller->USER_NAME);
-    $activeWorksheet->setCellValue('A3', "DISTRIBUCION DE MODULOS CLAP A FAMILIAS");
+    if (!empty($id)){
+        $activeWorksheet->setCellValue('A3', 'DISTRIBUCION DE MODULOS CLAP A FAMILIAS DEL MUNICIPIO ' . $title);
+    }else{
+        $activeWorksheet->setCellValue('A3', "DISTRIBUCION DE MODULOS CLAP A FAMILIAS DEL ". $title);
+    }
     $activeWorksheet->setCellValue('A6', 'BLOQUE');
     $activeWorksheet->setCellValue('B6', 'PARROQUIA');
     $activeWorksheet->setCellValue('C6', 'EXTRACTO');
@@ -74,6 +82,7 @@ if ($_POST){
 
     $fila = 7;
     $i = 0;
+    $suma = 0;
 
 //recorremos la db y llemanos las columnas
      foreach ($listarClap as $clap) {
@@ -100,10 +109,22 @@ if ($_POST){
          fondoCeldaExcel($activeWorksheet, 'K'. $fila, 'naranja');
 
          $fila++;
+         $suma = $suma + $clap['familias'];
+
      }
+    $activeWorksheet->setCellValue('J'. $fila, 'DESPACHO TOTAL DEL BLOQUE: '  );
+    $activeWorksheet->setCellValue('K'. $fila, $suma );
+    bordeCeldaExcel($activeWorksheet, 'J'. $fila);
+    bordeCeldaExcel($activeWorksheet, 'K'. $fila);
+    fondoCeldaExcel($activeWorksheet, 'J'. $fila, 'amarillo');
+    fondoCeldaExcel($activeWorksheet, 'K'. $fila, 'amarillo');
 
 # definimos el nombre del archivo
-    $fileName = "Datos_Claps.xlsx";
+    if (!empty($id)){
+        $fileName = 'Datos_Claps_'.$municipio['mini'].'_'.date('d-m-Y').'.xlsx';
+    }else{
+        $fileName = 'Datos_Claps_Estado_Guárico'.date('d-m-Y').'.xlsx';
+    }
 
 # Crear un "escritor"
     $writer = new Xlsx($spreadsheet);
