@@ -1,5 +1,6 @@
 <?php
 
+use app\model\Parametros;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(dirname(__FILE__, 3));
@@ -297,6 +298,30 @@ function validateJSON(string $json): bool
 function verUtf8($string){
     //$utf8_string = "Some UTF-8 encoded BATE QUEBRADO ÑñíÍÁÜ niño ó Ó string: é, ö, ü";
     return mb_convert_encoding($string, 'UTF-8');
+}
+
+function numRowsPaginate(){
+    $default = 30;
+    $model = new Parametros();
+    $parametro = $model->first('nombre', '=', 'numRowsPaginate');
+    if ($parametro) {
+        if (is_numeric($parametro['valor'])) {
+            return $parametro['valor'];
+        }
+    }
+    return $default;
+}
+
+function numSizeCodigo(){
+    $default = 6;
+    $model = new Parametros();
+    $parametro = $model->first('nombre', '=', 'size_codigo');
+    if ($parametro) {
+        if (is_numeric($parametro['tabla_id'])) {
+            return $parametro['tabla_id'];
+        }
+    }
+    return $default;
 }
 
 

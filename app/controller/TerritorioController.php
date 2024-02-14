@@ -25,7 +25,8 @@ class TerritorioController extends Admin
     public function listarMunicipios(): array
     {
         $model = new Municipio();
-        $limit = 15;
+        if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
+        $limit = $paginate;
         $this->linksPaginate = paginate('procesar_municipio.php', 'tabla_municipios', $limit, $model->count(), null, 'paginate_municipio', 'dataContainerMunicipio', '_municipio')->createLinks();
         return $model->paginate($limit, null, 'nombre', 'ASC');
     }
@@ -33,7 +34,8 @@ class TerritorioController extends Admin
     public function listarParroquias()
     {
         $model = new Parroquia();
-        $limit = 15;
+        if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
+        $limit = $paginate;
         $this->linksPaginate = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
         return $model->paginate($limit, null, 'nombre', 'ASC');
     }

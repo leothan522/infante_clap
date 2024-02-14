@@ -25,7 +25,7 @@ class UsersController extends Admin
     public function listarUsuarios(): array
     {
         $model = new User();
-        $limit = 30;
+        $limit = numRowsPaginate();
         $this->linksPaginate = paginate('procesar.php', 'tabla_usuarios', $limit, $model->count(1))->createLinks();
         return $model->paginate($limit, null, 'role', 'DESC', 1);
     }
