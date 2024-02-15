@@ -752,7 +752,8 @@ if ($_POST) {
 
                         //traer todos los datos del municipio
                         $municipio = $modelMunicipio->find($id);
-                        $limit = 5;
+                        if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
+                        $limit = $paginate;
                         $i = 0;
                         $links = paginate(
                             'procesar_claps.php',

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.bloques: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.bloques: ~8 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.claps
 CREATE TABLE IF NOT EXISTS `claps` (
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.claps: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.claps: ~23 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.cuotas
 CREATE TABLE IF NOT EXISTS `cuotas` (
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `jefes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.jefes: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.jefes: ~23 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.parametros: ~6 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.users: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `acceso_municipio`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$AsJ1CdJSb0yg2QxpgIpjJOfEjMv/iYY9dGavWhQDhewyvHyY.cwjG', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, '{"9":true,"10":true,"12":true,"15":true}', 1, 1, '2023-08-12', '2024-02-06', NULL, 0),
 	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$k0hDjkv2UVWA3Qp/OpesrOL5ruFtjBWHWxJVNEMt4yBi4bbuJQGYu', '(0412) 199-56.47', 'QBT2FEwoc9NB8NuZoGGoebxBobGHa04Pl4KhYTTSkYR9fqdDsi', '2024-02-06 12:36:22', NULL, 100, 0, NULL, '{"5":true, "7":true, "1":true}', 1, 1, '2023-08-28', '2023-09-23', NULL, 0);
