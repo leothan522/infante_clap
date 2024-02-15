@@ -1,10 +1,10 @@
-<div class="" id="dataContainerClap">
+<div class="table-responsive">
     <table class="table table-sm" id="tabla_claps">
         <thead>
         <tr>
             <th style="width: 5%; text-align: center">#</th>
-            <?php if ($col_municipio){ ?>
-            <th>Municipio</th>
+            <?php if ($col_municipio) { ?>
+                <th>Municipio</th>
             <?php } ?>
             <th>Nombre del CLAPS</th>
             <th>Jefe de Comunidad</th>
@@ -16,43 +16,45 @@
         </thead>
         <tbody>
         <?php
-        foreach ($listarClap as $clap) {
+        foreach ($controller->listarClap as $clap) {
             $i++;
 
             $jefe = getJefe($clap['id']);
             $municipio = $modelMunicipio->find($clap['municipios_id']);
 
-            if (!empty($id)){
-                if ($id == $clap['municipios_id']){
+            if (!empty($id)) {
+                if ($id == $clap['municipios_id']) {
                     $ver = true;
-                }else{
+                } else {
                     $ver = false;
                 }
             }
 
 
-        if (validarAccesoMunicipio($municipio['id']) && $ver){
-            ?>
-            <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
-                <td class="text-center item"><?php echo $i; ?>.</td>
-                <?php if ($col_municipio){ ?>
-                    <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
-                <?php } ?>
-                <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
-                <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
-                <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
-                <td class="text-center telefono"> <?php echo $jefe['telefono']; ?> </td>
-                <td class="text-right familias"><?php echo formatoMillares($clap['familias'], 0); ?></td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-show-claps"
-                                onclick="showClapJefe(<?php echo $clap['id']; ?>)" id="btn_elimiar_clap_<?php echo $clap['id'] ?>">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        <?php
+            if (validarAccesoMunicipio($municipio['id']) && $ver) {
+                ?>
+                <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
+                    <td class="text-center item"><?php echo $i; ?>.</td>
+                    <?php if ($col_municipio) { ?>
+                        <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
+                    <?php } ?>
+                    <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
+                    <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
+                    <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
+                    <td class="text-center telefono"> <?php echo $jefe['telefono']; ?> </td>
+                    <td class="text-right familias"><?php echo formatoMillares($clap['familias'], 0); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                    data-target="#modal-show-claps"
+                                    onclick="showClapJefe(<?php echo $clap['id']; ?>)"
+                                    id="btn_elimiar_clap_<?php echo $clap['id'] ?>">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <?php
             }
         } ?>
         </tbody>

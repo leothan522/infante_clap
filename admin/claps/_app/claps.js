@@ -721,8 +721,8 @@ function showClapJefe(id) {
 function getClapsMunicipio(id) {
     ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
-    $('#claps_listar_card').html(data);
-    datatable('tabla_claps');
+    $('#card_listar_claps').html(data);
+    //datatable('tabla_claps');
     $('#clap_input_municipio_id').val(id);
 
     });
@@ -750,7 +750,6 @@ $('#navbar_form_buscar').submit(function (e) {
     ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize(), html:'si' }, function (data) {
 
         $('#claps_listar_card').html(data);
-        datatable('tabla_claps');
         $('#clap_input_municipio_id').val(id);
 
     });

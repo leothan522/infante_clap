@@ -1,4 +1,5 @@
-<div class="card card-outline card-primary" id="claps_listar_card">
+<div class="card card-outline card-primary">
+
     <div class="card-header">
         <h3 class="card-title">Claps Registrados</h3>
 
@@ -6,24 +7,41 @@
 
             <button type="submit" class="btn btn-tool text-success swalDefaultInfo"
                     onclick="clickDescargarClaps()" id="clap_table_export_excel"
-                    <?php if (!validarPermisos()){ ?> disabled <?php } ?>>
+                <?php if (!validarPermisos()) { ?> disabled <?php } ?>>
                 <i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>
             </button>
             <button class="btn btn-tool" data-toggle="modal"
                     onclick="resetClap('clap_create_select_municipio', 'clap_create_select_entes')"
-                    data-target="#modal-claps" disabled >
+                    data-target="#modal-claps" disabled>
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>
 
     </div>
     <!-- /.card-header -->
-    <div class="card-body" >
-        Seleccione un <strong>Municipio</strong> para empezar...
+    <div class="card-body">
+
+
+        <div class="row">
+            <div class="col-12">
+            <?php
+                if (empty($controller->listarClap) && is_null($controller->id)){
+            ?>
+            Seleccione un <strong>Municipio</strong> para empezar...
+            <?php
+                }else {
+                    require '_layout/table_claps.php';
+                }
+             ?>
+            </div>
+        </div>
+
     </div>
     <!-- /.card-body -->
-    <div class="card-footer clearfix" id="claps_listar_footer">
-        <?php /*echo $links; */?>
+    <div class="card-footer clearfix">
+        <?php echo $controller->links;  ?>
     </div>
     <?php verCargando(); ?>
+
 </div>
+

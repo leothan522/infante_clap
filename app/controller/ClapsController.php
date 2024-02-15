@@ -15,8 +15,9 @@ class ClapsController extends Admin
     public string $TITTLE = 'Gestionar CLAPS';
     public string $MODULO = 'claps.index';
 
-    public $linksPaginate;
-    public $pag = 0;
+    public $listarClap = [];
+    public $id = null;
+    public $links = null;
 
     public function isAdmin()
     {
@@ -24,6 +25,13 @@ class ClapsController extends Admin
         if (!validarPermisos($this->MODULO)) {
             header('location: ' . ROOT_PATH . 'admin\\');
         }
+    }
+
+    public function listarmunicipios()
+    {
+        $model = new Municipio();
+        $listarMunicipio = $model->getAll();
+        return $listarMunicipio;
     }
 
 
@@ -42,26 +50,21 @@ class ClapsController extends Admin
     }
 
 
-    public function listarClaps()
+    /*public function listarClaps()
     {
         $model = new Clap();
         $limit = 30;
         $this->linksPaginate = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1), null, 'paginate', 'dataContainerClap')->createLinks();
         return $model->paginate($limit, null, 'id', 'DESC', 1);
-    }
+    }*/
 
-    public function listarmunicipios()
-    {
-        $model = new Municipio();
-        $listarMunicipio = $model->getAll();
-        return $listarMunicipio;
-    }
 
-    public function getJefe($id){
+
+    /*public function getJefe($id){
         $modelJefe = new Jefe();
         $jefe = $modelJefe->first('claps_id', '=', $id);
         return $jefe;
-    }
+    }*/
 
 
 }

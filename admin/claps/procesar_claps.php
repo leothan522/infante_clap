@@ -2,6 +2,7 @@
 session_start();
 require_once "../../vendor/autoload.php";
 
+use app\controller\ClapsController;
 use app\model\Clap;
 use app\model\Municipio;
 use app\model\Bloque;
@@ -13,6 +14,8 @@ $response = array();
 $paginate = false;
 
 if ($_POST) {
+
+    $controller = new ClapsController();
 
     if (!empty($_POST['opcion'])) {
 
@@ -41,12 +44,50 @@ if ($_POST) {
                     $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+                    $campo = !empty($_POST['campo']) ? $_POST['campo'] : '';
+                    $operador = !empty($_POST['operador']) ? $_POST['operador'] : '';
+                    $valor = !empty($_POST['valor']) ? $_POST['valor'] : '';
 
-                    $listarClap = $model->paginate($limit, $offset, 'id', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerClap',)->createLinks();
+                    $listarClap = $model->paginate(
+                        $limit,
+                        $offset,
+                        'id',
+                        'DESC',
+                        1,
+                        $campo,
+                        $operador,
+                        $valor
+                    );
+                    $links = paginate(
+                        $baseURL,
+                        $tableID,
+                        $limit,
+                        $model->count(1, $campo, $operador, $valor),
+                        $offset,
+                        'paginate',
+                        'card_listar_claps',
+                        null,
+                        $campo,
+                        $operador,
+                        $valor
+                    )->createLinks();
+
                     $i = $offset;
-                    echo '<div id="dataContainerClap">';
-                    require "_layout/table_claps.php";
+
+                    $modelMunicipio = new Municipio();
+
+                    $id = $valor;
+                    $ver = true;
+                    $col_municipio = true;
+                    if (!empty($id)){
+                        $col_municipio = false;
+                    }
+                    $controller->listarClap = $listarClap;
+                    $controller->id = $id;
+                    $controller->links = $links;
+
+                    echo '<div id="card_listar_claps">';
+                    require ('_layout/card_listar_claps.php');
                     echo '</div>';
                     break;
 
@@ -711,10 +752,31 @@ if ($_POST) {
 
                         //traer todos los datos del municipio
                         $municipio = $modelMunicipio->find($id);
-                        $limit = 30;
+                        $limit = 5;
                         $i = 0;
-                        $links = paginate('procesar_claps.php', 'tabla_claps', $limit, $model->count(1, 'municipios_id', '=', $id), null, 'paginate', 'dataContainerClap')->createLinks();
-                        $listarClap = $model->paginate($limit, null, 'id', 'DESC', 1, 'municipios_id', '=', $id);
+                        $links = paginate(
+                            'procesar_claps.php',
+                            'tabla_claps',
+                            $limit,
+                            $model->count(1, 'municipios_id', '=', $id),
+                            null,
+                            'paginate',
+                            'card_listar_claps',
+                            null,
+                            'municipios_id',
+                            '=',
+                            $id
+                        )->createLinks();
+
+                        $listarClap = $model->paginate(
+                            $limit,
+                            null,
+                            'id',
+                            'DESC',
+                            1,
+                            'municipios_id',
+                            '=',
+                            $id);
 
                         if (!validarPermisos("claps.create")) {
                             $disabled = 'disabled';
@@ -728,46 +790,12 @@ if ($_POST) {
                             $col_municipio = false;
                         }
 
-                        echo '<div class="card-header">';
-                        echo      '<h3 class="card-title">Claps Registrados: <strong>'.$municipio['nombre'].'</strong></h3>';
-                        echo         '<div class="card-tools">';
-                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel">';
-                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
-                        echo         '</button>';
-                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps"'.$disabled.'>';
-                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
-                        echo             '</button>';
-                        echo         '</div>';
-                        echo '</div>';
-                        echo '<div class="card-body" >';
-                                  require "_layout/table_claps.php";
-                        echo '</div>';
-                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
-                        echo      $links;
-                        echo '</div>';
-                        verCargando();
-                        
-                    } else {
-                        echo '<div class="card-header">';
-                        echo     '<h3 class="card-title">Claps Registrados</h3>';
-                        echo         '<div class="card-tools">';
-                        if (!validarPermisos()){ $disabled = 'disabled'; }else{ $disabled = null; }
-                        echo         '<button type="submit" class="btn btn-tool text-success swalDefaultInfo" onclick="clickDescargarClaps()" id="clap_table_export_excel"'.$disabled.' >';
-                        echo            '<i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>';
-                        echo         '</button>';
-                        echo             '<button class="btn btn-tool" data-toggle="modal" onclick="resetClap(\'clap_create_select_municipio\', \'clap_create_select_entes\')" data-target="#modal-claps" disabled>';
-                        echo                 '<i class="far fa-file-alt"></i> Nuevo';
-                        echo             '</button>';
-                        echo         '</div>';
-                        echo '</div>';
-                        echo '<div class="card-body" >';
-                        echo      'Seleccione un <strong>Municipio</strong> para empezar...';
-                        echo '</div>';
-                        echo '<div class="card-footer clearfix" id="claps_listar_footer">';
-                        echo '</div>';
-                        verCargando();
-
+                        $controller->listarClap = $listarClap;
+                        $controller->id = $id;
+                        $controller->links = $links;
                     }
+
+                    require ('_layout/card_listar_claps.php');
 
                     break;
 

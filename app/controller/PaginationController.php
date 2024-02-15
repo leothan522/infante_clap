@@ -37,7 +37,10 @@ class PaginationController
     var $currentOffset	= 0;
     var $contentDiv     = '';
     var $opcion         = '';
-    var $leyenda         = '';
+    var $leyenda        = '';
+    var $campo          = '';
+    var $operador       = '';
+    var $valor          = '';
     var $additionalParam= '';
 
     function __construct($params = array()){
@@ -185,7 +188,17 @@ class PaginationController
             return '<a href="'. $this->anchorClass . ' ' . $this->baseURL . $count . '">'. $text .'</a>';
 
         $pageCount = $count?$count:0;
-        $this->additionalParam = "{'page' : $pageCount, 'limit' : $this->perPage, 'baseURL' : '$this->baseURL', 'totalRows' : '$this->totalRows', 'tableID' : '$this->tableID', 'opcion': '$this->opcion' }";
+        $this->additionalParam = "{
+        'page' : $pageCount, 
+        'limit' : $this->perPage, 
+        'baseURL' : '$this->baseURL', 
+        'totalRows' : '$this->totalRows', 
+        'tableID' : '$this->tableID', 
+        'opcion': '$this->opcion', 
+        'campo': '$this->campo', 
+        'operador': '$this->operador', 
+        'valor': '$this->valor', 
+        }";
 
         return "<a href=\"javascript:void(0);\" " . $this->anchorClass . "
 				onclick=\"$.post('". $this->baseURL."', ". $this->additionalParam .", function(data){
