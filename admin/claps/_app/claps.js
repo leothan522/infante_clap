@@ -749,7 +749,8 @@ $('#navbar_form_buscar').submit(function (e) {
 
     ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize(), html:'si' }, function (data) {
 
-        $('#claps_listar_card').html(data);
+        $('#card_listar_claps').html(data);
+        datatable('tabla_claps');
         $('#clap_input_municipio_id').val(id);
 
     });
@@ -762,4 +763,4 @@ $('#navbar_form_buscar').submit(function (e) {
 
 
 
-console.log('clap');
+console.log('clap sss');

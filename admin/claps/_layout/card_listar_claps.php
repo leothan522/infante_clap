@@ -1,7 +1,16 @@
 <div class="card card-outline card-primary">
 
     <div class="card-header">
-        <h3 class="card-title">Claps Registrados</h3>
+        <h3 class="card-title">
+            <?php if (!isset($keyword)){ ?>
+            Claps Registrados
+            <?php }else { ?>
+                Resultados para la busqueda [<strong class="text-danger"><?php echo mb_strtoupper($keyword); ?></strong>]
+                <?php if ($controller->id){ ?>
+                    del municipio [<strong class="text-danger"><?php echo mb_strtoupper($municipio['mini']); ?></strong>]
+                <?php } ?>
+            <?php } ?>
+        </h3>
 
         <div class="card-tools">
 
