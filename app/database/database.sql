@@ -55,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `cuotas` (
   `mes` int unsigned NOT NULL,
   `fecha` date NOT NULL,
   `precio` decimal(12,2) unsigned DEFAULT NULL,
+  `adicional` decimal(12,2) DEFAULT NULL,
+  `year` date DEFAULT NULL,
   `band` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -69,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `entes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.entes: ~1 rows (aproximadamente)
 INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
 	(1, 'Alguarisa', 1);
 
@@ -86,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `jefes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.jefes: ~23 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.jefes: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
@@ -140,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.parametros: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.parametros: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
