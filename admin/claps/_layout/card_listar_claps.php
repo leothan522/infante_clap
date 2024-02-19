@@ -16,7 +16,7 @@
 
             <button type="submit" class="btn btn-tool text-success swalDefaultInfo"
                     onclick="clickDescargarClaps()" id="clap_table_export_excel"
-                <?php if (empty($id)) { ?> disabled <?php } ?>>
+                <?php if (empty($id) && !validarPermisos()) { ?> disabled <?php } ?>>
                 <i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>
             </button>
             <button class="btn btn-tool" data-toggle="modal"

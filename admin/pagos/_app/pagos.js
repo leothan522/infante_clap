@@ -154,4 +154,9 @@ function resetCuota() {
     $('#cuotas_input_adicional').val('');
 
 }
+
+function getPrecio() {
+    ajaxRequest();
+}
+
 console.log('cuotas');
