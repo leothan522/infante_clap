@@ -718,21 +718,27 @@ function showClapJefe(id) {
     });
 }
 
+$('#global_select_id_municipio').change(function (e) {
+    e.preventDefault();
+    let id = $(this).val()
+    ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
+
+        $('#card_listar_claps').html(data);
+        datatable('tabla_claps');
+        $('#clap_input_municipio_id').val(id);
+
+    });
+});
+
 function getClapsMunicipio(id) {
     ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
     $('#card_listar_claps').html(data);
-    //datatable('tabla_claps');
+    datatable('tabla_claps');
     $('#clap_input_municipio_id').val(id);
 
     });
 }
-
-$('#claps_select_id_municipio').change(function (e) {
-   e.preventDefault();
-   let id = $(this).val()
-   getClapsMunicipio(id);
-});
 
 function clickDescargarClaps() {
     $('#form_claps_excel').submit();
@@ -763,4 +769,4 @@ $('#navbar_form_buscar').submit(function (e) {
 
 
 
-console.log('clap');
+console.log('claps ssss');

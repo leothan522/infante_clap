@@ -4,6 +4,69 @@ inputmask('#cuotas_input_adicional', 'numerico', 1, 5, '.');
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('tabla_cuotas');
 
+//esta funsion sirve para resetear los datos del modal
+function getMunicipios(municipio = true) {
+    let html = '<div class="card-body"><span>Seleccione un Municipio para empezar</span></div>';
+    $('#card_body_cuotas')
+        .html(html);
+    $('#cuotas_select_municipios').val('');
+
+    ajaxRequest({url: 'procesar_cuotas.php', data: {opcion: 'get_municipios'}}, function (data) {
+        if (data.result) {
+            let select = $('#cuotas_select_municipios');
+            let municipios = data.municipios.length;
+            select.empty();
+            select.append('<option value="">Seleccione</option>');
+            for (let i = 0; i < municipios; i++) {
+                let id = data.municipios[i]['id'];
+                let nombre = data.municipios[i]['nombre'];
+                select.append('<option value="' + id + '">' + nombre + '</option>');
+            }
+        }
+    });
+
+}
+
+function cambiarMunicipio() {
+    getPrecio();
+    getCuotas();
+}
+
+function getPrecio() {
+    let id = $('#cuotas_select_municipios').val();
+    ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'getPrecio', id: id } }, function (data) {
+        if (data.result){
+            $('#cuotas_input_precio').val(data.precio_modulo);
+            $('#input_hidde_municipios_id').val(id);
+        }
+    });
+}
+
+function getCuotas() {
+    let id = $('#cuotas_select_municipios').val();
+    ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'listar_cuotas', id: id }, html: 'si' }, function (data) {
+
+        $('#card_body_cuotas').html('<div class="card-body"><span class="text-success">yonathan</span></div>');
+
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //cacturo el formulario para guardar la cuota
 $('#cuotas_form').submit(function (e) {
@@ -153,10 +216,6 @@ function resetCuota() {
     $('#cuotas_input_precio').val('');
     $('#cuotas_input_adicional').val('');
 
-}
-
-function getPrecio() {
-    ajaxRequest();
 }
 
 console.log('cuotas');

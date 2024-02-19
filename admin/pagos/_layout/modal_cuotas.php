@@ -14,14 +14,9 @@
                         <?php require "form_cuotas.php" ?>
                     </div>
                     <div class="col-md-8">
-                        <div id="dataContainerCuotas">
                             <?php
-                            $listarCuotas = $controller->listarCuotas();
-                            $i = 0;
-                            $links = $controller->linksPaginate;
-                            require 'table_cuotas.php';
+                            require 'card_cuotas.php';
                             ?>
-                        </div>
                     </div>
                 </div>
             </div>

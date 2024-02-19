@@ -3,6 +3,7 @@ session_start();
 require_once "../../vendor/autoload.php";
 use app\controller\PagosController;
 $controller = new PagosController();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,7 +53,7 @@ $controller = new PagosController();
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
 <!-- Preloader -->
-<?php require_once "../_layout/preloader.php" ?>
+<?php /*require_once "../_layout/preloader.php" */?>
 
 <!-- Site wrapper -->
 <div class="wrapper">

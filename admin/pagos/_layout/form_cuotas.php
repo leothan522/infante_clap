@@ -69,7 +69,7 @@
             </div>
 
             <div class="form-group">
-                <input type="hidden" value="<?php echo date('Y') ?>" placeholder="año" name="cuota_input_year" id="cuotas_input_year">
+                <input type="text" placeholder="municipios_id" name="municipios_id" id="input_hidde_municipios_id">
             </div>
             
         </div>

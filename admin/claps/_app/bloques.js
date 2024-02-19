@@ -200,8 +200,11 @@ function eliminarBloque(id) {
                         .row(item)
                         .remove()
                         .draw();
+
+                    limpiarBloques();
                 }
             });
+
 
         }
 

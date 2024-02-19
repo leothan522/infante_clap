@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\middleware\Admin;
 use app\model\Cuota;
+use app\model\Municipio;
 
 class PagosController extends Admin
 {
@@ -20,6 +21,8 @@ class PagosController extends Admin
             header('location: ' . ROOT_PATH . 'admin\\');
         }
     }
+
+
 
     public function listarCuotas()
     {

@@ -3,6 +3,8 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 use app\model\Cuota;
+use app\model\Municipio;
+use app\model\Parametros;
 
 $response = array();
 $paginate = false;
@@ -15,6 +17,7 @@ if ($_POST) {
 
         try {
             $model = new Cuota();
+            $modelParametros = new Parametros();
             switch ($opcion) {
 
                 //definimos las opciones a procesar
@@ -46,7 +49,14 @@ if ($_POST) {
                         $fecha = $_POST['cuotas_input_fecha'];
                         $precio = $_POST['cuotas_input_precio'];
                         $adicional = $_POST['cuotas_input_adicional'];
-                        $year = $_POST['cuota_input_year'];
+                        $year = date("Y");
+                        if (empty($_POST['municipios_id'])){
+                            $municipios_id = -1;
+                        }else{
+                            $municipios_id = $_POST['municipios_id'];
+                        }
+
+
 
                         $existe = false;
                         $error_mes = false;
@@ -95,6 +105,23 @@ if ($_POST) {
                             ];
 
                             $model->save($data);
+
+                            $sql = "SELECT * FROM parametros WHERE nombre = 'precio_modulo' AND tabla_id = '$municipios_id';  ";
+                            $parametro = $modelParametros->sqlPersonalizado($sql);
+                            if ($parametro){
+                                if ($precio != $parametro['valor']){
+                                    $modelParametros->update($parametro['id'], 'precio_modulo', $precio);
+                                }
+                            }else{
+                                $dataParametros = [
+                                    'precio_modulo',
+                                    $municipios_id,
+                                    $precio
+                                ];
+                                $modelParametros->save($dataParametros);
+                            }
+
+
                             $response = crearResponse(
                                 false,
                                 true,
@@ -230,7 +257,7 @@ if ($_POST) {
                         //proceso
                         $id = $_POST['id'];
                         $model->delete($id);
-                        
+
                         $response = crearResponse(
                             null,
                             true,
@@ -244,6 +271,44 @@ if ($_POST) {
                         $response = crearResponse('faltan_datos');
                     }
 
+                    break;
+
+                case 'getPrecio':
+                    if (empty($_POST['id'])){
+                        $id = -1;
+                    }else{
+                        $id = $_POST['id'];
+                    }
+                    $sql = "SELECT * FROM parametros WHERE nombre = 'precio_modulo' AND tabla_id = '$id';  ";
+                    $parametro = $modelParametros->sqlPersonalizado($sql);
+                    $response = crearResponse(
+                        null,
+                        true,
+                        null,
+                        null,
+                        'success',
+                        null,
+                        true
+                    );
+                    if ($parametro){
+                        $response['precio_modulo'] = $parametro['valor'];
+                    }else{
+                        $response['precio_modulo'] = null;
+                    }
+                    break;
+
+                case 'get_municipios':
+                    $model = new Municipio();
+
+                    $response = crearResponse(null, true, null, null, 'success', false, true);
+
+                    foreach ($model->getAll() as $municipio) {
+                        $id = $municipio['id'];
+                        $nombre = $municipio['mini'];
+                        if (validarAccesoMunicipio($id)){
+                            $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
+                        }
+                    }
                     break;
 
                 //Por defecto

@@ -306,6 +306,15 @@ function verPermisos(): array
                     'text' => 'Eliminar Entes'
                 ]
             ]
+        ],
+        [ 'permiso' => 'pagos.index',
+            'text' => 'Validacion Pagos',
+            'opciones' => [
+                /*[
+                    'permiso' => 'pagos.create',
+                    'text' => 'Crear '
+                ]*/
+            ]
         ]
 
         /*

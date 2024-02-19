@@ -8,6 +8,7 @@
                 <!--<li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Layout</a></li>
                 <li class="breadcrumb-item active">Fixed Navbar Layout</li>-->
+                <?php require '../_layout/mount_select_municipio.php'; ?>
             </ol>
         </div>
     </div>

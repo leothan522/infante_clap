@@ -8,19 +8,7 @@
                 <!--<li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Layout</a></li>
                 <li class="breadcrumb-item active">Fixed Navbar Layout</li>-->
-                <select class="custom-select custom-select-sm rounded-0" id="claps_select_id_municipio">
-                    <option value="">MUNICIPIOS</option>
-                    <?php
-                    foreach ($controller->listarmunicipios() as $listarmunicipio)
-                    {
-                        if (validarAccesoMunicipio($listarmunicipio['id'])){
-                    ?>
-                        <option value="<?php echo $listarmunicipio['id']; ?>"> <?php echo $listarmunicipio['nombre'] ?> </option>
-                    <?php
-                        }
-                    }
-                    ?>
-                </select>
+                <?php require '../_layout/mount_select_municipio.php'; ?>
                 <form method="POST" action="_export/export_claps.php" id="form_claps_excel">
                     <input type="hidden" placeholder="municipio_id" name="clap_input_municipio_id" id="clap_input_municipio_id">
                 </form>

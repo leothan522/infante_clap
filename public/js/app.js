@@ -141,4 +141,7 @@ ajaxRequest({ data: $(this).serialize() },
 
 * */
 
+console.log('hola app global')
+
+
 
