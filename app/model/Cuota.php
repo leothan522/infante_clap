@@ -9,8 +9,11 @@ class Cuota extends Model
     {
         $this->TABLA = "cuotas";
         $this->DATA = [
-          'mes',
-          'fecha'
+            'mes',
+            'fecha',
+            'precio',
+            'adicional',
+            'year'
         ];
     }
 }

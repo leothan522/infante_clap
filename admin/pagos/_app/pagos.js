@@ -1,3 +1,6 @@
+inputmask('#cuotas_input_precio', 'numerico', 1, 5, '.');
+inputmask('#cuotas_input_adicional', 'numerico', 1, 5, '.');
+
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('tabla_cuotas');
 
@@ -8,6 +11,7 @@ $('#cuotas_form').submit(function (e) {
   let procesar = true;
   let mes = $('#cuotas_select_mes');
   let fecha = $('#cuotas_input_fecha');
+  let precio = $('#cuotas_input_precio');
 
   if (mes.val().length <= 0){
       procesar = false;
@@ -25,6 +29,16 @@ $('#cuotas_form').submit(function (e) {
         $('#error_cuotas_input_fecha').text('La fecha es obligatoria.');
     }else {
         fecha
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (precio.val().length <= 0){
+        procesar = false;
+        precio.addClass('is-invalid');
+        $('#error_cuotas_input_precio').text('El precio es obligatorio.');
+    }else {
+        precio
             .removeClass('is-invalid')
             .addClass('is-valid');
     }
@@ -77,7 +91,7 @@ $('#cuotas_form').submit(function (e) {
 
                 if (data.error_mes){
                     mes.addClass('is-invalid');
-                    $('#error_cuotas_select_mes').text('El mes ya ha sido registrado.');
+                    $('#error_cuotas_select_mes').text('El mes ya ha sido registrado este año.');
                 }
 
                 if (data.error_fecha){
@@ -100,6 +114,8 @@ function editCuota(id) {
        if (data.result){
            $('#cuotas_select_mes').val(data.mes);
            $('#cuotas_input_fecha').val(data.fecha);
+           $('#cuotas_input_precio').val(data.precio);
+           $('#cuotas_input_adicional').val(data.adicional);
            $('#cuotas_id').val(data.id);
            $('#cuotas_opcion').val('editar_cuotas');
        }
@@ -134,6 +150,8 @@ function resetCuota() {
         .val('');
     $('#cuotas_id').val('');
     $('#cuotas_opcion').val('guardar_cuotas');
+    $('#cuotas_input_precio').val('');
+    $('#cuotas_input_adicional').val('');
 
 }
 console.log('cuotas');

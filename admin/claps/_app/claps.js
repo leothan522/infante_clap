@@ -763,4 +763,4 @@ $('#navbar_form_buscar').submit(function (e) {
 
 
 
-console.log('clap sss');
+console.log('clap');

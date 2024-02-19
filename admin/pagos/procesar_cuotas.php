@@ -44,24 +44,22 @@ if ($_POST) {
 
                         $mes = $_POST['cuotas_select_mes'];
                         $fecha = $_POST['cuotas_input_fecha'];
+                        $precio = $_POST['cuotas_input_precio'];
+                        $adicional = $_POST['cuotas_input_adicional'];
+                        $year = $_POST['cuota_input_year'];
 
                         $existe = false;
                         $error_mes = false;
                         $error_fecha = false;
-                        $year = date("Y");
 
-                        $listarCuotas = $model->getList('mes', '=', $mes, 1, 'mes', 'DESC');
-                        if ($listarCuotas){
-                            foreach ($listarCuotas as $cuota){
-                                $db_fecha = $cuota['fecha'];
-                                break;
-                            }
-                            $explode = explode('-', $db_fecha);
-                            if ($year == $explode[0]){
-                                $existe = true;
-                                $error_mes = true;
-                            }
+                        $sql = "SELECT * FROM `cuotas` WHERE `mes` = '$mes' AND `year` = '$year';";
+                        $existeCuota = $model->sqlPersonalizado($sql);
+
+                        if ($existeCuota){
+                            $existe = true;
+                            $error_mes = true;
                         }
+
 
                         $listarCuotas = $model->getAll(1, 'fecha', 'DESC');
                         if ($listarCuotas){
@@ -75,12 +73,25 @@ if ($_POST) {
                             }
                         }
 
+                        if (empty($precio)){
+                            $precio = NULL;
+                        }else{
+                            $precio = $_POST['cuotas_input_precio'];
+                        }
 
+                        if (empty($adicional)){
+                            $adicional = NULL;
+                        }else{
+                            $adicional = $_POST['cuotas_input_adicional'];
+                        }
 
                         if (!$existe){
                             $data = [
                                 $mes,
-                                $fecha
+                                $fecha,
+                                $precio,
+                                $adicional,
+                                $year
                             ];
 
                             $model->save($data);
@@ -138,6 +149,8 @@ if ($_POST) {
                         );
                         $response['mes'] = $cuota['mes'];
                         $response['fecha'] = $cuota['fecha'];
+                        $response['precio'] = $cuota['precio'];
+                        $response['adicional'] = $cuota['adicional'];
                         $response['id'] = $cuota['id'];
 
                     }else{
@@ -153,12 +166,16 @@ if ($_POST) {
                     ){
                         $mes = $_POST['cuotas_select_mes'];
                         $fecha = $_POST['cuotas_input_fecha'];
+                        $precio = $_POST['cuotas_input_precio'];
+                        $adicional = $_POST['cuotas_input_adicional'];
                         $id = $_POST['cuotas_id'];
                         $cambios = false;
                         $cuota = $model->find($id);
 
                         $db_mes = $cuota['mes'];
                         $db_fecha = $cuota['fecha'];
+                        $db_precio = $cuota['precio'];
+                        $db_adicional = $cuota['adicional'];
 
                         if ($db_mes != $mes){
                             $cambios = true;
@@ -168,6 +185,16 @@ if ($_POST) {
                         if ($db_fecha != $fecha){
                             $cambios = true;
                             $model->update($id, 'fecha', $fecha);
+                        }
+
+                        if ($db_precio != $precio){
+                            $cambios = true;
+                            $model->update($id, 'precio', $precio);
+                        }
+
+                        if ($db_adicional != $adicional){
+                            $cambios = true;
+                            $model->update($id, 'adicional', $adicional);
                         }
 
                         if ($cambios){

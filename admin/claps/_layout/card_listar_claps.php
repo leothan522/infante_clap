@@ -16,12 +16,12 @@
 
             <button type="submit" class="btn btn-tool text-success swalDefaultInfo"
                     onclick="clickDescargarClaps()" id="clap_table_export_excel"
-                <?php if (!validarPermisos()) { ?> disabled <?php } ?>>
+                <?php if (empty($id)) { ?> disabled <?php } ?>>
                 <i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>
             </button>
             <button class="btn btn-tool" data-toggle="modal"
                     onclick="resetClap('clap_create_select_municipio', 'clap_create_select_entes')"
-                    data-target="#modal-claps" disabled>
+                    data-target="#modal-claps" <?php if (!validarPermisos('claps.create') || empty($id)){ ?> disabled <?php } ?>>
                 <i class="far fa-file-alt"></i> Nuevo
             </button>
         </div>

@@ -9,10 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
-
                 <div class="row">
                     <div class="col-md-4">
-                        <?php require_once "form_cuotas.php" ?>
+                        <?php require "form_cuotas.php" ?>
                     </div>
                     <div class="col-md-8">
                         <div id="dataContainerCuotas">
@@ -25,7 +24,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer justify-content-end">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

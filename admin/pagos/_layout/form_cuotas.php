@@ -47,12 +47,29 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Precio del Modulo" name="cuotas_input_precio" id="cuotas_input_precio">
                     <div class="input-group-append">
-                        <div class="input-group-text">
-                            <i class="fas fa-dollar-sign"></i>
+                        <div class="input-group-text text-bold">
+                            Bs.
                         </div>
                     </div>
                     <div class="invalid-feedback" id="error_cuotas_input_precio"></div>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Adicional <small class="text-muted"> <em>(Opcional)</em></small> </label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Costos Adicionales" name="cuotas_input_adicional" id="cuotas_input_adicional">
+                    <div class="input-group-append">
+                        <div class="input-group-text text-bold">
+                            Bs.
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" id="error_cuotas_input_adicional"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" value="<?php echo date('Y') ?>" placeholder="año" name="cuota_input_year" id="cuotas_input_year">
             </div>
             
         </div>

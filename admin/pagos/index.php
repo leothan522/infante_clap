@@ -3,13 +3,12 @@ session_start();
 require_once "../../vendor/autoload.php";
 use app\controller\PagosController;
 $controller = new PagosController();
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?php asset('app/favicon/apple-icon-57x57.png') ?>">
@@ -32,55 +31,63 @@ $controller = new PagosController();
 
     <title><?php if (isset($controller->TITTLE)) { echo config('app_name').' | '.$controller->TITTLE; } else { echo config('app_name').'| Dashboard'; } ?></title>
 
-
     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/fontawesome-free/css/all.min.css'); ?>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css'); ?>">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2/css/select2.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); ?>">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php asset('app/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
 
 <!-- Preloader -->
-<?php /*require_once "../_layout/preloader.php" */?>
+<?php require_once "../_layout/preloader.php" ?>
 
 <!-- Site wrapper -->
 <div class="wrapper">
-  <!-- Navbar -->
-  <?php require_once "../_layout/navbar.php"?>
-  <!-- /.navbar -->
+    <!-- Navbar -->
+    <?php require_once "../_layout/navbar.php"?>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <?php require_once  "../_layout/sidebar.php"?>
+    <!-- Main Sidebar Container -->
+    <?php require_once  "../_layout/sidebar.php"?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <?php require_once "_layout/header.php"; ?>
-    </section>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <?php require_once "_layout/header.php"; ?>
+        </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <?php require_once "_layout/content.php"?>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <?php require_once "_layout/content.php"?>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
-  <?php require_once "../_layout/footer.php"?>
+    <?php require_once "../_layout/footer.php"?>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-      <?php require_once "_layout/right-sidebar.php" ?>
-  </aside>
-  <!-- /.control-sidebar -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <?php require_once "_layout/right-sidebar.php" ?>
+    </aside>
+    <!-- /.control-sidebar -->
 
 </div>
 <!-- ./wrapper -->
@@ -98,6 +105,13 @@ $controller = new PagosController();
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
+<!-- InputMask -->
+<script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+
+<!-- select2 -->
+<script src="<?php asset('app/resources/adminlte/plugins/select2/js/select2.full.min.js'); ?>"></script>
+
 <!-- DataTables  & Plugins -->
 <script src="<?php asset('app/resources/adminlte/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
@@ -113,9 +127,8 @@ $controller = new PagosController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
-
+<script src="<?php asset('public/js/app.js'); ?>"></script>
 
 <script src="_app/pagos.js"></script>
-
 </body>
 </html>
