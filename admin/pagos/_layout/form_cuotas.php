@@ -69,7 +69,7 @@
             </div>
 
             <div class="form-group">
-                <input type="text" placeholder="municipios_id" name="municipios_id" id="input_hidde_municipios_id">
+                <input type="hidden" placeholder="municipios_id" name="municipios_id" id="input_hidde_municipios_id">
             </div>
             
         </div>

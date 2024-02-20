@@ -11,5 +11,5 @@
     <div class="row" id="card_body_cuotas">
         <!-- HTML por JV -->
     </div>
-    <?php verCargando(); ?>
+
 </div>

@@ -33,31 +33,51 @@ if ($_POST) {
                     $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+                    $campo = !empty($_POST['campo']) ? $_POST['campo'] : '';
+                    $operador = !empty($_POST['operador']) ? $_POST['operador'] : '';
+                    $valor = !empty($_POST['valor']) ? $_POST['valor'] : '';
 
-                    $listarCuotas = $model->paginate($limit, $offset, 'fecha', 'DESC', 1);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(1), $offset, 'paginate', 'dataContainerCuotas', )->createLinks();
+                    $listarCuotas = $model->paginate(
+                        $limit,
+                        $offset,
+                        'fecha',
+                        'DESC',
+                        1,
+                        $campo,
+                        $operador,
+                        $valor);
+                    $links = paginate(
+                        'procesar_cuotas.php',
+                        'tabla_cuotas',
+                        $limit,
+                        $model->count(1, $campo, $operador, $valor),
+                        $offset,
+                        'paginate',
+                        'card_body_cuotas',
+                        null,
+                        $campo,
+                        $operador,
+                        $valor
+                    )->createLinks();
                     $i = $offset;
-                    echo '<div id="dataContainerCuotas">';
-                    require "_layout/table_cuotas.php";
-                    echo '</div>';
+
+                    require '_layout/table_cuotas.php';
+
                     break;
 
                 case 'guardar_cuotas':
                     if (
                         !empty($_POST['cuotas_select_mes']) &&
-                        !empty($_POST['cuotas_input_fecha'])
+                        !empty($_POST['cuotas_input_fecha'] &&
+                        !empty($_POST['municipios_id'])
+                        )
                     ){
-
                         $mes = $_POST['cuotas_select_mes'];
                         $fecha = $_POST['cuotas_input_fecha'];
+                        $municipios_id = $_POST['municipios_id'];
                         $precio = $_POST['cuotas_input_precio'];
                         $adicional = $_POST['cuotas_input_adicional'];
                         $year = date("Y");
-                        if (empty($_POST['municipios_id'])){
-                            $municipios_id = -1;
-                        }else{
-                            $municipios_id = $_POST['municipios_id'];
-                        }
 
 
 
@@ -65,7 +85,7 @@ if ($_POST) {
                         $error_mes = false;
                         $error_fecha = false;
 
-                        $sql = "SELECT * FROM `cuotas` WHERE `mes` = '$mes' AND `year` = '$year';";
+                        $sql = "SELECT * FROM `cuotas` WHERE `mes` = '$mes' AND `year` = '$year' AND municipios_id = $municipios_id;";
                         $existeCuota = $model->sqlPersonalizado($sql);
 
                         if ($existeCuota){
@@ -104,6 +124,7 @@ if ($_POST) {
                                 $fecha,
                                 $precio,
                                 $adicional,
+                                $municipios_id,
                                 $year
                             ];
 
@@ -315,18 +336,32 @@ if ($_POST) {
                     break;
 
                 case 'listar_cuotas':
+                    $paginate = true;
+
                     if (!empty($_POST['id'])){
                         $id = $_POST['id'];
-                        $paginate = true;
-                        $listarCuotas = $controller->listarCuotas();
+
+                        $limit = numRowsPaginate();
+
+                        $listarCuotas = $model->paginate($limit, null, 'fecha', 'DESC', 1, 'municipios_id', '=', $id);
+                        $links = paginate(
+                            'procesar_cuotas.php',
+                            'tabla_cuotas',
+                            $limit,
+                            $model->count(1, 'municipios_id', '=', $id),
+                            null,
+                            'paginate',
+                            'card_body_cuotas',
+                            null,
+                            'municipios_id',
+                            '=',
+                            $id)->createLinks();
                         $i = 0;
-                        $links = 10;
 
                         require '_layout/table_cuotas.php';
 
 
                     }else{
-                        $paginate = true;
                         echo '<div class="card-body"><span>Seleccione un Municipio para empezar</span></div>';
                     }
                     break;

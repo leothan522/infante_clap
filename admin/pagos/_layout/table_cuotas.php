@@ -41,7 +41,7 @@
 
 </div>
 
-<div class="card-footer clearfix">
+<div class="card-footer clearfix col-12">
     <?php echo $links; ?>
     <!--<ul class="pagination pagination-sm m-0 float-right">
         <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>

@@ -13,6 +13,7 @@ class Cuota extends Model
             'fecha',
             'precio',
             'adicional',
+            'municipios_id',
             'year'
         ];
     }

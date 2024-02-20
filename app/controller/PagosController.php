@@ -24,11 +24,10 @@ class PagosController extends Admin
 
 
 
-    public function listarCuotas()
+    public function listarCuotas($municipio)
     {
         $model = new Cuota();
-        $limit = 12;
-        $this->linksPaginate = paginate('procesar_cuotas.php', 'tabla_cuotas', $limit, $model->count(1), null, 'paginate', 'dataContainerCuotas')->createLinks();
-        return $model->paginate($limit, null, 'fecha', 'DESC', 1);
+        $listarCuotas = $model->getList('municipios_id', '=', $municipio);
+        return $listarCuotas;
     }
 }
