@@ -28,8 +28,8 @@ function getMunicipios(municipio = true) {
 }
 
 function cambiarMunicipio() {
-    getPrecio();
     getCuotas();
+    getPrecio();
 }
 
 function getPrecio() {
@@ -38,6 +38,7 @@ function getPrecio() {
         if (data.result){
             $('#cuotas_input_precio').val(data.precio_modulo);
             $('#input_hidde_municipios_id').val(id);
+
         }
     });
 }
@@ -46,7 +47,9 @@ function getCuotas() {
     let id = $('#cuotas_select_municipios').val();
     ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'listar_cuotas', id: id }, html: 'si' }, function (data) {
 
-        $('#card_body_cuotas').html('<div class="card-body"><span class="text-success">yonathan</span></div>');
+        $('#card_body_cuotas').html(data);
+        datatable('tabla_cuotas');
+
 
     });
 }
@@ -75,6 +78,7 @@ $('#cuotas_form').submit(function (e) {
   let mes = $('#cuotas_select_mes');
   let fecha = $('#cuotas_input_fecha');
   let precio = $('#cuotas_input_precio');
+  let id = $('#input_hidde_municipios_id');
 
   if (mes.val().length <= 0){
       procesar = false;
@@ -100,6 +104,16 @@ $('#cuotas_form').submit(function (e) {
         procesar = false;
         precio.addClass('is-invalid');
         $('#error_cuotas_input_precio').text('El precio es obligatorio.');
+    }else {
+        precio
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+    }
+
+    if (id.val().length <= 0){
+        procesar = false;
+        id.addClass('is-invalid');
+        $('#error_cuotas_municipio').text('Seleccione un Municipio.');
     }else {
         precio
             .removeClass('is-invalid')

@@ -2,9 +2,12 @@
 session_start();
 require_once "../../vendor/autoload.php";
 
+use app\controller\PagosController;
 use app\model\Cuota;
 use app\model\Municipio;
 use app\model\Parametros;
+
+$controller = new PagosController();
 
 $response = array();
 $paginate = false;
@@ -308,6 +311,23 @@ if ($_POST) {
                         if (validarAccesoMunicipio($id)){
                             $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
                         }
+                    }
+                    break;
+
+                case 'listar_cuotas':
+                    if (!empty($_POST['id'])){
+                        $id = $_POST['id'];
+                        $paginate = true;
+                        $listarCuotas = $controller->listarCuotas();
+                        $i = 0;
+                        $links = 10;
+
+                        require '_layout/table_cuotas.php';
+
+
+                    }else{
+                        $paginate = true;
+                        echo '<div class="card-body"><span>Seleccione un Municipio para empezar</span></div>';
                     }
                     break;
 
