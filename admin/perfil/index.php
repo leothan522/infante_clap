@@ -105,6 +105,6 @@ $controller = new PerfilController();
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 
 
-<script src="_app/perfil.js"></script>
+<script src="<?php asset('admin/perfil/_app/perfil.js', true); ?>"></script>
 </body>
 </html>

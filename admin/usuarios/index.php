@@ -133,6 +133,6 @@ $controller->isAdmin();
     });
 </script>
 
-<script src="_app/usuarios.js"></script>
+<script src="<?php asset('admin/usuarios/_app/usuarios.js', true); ?>"></script>
 </body>
 </html>

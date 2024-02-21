@@ -79,4 +79,4 @@ $('#form_forgot_password').submit(function (e) {
 
 });
 
-console.log('hi!');
+console.log('forgot-password.!');

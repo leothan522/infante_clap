@@ -299,4 +299,4 @@ $('#check_datos').click(function (){
     }
 });
 
-console.log('perfil 2!')
+console.log('perfil.!')

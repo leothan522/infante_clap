@@ -7,9 +7,16 @@ $dotenv = Dotenv::createImmutable(dirname(__FILE__, 3));
 $dotenv->load();
 define('ROOT_PATH', $_ENV['APP_URL']);
 
-function asset($url): void
+function asset($url, $noCache = false): void
 {
-    echo ROOT_PATH . $url;
+    $version = null;
+    if ($noCache){
+        if (isset($_ENV['APP_DEBUG']) && config('app_debug') == 'true'){
+            $version = "?v=".rand();
+        }
+    }
+
+    echo ROOT_PATH . $url . $version;
 }
 
 function public_url($url): string

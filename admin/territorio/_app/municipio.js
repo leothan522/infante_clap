@@ -241,4 +241,4 @@ function estatusMunicipio(id)
 
 }
 
-console.log('hi municipio!');
+console.log('Municipio.!');

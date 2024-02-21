@@ -129,9 +129,9 @@ $controller = new ClapsController();
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
-<script src="_app/bloques.js"></script>
-<script src="_app/entes.js"></script>
-<script src="_app/claps.js"></script>
+<script src="<?php asset('admin/claps/_app/bloques.js', true); ?>"></script>
+<script src="<?php asset('admin/claps/_app/entes.js', true); ?>"></script>
+<script src="<?php asset('admin/claps/_app/claps.js', true); ?>"></script>
 
 </body>
 </html>

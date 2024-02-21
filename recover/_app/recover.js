@@ -83,4 +83,4 @@ $('#form_recover').submit(function (e) {
 });
 
 
-console.log('hi!');
+console.log('recover!');

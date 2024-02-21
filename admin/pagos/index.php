@@ -105,7 +105,7 @@ $controller = new PagosController();
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
-<script src="<?php asset('public/js/app.js'); ?>"></script>
+
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
@@ -130,6 +130,6 @@ $controller = new PagosController();
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
-<script src="_app/pagos.js"></script>
+<script src="<?php asset('admin/pagos/_app/pagos.js', true); ?>"></script>
 </body>
 </html>

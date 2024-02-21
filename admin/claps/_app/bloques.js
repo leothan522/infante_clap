@@ -211,4 +211,4 @@ function eliminarBloque(id) {
     });
 }
 
-console.log('bloques!');
+console.log('bloques.!');

@@ -104,6 +104,6 @@ $controller = new RecoverController();
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
 <script src="<?php asset('public/js/app.js');  ?>"></script>
 
-<script src="_app/recover.js"></script>
+<script src="<?php asset('recover/_app/recover.js', true); ?>"></script>
 </body>
 </html>

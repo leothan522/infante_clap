@@ -127,6 +127,6 @@ $controller->isAdmin();
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
 
-<script src="_app/parametros.js"></script>
+<script src="<?php asset('admin/parametros/_app/parametros.js', true) ?>"></script>
 </body>
 </html>

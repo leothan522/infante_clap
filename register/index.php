@@ -160,6 +160,6 @@ if (config('app_register') == "false"){
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
 
-<script src="_app/register.js"></script>
+<script src="<?php asset('register/_app/register.js', true); ?>"></script>
 </body>
 </html>

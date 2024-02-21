@@ -80,76 +80,6 @@ $('#form_parametros').submit(function (e){
             }
 
         });
-
-        /*verSpinner(true)
-        $.ajax({
-           type: 'POST',
-           url: "procesar.php",
-           data: $(this). serialize(),
-           success: function (response){
-               let data = JSON.parse(response)
-               if (data.result){
-
-
-                   let table = $('#table_parametros').DataTable();
-                   let buttons = '<div class="btn-group btn-group-sm">\n' +
-                       '                            <button type="button" class="btn btn-info" onclick="edit('+ data.id +')">\n' +
-                       '                                <i class="fas fa-edit"></i>\n' +
-                       '                            </button>\n' +
-                       '                            <button type="button" class="btn btn-info" onclick="borrar('+ data.id +')" id="btn_eliminar_'+ data.id +'"  >\n' +
-                       '                                <i class="far fa-trash-alt"></i>\n' +
-                       '                            </button>\n' +
-                       '                        </div>';
-
-                   if (data.add){
-                       //nueva row
-
-                       table.row.add([
-                           '<span class="text-bold">'+ data.item +'</span>',
-                           data.nombre,
-                           data.tabla_id,
-                           data.valor,
-                           buttons
-                       ]).draw();
-
-                       $('#paginate_leyenda').text(data.total);
-
-                       let nuevo = $('#table_parametros tr:last');
-                       nuevo.attr('id', 'tr_item_' + data.id);
-                       nuevo.find("td:eq(1)").addClass('nombre');
-                       nuevo.find("td:eq(2)").addClass('tabla_id');
-                       nuevo.find("td:eq(3)").addClass('valor');
-
-                   }else {
-                       //editando
-
-                       let tr = $('#tr_item_' + data.id);
-                       table
-                           .cell(tr.find('.nombre')).data(data.nombre)
-                           .cell(tr.find('.tabla_id')).data(data.tabla_id)
-                           .cell(tr.find('.valor')).data(data.valor)
-                           .draw();
-                   }
-                   $('#btn_cancelar').click();
-               }
-
-               if (data.alerta) {
-                   Alerta.fire({
-                       icon: data.icon,
-                       title: data.title,
-                       text: data.message
-                   });
-               } else {
-                   Toast.fire({
-                       icon: data.icon,
-                       text: data.title
-                   });
-               }
-
-               verSpinner(false);
-           }
-
-        });*/
     }
 });
 
@@ -167,40 +97,6 @@ function edit(id) {
         }
     });
 
-    /*verSpinner();
-    $.ajax({
-        type: 'POST',
-        url: 'procesar.php',
-        data: {
-            id: id,
-            opcion: 'get_parametro'
-        },
-        success: function (response) {
-            let data = JSON.parse(response);
-
-            if (data.result){
-                $('#name').val(data.nombre);
-                $('#tabla_id').val(data.tabla_id);
-                $('#valor').val(data.valor);
-                $('#opcion').val("editar");
-                $('#id').val(data.id);
-            }
-
-            if (data.alerta) {
-                Alerta.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.message
-                });
-            } else {
-                Toast.fire({
-                    icon: data.icon,
-                    text: data.title
-                });
-            }
-            verSpinner(false);
-        }
-    });*/
 }
 
 //eliminamos parametros
@@ -226,46 +122,6 @@ function borrar(id) {
                 }
 
             });
-
-            /*$.ajax({
-                type: 'POST',
-                url: 'procesar.php',
-                data: {
-                    id: id,
-                    opcion: 'eliminar'
-                },
-                success: function (response) {
-                    let data = JSON.parse(response);
-
-                    if (data.result){
-
-                        let table = $('#table_parametros').DataTable();
-                        let item = $('#btn_eliminar_' + id).closest('tr');
-
-                        table
-                            .row(item)
-                            .remove()
-                            .draw();
-
-                        $('#paginate_leyenda').text(data.total);
-                        $('#btn_cancelar').click();
-
-                    }
-
-                    if (data.alerta) {
-                        Alerta.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.message
-                        });
-                    } else {
-                        Toast.fire({
-                            icon: data.icon,
-                            text: data.title
-                        });
-                    }
-                }
-            });*/
         }
 
     });
@@ -291,6 +147,6 @@ function ocultarForm() {
     }, 500);
 }
 
-console.log('hi!');
+console.log('hi mundo!');
 
 

@@ -134,8 +134,8 @@ $controller = new TerritorioController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 
-<script src="_app/municipio.js"></script>
-<script src="_app/parroquia.js"></script>
+<script src="<?php asset('admin/territorio/_app/municipio.js', true); ?>"></script>
+<script src="<?php asset('admin/territorio/_app/parroquia.js', true); ?>"></script>
 
 </body>
 </html>

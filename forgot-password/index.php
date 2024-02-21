@@ -93,6 +93,6 @@ $controller = new GuestController();
 <script src="<?php asset('public/js/app.js');  ?>"></script>
 
 
-<script src="_app/forgot_password.js"></script>
+<script src="<?php asset('forgot-password/_app/forgot_password.js', true); ?>"></script>
 </body>
 </html>
