@@ -396,14 +396,20 @@ if ($_POST) {
                     break;
 
                 case 'filtrar_parroquias':
-
                     $paginate = true;
-
                     $model = new Parroquia();
                     $limit = 100;
-                    $cantidadParroquias = count($model->getList('municipios_id', '=', $_POST['id']));
-                    $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC', null, 'municipios_id', '=', $_POST['id']);
-                    $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $cantidadParroquias, null, 'paginate_parroquia', 'dataContainerParroquia', '_parroquia')->createLinks();
+                    if (!empty($_POST['id'])){
+                        $cantidadParroquias = count($model->getList('municipios_id', '=', $_POST['id']));
+                        $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC', null, 'municipios_id', '=', $_POST['id']);
+                        $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $cantidadParroquias, null, 'paginate_parroquia', 'dataContainerParroquia', '_parroquia')->createLinks();
+                    }else{
+                        if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
+                        $limit = $paginate;
+                        $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
+                        $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC');
+                    }
+
                     $i = 0;
                     echo '<div id="dataContainerParroquia">';
                     require_once "_layout/card_table_parroquias.php";

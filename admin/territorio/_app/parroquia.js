@@ -281,4 +281,5 @@ function estatusParroquia(id) {
 
 
 }
+
 console.log('Parroquia.!');

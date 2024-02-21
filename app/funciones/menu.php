@@ -264,12 +264,12 @@ function verPermisos(): array
             'text' => 'Distribución',
             'opciones' => [
                 [
-                    'permiso' => 'jefes.edit',
-                    'text' => 'Editar Jefes'
-                ],
-                [
                     'permiso' => 'claps.create',
                     'text' => 'Crear Claps'
+                ],
+                [
+                    'permiso' => 'jefes.edit',
+                    'text' => 'Editar Jefes'
                 ],
                 [
                     'permiso' => 'claps.edit',

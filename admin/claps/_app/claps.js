@@ -328,7 +328,7 @@ function resetClap(select_municipios, select_entes, opcion = 'create') {
             let select_ente = $('#' + select_entes);
             let entes = data.entes.length;
             select_ente.empty();
-            select_ente.append('<option value="">Seleccione</option>');
+            //select_ente.append('<option value="">Seleccione</option>');
             for (let i = 0; i < entes; i++) {
                 let id = data.entes[i]['id'];
                 let nombre = data.entes[i]['nombre'];
