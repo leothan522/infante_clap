@@ -106,9 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container">
-      <div class="row">
-          header
-      </div>
+      <?php require '../admin/perfil/_layout/header.php'?>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -116,9 +114,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="content">
       <div class="container">
-        <div class="row">
-            content
-        </div>
+          <?php require '../admin/perfil/_layout/content.php'; ?>
 
       </div>
     </div>
@@ -154,10 +150,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js', true);  ?>"></script>
 
+<!-- InputMask -->
+<script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
+<script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
+
 <!-- AdminLTE App -->
 <script src="<?php asset('app/resources/adminlte/dist/js/adminlte.min.js'); ?>"></script>
 <script src="<?php asset('public/js/app.js', true); ?>"></script>
 <script src="<?php asset('web/_app/app.js', true); ?>"></script>
+
 
 </body>
 </html>
