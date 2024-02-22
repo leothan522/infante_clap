@@ -1,6 +1,8 @@
-//datatable('table_parametros');
+datatable('table_parametros');
 inputmask('#tabla_id', 'numerico', 0, 12);
 inputmask('#name', 'alfanumerico', 4, 100, '_');
+
+$("#navbar_buscar").removeClass('d-none');
 
 //procesamos el formulario tanto para guardar como editar
 $('#form_parametros').submit(function (e){
@@ -146,6 +148,15 @@ function ocultarForm() {
         verSpinner(false);
     }, 500);
 }
+
+$('#navbar_form_buscar').submit(function (e) {
+    e.preventDefault();
+    let keyword = $('#navbar_input_buscar').val();
+    ajaxRequest({ url: 'procesar.php', data: {opcion: 'navbar_buscar', keyword: keyword}, html: 'si' }, function (data) {
+        $('#dataContainerParametros').html(data);
+    });
+
+});
 
 console.log('hi!');
 

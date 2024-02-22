@@ -200,6 +200,30 @@ if ($_POST) {
                     }
                     break;
 
+                case 'navbar_buscar':
+                    $paginate = true;
+
+                    if (!empty($_POST['keyword'])){
+                        $keyword = $_POST['keyword'];
+
+                        $i = 0;
+                        $listarParametros = $model->getList('nombre', 'LIKE', "%$keyword%");
+
+                        require_once "_layout/table.php";
+
+                    }else{
+                        $response = crearResponse(
+                            true,
+                            false,
+                            'Escriba lo que desea buscar.',
+                            'Escriba lo que desea buscar.',
+                            'warning',
+                            false,
+                            true
+                        );
+                    }
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);

@@ -11,6 +11,7 @@ class ParametrosController extends Admin
     public $MODULO = "parametros.index";
 
     public $links;
+    public $totalRows;
 
     public function isAdmin()
     {
@@ -25,8 +26,8 @@ class ParametrosController extends Admin
     {
         $model = new Parametros();
         $limit = numRowsPaginate();
-        $totalRows = $model->count();
-        $this->links = paginate('procesar.php','table_parametros', $limit, $totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
+        $this->totalRows = $model->count();
+        $this->links = paginate('procesar.php','table_parametros', $limit, $this->totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
         return $model->paginate($limit,null, 'id','DESC');
     }
 

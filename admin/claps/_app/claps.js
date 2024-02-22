@@ -746,7 +746,7 @@ function clickDescargarClaps() {
 
 $('#navbar_form_buscar').submit(function (e) {
     e.preventDefault();
-    let id = $('#claps_select_id_municipio').val();
+    let id = $('#global_select_id_municipio').val();
 
     let html = '<input type="hidden" name="opcion" value="nabvar_buscar" id="nabvar_temp_opcion">';
     html += '<input type="hidden" name="id" value="'+ id +'" id="nabvar_temp_municipio">';
