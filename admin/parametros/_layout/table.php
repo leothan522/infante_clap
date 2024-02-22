@@ -12,7 +12,11 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table-responsive  mt-3" <?php if ($totalRows > 16){ echo 'style="height: 54vh;"'; }  ?> >
+        <div class="table-responsive  mt-3"
+            <?php if ($limit > 15 && $totalRows > 15) {
+                echo 'style="height: 54vh;"';
+            }
+            ?> >
             <table class="table table-sm" id="table_parametros">
                 <thead>
                 <tr>
@@ -27,7 +31,7 @@
                 <?php
                 foreach ($listarParametros as $parametro){ ?>
                     <tr id="tr_item_<?php echo $parametro['id']; ?>">
-                        <td><span class="text-bold"><?php echo $parametro['id']; ?></span></td>
+                        <td><span class="text-bold"><?php echo ++$i; ?></span></td>
                         <td class="nombre">
                             <?php echo $parametro['nombre'] ?>
                         </td>

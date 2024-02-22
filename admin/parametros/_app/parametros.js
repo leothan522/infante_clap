@@ -34,8 +34,14 @@ $('#form_parametros').submit(function (e){
     }
 
     if (condicion){
+        let opcion = $('#opcion').val();
+        if (opcion === 'editar'){
+            editParametros();
+        }else {
+            guardarParametro();
+        }
 
-        ajaxRequest({ data: $(this). serialize() }, function (data) {
+        /*ajaxRequest({ data: $(this). serialize() }, function (data) {
 
             if (data.result) {
 
@@ -81,10 +87,40 @@ $('#form_parametros').submit(function (e){
                 $('#btn_cancelar').click();
             }
 
-        });
+        });*/
     }
 });
 
+function editParametros() {
+
+    ajaxRequest({ data: $('#form_parametros'). serialize() }, function (data) {
+
+        if (data.result) {
+
+            let table = $('#table_parametros').DataTable();
+
+                let tr = $('#tr_item_' + data.id);
+                table
+                    .cell(tr.find('.nombre')).data(data.nombre)
+                    .cell(tr.find('.tabla_id')).data(data.tabla_id)
+                    .cell(tr.find('.valor')).data(data.valor)
+                    .draw();
+            }
+            $('#btn_cancelar').click();
+
+    });
+}
+
+function guardarParametro() {
+
+    ajaxRequest({ data: $('#form_parametros'). serialize(), html: 'si' }, function (data) {
+
+        $('#dataContainerParametros').html(data);
+        datatable('table_parametros');
+        $('#btn_cancelar').click();
+
+    });
+}
 
 //cambiamos los datos en formulariopara editar
 function edit(id) {

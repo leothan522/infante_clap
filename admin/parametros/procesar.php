@@ -4,6 +4,9 @@ require_once "../../vendor/autoload.php";
 
 use app\database\Query;
 use app\model\Parametros;
+use app\controller\ParametrosController;
+
+$controller = new ParametrosController();
 
 $response = array();
 $paginate = false;
@@ -32,7 +35,7 @@ if ($_POST) {
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
 
-                    $listarParametros = $model->paginate($limit, $offset, 'nombre', 'DESC',);
+                    $listarParametros = $model->paginate($limit, $offset, 'id', 'DESC',);
                     $linksPaginate= paginate($baseURL, $tableID, $limit, $model->count(), $offset, 'paginate', 'dataContainerParametros')->createLinks();
                     $i = $offset;
 
@@ -41,7 +44,7 @@ if ($_POST) {
                     break;
 
                 case "guardar":
-
+                    $paginate = true;
                     if (!empty($_POST['name'])) {
 
                         $name = $_POST['name'];
@@ -65,25 +68,21 @@ if ($_POST) {
 
                         $model->save($data);
 
-                        $query = new Query();
-                        $sql = "SELECT *FROM `parametros` WHERE `nombre` = '$name' $tabla_id_sql  AND `valor` = '$valor' ORDER BY `id` DESC;";
-                        $row = $query->getFirst($sql);
-
-                        $response = crearResponse(
+                        $limit = numRowsPaginate();
+                        $totalRows = $model->count();
+                        $linksPaginate = paginate(
+                            'procesar.php',
+                            'table_parametros',
+                            $limit,
+                            $totalRows,
                             null,
-                            true,
-                            'Parametro agregado.',
-                            'Parametro agregado.'
-                        );
+                            'paginate',
+                            'dataContainerParametros'
+                        )->createLinks();
+                        $listarParametros = $model->paginate($limit,null, 'id','DESC');
+                        $i = 0;
 
-                        //datos extras para el $response
-                        $response['id'] = $row['id'];
-                        $response['nombre'] = $row['nombre'];
-                        $response['tabla_id'] = $row['tabla_id'];
-                        $response['valor'] = $row['valor'];
-                        $response['item'] = $model->count();
-                        $response['add'] = true;
-                        $response['total'] = $model->count();
+                        require '_layout/table.php';
 
                     } else {
                         $response = crearResponse('faltan_datos');

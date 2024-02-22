@@ -8,6 +8,8 @@
         $listarParametros = $controller->listarParametros();
         $linksPaginate = $controller->links;
         $totalRows = $controller->totalRows;
+        $limit = $controller->limit;
+
         $i = 0;
         require_once "table.php";
         ?>
