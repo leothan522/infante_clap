@@ -1,4 +1,4 @@
-datatable('table_parametros');
+//datatable('table_parametros');
 inputmask('#tabla_id', 'numerico', 0, 12);
 inputmask('#name', 'alfanumerico', 4, 100, '_');
 
@@ -147,6 +147,6 @@ function ocultarForm() {
     }, 500);
 }
 
-console.log('hi mundo!');
+console.log('hi!');
 
 

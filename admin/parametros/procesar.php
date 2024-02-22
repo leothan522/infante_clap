@@ -22,6 +22,24 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
 
+                case 'paginate':
+
+                    $paginate = true;
+
+                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
+                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
+                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
+                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
+                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+
+                    $listarParametros = $model->paginate($limit, $offset, 'nombre', 'DESC',);
+                    $linksPaginate= paginate($baseURL, $tableID, $limit, $model->count(), $offset, 'paginate', 'dataContainerParametros')->createLinks();
+                    $i = $offset;
+
+                    require "_layout/table.php";
+
+                    break;
+
                 case "guardar":
 
                     if (!empty($_POST['name'])) {
@@ -180,25 +198,6 @@ if ($_POST) {
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
-                    break;
-
-                case 'paginate':
-
-                    $paginate = true;
-
-                    $offset = !empty($_POST['page']) ? $_POST['page'] : 0;
-                    $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
-                    $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'procesar.php';
-                    $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
-                    $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_parametros';
-
-                    echo '<div id="dataContainer">';
-                    $listarParametros = $model->paginate($limit, $offset);
-                    $linksPaginate = paginate('procesar.php', 'table_parametros', $limit, $totalRows, $offset)->createLinks();
-                    $i = $offset;
-                    require_once "_layout/table.php";
-                    echo '</div>';
-
                     break;
 
                 //Por defecto

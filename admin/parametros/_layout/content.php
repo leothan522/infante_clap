@@ -3,7 +3,7 @@
         <?php require_once "form.php"?>
     </div>
     <div class="col-md-8">
-        <div id="dataContainer">
+        <div id="dataContainerParametros">
         <?php
         $listarParametros = $controller->listarParametros();
         $linksPaginate = $controller->links;

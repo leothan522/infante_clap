@@ -24,9 +24,9 @@ class ParametrosController extends Admin
     public function listarParametros(): array
     {
         $model = new Parametros();
-        $limit = 30;
+        $limit = numRowsPaginate();
         $totalRows = $model->count();
-        $this->links = paginate('procesar.php','table_parametros', $limit, $totalRows)->createLinks();
+        $this->links = paginate('procesar.php','table_parametros', $limit, $totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
         return $model->paginate($limit,null, 'id','DESC');
     }
 

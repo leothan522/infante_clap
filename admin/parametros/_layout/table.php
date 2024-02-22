@@ -4,27 +4,16 @@
         <h3 class="card-title">Parametros Registrados</h3>
 
         <div class="card-tools">
-
-            <!--<button type="button" class="btn btn-tool" data-card-widget="card-refresh" data-source="widgets.html" data-source-selector="#card-refresh-content" data-load-on-init="false">
-                <i class="fas fa-sync-alt"></i>
-            </button>-->
             <button type="button" class="btn btn-tool" data-card-widget="maximize">
                 <i class="fas fa-expand"></i>
             </button>
-            <!--<button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-            </button>-->
-
         </div>
 
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table mt-3">
-            <table class="table" id="table_parametros">
+        <div class="table-responsive  mt-3" style="height: 54vh;">
+            <table class="table table-sm" id="table_parametros">
                 <thead>
                 <tr>
                     <th style="width: 10%">#</th>
