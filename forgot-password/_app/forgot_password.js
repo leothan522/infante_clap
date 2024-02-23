@@ -14,7 +14,7 @@ $('#form_forgot_password').submit(function (e) {
 
     if (procesar){
 
-        ajaxRequest({ data:$(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/ForgotPasswordRequest.php', data:$(this).serialize() }, function (data) {
 
             if (data.result){
                 const html = '<a href="../login" class="btn btn-primary btn-block">Ir al Login</a>';
