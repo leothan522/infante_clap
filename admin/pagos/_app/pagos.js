@@ -11,7 +11,7 @@ function getMunicipios(municipio = true) {
         .html(html);
     $('#cuotas_select_municipios').val('');
 
-    ajaxRequest({url: 'procesar_cuotas.php', data: {opcion: 'get_municipios'}}, function (data) {
+    ajaxRequest({url: '_request/CuotasRequest.php', data: {opcion: 'get_municipios'}}, function (data) {
         if (data.result) {
             let select = $('#cuotas_select_municipios');
             let municipios = data.municipios.length;
@@ -35,7 +35,7 @@ function cambiarMunicipio() {
 
 function getPrecio() {
     let id = $('#cuotas_select_municipios').val();
-    ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'getPrecio', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/CuotasRequest.php', data: { opcion: 'getPrecio', id: id } }, function (data) {
         if (data.result){
             $('#cuotas_input_precio').val(data.precio_modulo);
 
@@ -45,7 +45,7 @@ function getPrecio() {
 
 function getCuotas() {
     let id = $('#cuotas_select_municipios').val();
-    ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'listar_cuotas', id: id }, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/CuotasRequest.php', data: { opcion: 'listar_cuotas', id: id }, html: 'si' }, function (data) {
 
         $('#card_body_cuotas').html(data);
         datatable('tabla_cuotas');
@@ -122,7 +122,7 @@ $('#cuotas_form').submit(function (e) {
     }
 
     if (procesar){
-        ajaxRequest({ url: 'procesar_cuotas.php', data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/CuotasRequest.php', data: $(this).serialize() }, function (data) {
 
             if (data.result){
 
@@ -188,7 +188,7 @@ $('#cuotas_form').submit(function (e) {
 
 //me traigo los datos de las cuotas para editar
 function editCuota(id) {
-    ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'get_cuotas', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/CuotasRequest.php', data: { opcion: 'get_cuotas', id: id } }, function (data) {
        if (data.result){
            $('#cuotas_select_mes').val(data.mes);
            $('#cuotas_input_fecha').val(data.fecha);
@@ -204,7 +204,7 @@ function editCuota(id) {
 function destroyCuota(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
-            ajaxRequest({ url: 'procesar_cuotas.php', data: { opcion: 'eliminar_cuotas', id: id} }, function (data) {
+            ajaxRequest({ url: '_request/CuotasRequest.php', data: { opcion: 'eliminar_cuotas', id: id} }, function (data) {
                 if (data.result){
                     let table = $('#tabla_cuotas').DataTable();
                     let item = $('#btn_eliminar_cuota_' + id).closest('tr');

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\controller\PagosController;
 use app\model\Cuota;
@@ -47,7 +47,7 @@ if ($_POST) {
                         $operador,
                         $valor);
                     $links = paginate(
-                        'procesar_cuotas.php',
+                        '_request/CuotasRequest.php',
                         'tabla_cuotas',
                         $limit,
                         $model->count(1, $campo, $operador, $valor),
@@ -61,7 +61,7 @@ if ($_POST) {
                     )->createLinks();
                     $i = $offset;
 
-                    require '_layout/table_cuotas.php';
+                    require '../_layout/table_cuotas.php';
 
                     break;
 
@@ -345,7 +345,7 @@ if ($_POST) {
 
                         $listarCuotas = $model->paginate($limit, null, 'fecha', 'DESC', 1, 'municipios_id', '=', $id);
                         $links = paginate(
-                            'procesar_cuotas.php',
+                            '_request/CuotasRequest.php',
                             'tabla_cuotas',
                             $limit,
                             $model->count(1, 'municipios_id', '=', $id),
@@ -358,7 +358,7 @@ if ($_POST) {
                             $id)->createLinks();
                         $i = 0;
 
-                        require '_layout/table_cuotas.php';
+                        require '../_layout/table_cuotas.php';
 
 
                     }else{
