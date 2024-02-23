@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../vendor/autoload.php";
+require_once "../../vendor/autoload.php";
 
 use app\controller\WebController;
 use app\model\User;

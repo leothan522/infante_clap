@@ -1,5 +1,5 @@
 function irDashboard() {
-    ajaxRequest({url: 'procesar.php', data: {opcion: 'ir_dashboard'}}, function (data) {
+    ajaxRequest({ url: '_request/WebRequest.php', data: {opcion: 'ir_dashboard'}}, function (data) {
         if (data.result) {
             window.location.href = "../admin/";
         }
@@ -178,7 +178,7 @@ $('#form_perfil_seguridad').submit(function (e){
 
     if (procesar){
 
-        ajaxRequest({ data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/WebRequest.php', data: $(this).serialize() }, function (data) {
 
             if (data.result){
 
