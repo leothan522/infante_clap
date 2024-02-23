@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\model\Parroquia;
 use app\model\Municipio;
@@ -39,7 +39,7 @@ if ($_POST) {
                     $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerParroquia', '_parroquia')->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerParroquia">';
-                    require_once "_layout/card_table_parroquias.php";
+                    require_once "../_layout/card_table_parroquias.php";
                     echo '</div>';
                     break;
 
@@ -402,17 +402,17 @@ if ($_POST) {
                     if (!empty($_POST['id'])){
                         $cantidadParroquias = count($model->getList('municipios_id', '=', $_POST['id']));
                         $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC', null, 'municipios_id', '=', $_POST['id']);
-                        $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $cantidadParroquias, null, 'paginate_parroquia', 'dataContainerParroquia', '_parroquia')->createLinks();
+                        $links = paginate('ParroquiasRequest.php', 'tabla_parroquias', $limit, $cantidadParroquias, null, 'paginate_parroquia', 'dataContainerParroquia', '_parroquia')->createLinks();
                     }else{
                         if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
                         $limit = $paginate;
-                        $links = paginate('procesar_parroquia.php', 'tabla_parroquias', $limit, $model->count(), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
+                        $links = paginate('ParroquiasRequest.php', 'tabla_parroquias', $limit, $model->count(), null, 'paginate_parroquia', 'dataContainerParroquia','_parroquia')->createLinks();
                         $listarParroquias = $model->paginate($limit, null, 'nombre', 'ASC');
                     }
 
                     $i = 0;
                     echo '<div id="dataContainerParroquia">';
-                    require_once "_layout/card_table_parroquias.php";
+                    require_once "../_layout/card_table_parroquias.php";
                     echo '</div>';
 
                     break;

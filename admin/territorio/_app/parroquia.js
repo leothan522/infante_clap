@@ -56,7 +56,7 @@ $('#form_parroquias').submit(function (e) {
 
     if (procesar){
 
-        ajaxRequest({ url: 'procesar_parroquia.php', data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/ParroquiasRequest.php', data: $(this).serialize() }, function (data) {
 
             if (data.result){
 
@@ -157,7 +157,7 @@ $('#form_parroquias').submit(function (e) {
 function editParroquia(id) {
     resetParroquia();
 
-    ajaxRequest({ url: 'procesar_parroquia.php', data: { opcion: 'get_parroquia', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_parroquia', id: id } }, function (data) {
         if (data.result){
             $('#parroquia_municipio')
                 .val(data.municipios)
@@ -177,7 +177,7 @@ function elimParroquia(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed){
 
-            ajaxRequest({ url: 'procesar_parroquia.php', data: { opcion: 'eliminar_parroquia', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'eliminar_parroquia', id: id } }, function (data) {
 
                 if (data.result){
                     let table = $('#tabla_parroquias').DataTable();
@@ -204,7 +204,7 @@ function elimParroquia(id) {
 //esta funsion sirve para resetear los datos del modal de parroquia
 function resetParroquia(){
 
-    ajaxRequest({ url: 'procesar_parroquia.php', data: { opcion: 'get_municipios_select' } }, function (data) {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_municipios_select' } }, function (data) {
         if (data.result){
             let select = $('#parroquia_municipio');
             let municipios = data.municipios.length;
@@ -256,7 +256,7 @@ function municipioParroquias(id, parroquias) {
 
 function filtrarParroquias(id) {
 
-    ajaxRequest({ url: 'procesar_parroquia.php', data: { opcion: 'filtrar_parroquias', id: id }, html: true }, function (data) {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'filtrar_parroquias', id: id }, html: true }, function (data) {
         $('#dataContainerParroquia').html(data); datatable('tabla_parroquias');
         $('#parroquias_btn_restablecer').removeClass('d-none');
     });
@@ -269,7 +269,7 @@ function estatusParroquia(id) {
 
     let boton = $('#btn_estatus_parroquia_' + id);
 
-    ajaxRequest({ url: 'procesar_parroquia.php', data: { opcion: 'estatus_parroquia', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'estatus_parroquia', id: id } }, function (data) {
         if (data.result){
             if (data.estatus === 1){
                 boton.html(' <i class="fas fa-eye"></i>');
