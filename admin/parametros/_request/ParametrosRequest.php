@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\database\Query;
 use app\model\Parametros;
@@ -40,7 +40,7 @@ if ($_POST) {
                     $i = $offset;
                     $x = 0;
 
-                    require "_layout/table.php";
+                    require "../_layout/table.php";
 
                     break;
 
@@ -53,7 +53,7 @@ if ($_POST) {
 
                     $i = 0;
                     $x = 0;
-                    require_once "_layout/table.php";
+                    require_once "../_layout/table.php";
                     break;
 
                 case "guardar":
@@ -96,7 +96,7 @@ if ($_POST) {
                         $i = 0;
                         $x = 0;
 
-                        require '_layout/table.php';
+                        require '../_layout/table.php';
 
                     } else {
                         $response = crearResponse('faltan_datos');
@@ -223,9 +223,11 @@ if ($_POST) {
 
                         $i = 0;
                         $x = 0;
+                        $limit = 100;
                         $listarParametros = $model->getList('nombre', 'LIKE', "%$keyword%");
+                        $totalRows = $model->count(null, 'nombre', 'LIKE', "%$keyword%");
 
-                        require_once "_layout/table.php";
+                        require_once "../_layout/table.php";
 
                     }else{
                         $response = crearResponse(

@@ -29,7 +29,7 @@ class ParametrosController extends Admin
         $model = new Parametros();
         $this->limit = numRowsPaginate();
         $this->totalRows = $model->count();
-        $this->links = paginate('procesar.php','table_parametros', $this->limit, $this->totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
+        $this->links = paginate('_request/ParametrosRequest.php','table_parametros', $this->limit, $this->totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
         $this->rows = $model->paginate($this->limit,null, 'id','DESC');
     }
 

@@ -45,7 +45,7 @@ $('#form_parametros').submit(function (e){
 
 function editParametros() {
 
-    ajaxRequest({ data: $('#form_parametros'). serialize() }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data: $('#form_parametros'). serialize() }, function (data) {
 
         if (data.result) {
 
@@ -65,7 +65,7 @@ function editParametros() {
 
 function guardarParametro() {
 
-    ajaxRequest({ data: $('#form_parametros'). serialize(), html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data: $('#form_parametros'). serialize(), html: 'si' }, function (data) {
 
         $('#dataContainerParametros').html(data);
         datatable('table_parametros');
@@ -77,7 +77,7 @@ function guardarParametro() {
 //cambiamos los datos en formulariopara editar
 function edit(id) {
 
-    ajaxRequest({ data:{ id: id, opcion: 'get_parametro'} }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data:{ id: id, opcion: 'get_parametro'} }, function (data) {
         if (data.result){
             $('#name').val(data.nombre);
             $('#tabla_id').val(data.tabla_id);
@@ -94,7 +94,7 @@ function borrar(id) {
     MessageDelete.fire().then((result_parametros) => {
         if (result_parametros.isConfirmed){
             let valor_x = $('#input_hidden_x').val();
-            ajaxRequest({ data: { id: id, opcion: 'eliminar' } }, function (data) {
+            ajaxRequest({ url: '_request/ParametrosRequest.php', data: { id: id, opcion: 'eliminar' } }, function (data) {
 
                 if (data.result){
 
@@ -145,14 +145,14 @@ function ocultarForm() {
 $('#navbar_form_buscar').submit(function (e) {
     e.preventDefault();
     let keyword = $('#navbar_input_buscar').val();
-    ajaxRequest({ url: 'procesar.php', data: {opcion: 'navbar_buscar', keyword: keyword}, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data: {opcion: 'navbar_buscar', keyword: keyword}, html: 'si' }, function (data) {
         $('#dataContainerParametros').html(data);
     });
 
 });
 
 function reconstruirTabla() {
-    ajaxRequest({ url: 'procesar.php', data: { opcion: 'index'}, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data: { opcion: 'index'}, html: 'si' }, function (data) {
         $('#dataContainerParametros').html(data);
     });
 }
