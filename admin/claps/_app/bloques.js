@@ -53,7 +53,7 @@ $('#bloques_form').submit(function (e) {
     }
 
     if (procesar) {
-        ajaxRequest({ url: 'procesar_bloques.php', data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/BloquesRequest.php', data: $(this).serialize() }, function (data) {
             if (data.result){
 
                 let table = $('#bloques_tabla').DataTable();
@@ -115,7 +115,7 @@ $('#bloques_form').submit(function (e) {
 });
 
 function editBloque(id) {
-    ajaxRequest({url: 'procesar_bloques.php', data: { opcion: 'get_bloque', id: id }}, function (data) {
+    ajaxRequest({url: '_request/BloquesRequest.php', data: { opcion: 'get_bloque', id: id }}, function (data) {
         if (data.result) {
             $('#bloques_input_numero').val(data.numero);
             $('#bloques_input_nombre').val(data.nombre);
@@ -132,7 +132,7 @@ function cambiarMunicipio() {
     let municipio = $('#bloques_select_municipios');
     municipio.removeClass('is-invalid');
     limpiarBloques(false);
-    ajaxRequest({ url: 'procesar_bloques.php', data: { opcion: 'get_bloques_municipios', id: municipio.val() }, html: 'si' }, function (data){
+    ajaxRequest({ url: '_request/BloquesRequest.php', data: { opcion: 'get_bloques_municipios', id: municipio.val() }, html: 'si' }, function (data){
 
         $('#dataContainerBloques').html(data);
         datatable('bloques_tabla');
@@ -149,7 +149,7 @@ function getMunicipios(municipio = true) {
         .html(html);
     $('#bloques_municipios_id').val('');
 
-    ajaxRequest({url: 'procesar_bloques.php', data: {opcion: 'get_municipios'}}, function (data) {
+    ajaxRequest({url: '_request/BloquesRequest.php', data: {opcion: 'get_municipios'}}, function (data) {
         if (data.result) {
             let select = $('#bloques_select_municipios');
             let municipios = data.municipios.length;
@@ -192,7 +192,7 @@ function eliminarBloque(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({ url: 'procesar_bloques.php', data: { opcion: 'eliminar_bloque', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/BloquesRequest.php', data: { opcion: 'eliminar_bloque', id: id } }, function (data) {
                 if (data.result) {
                     let table = $('#bloques_tabla').DataTable();
                     let item = $('#btn_eliminar_' + id).closest('tr');

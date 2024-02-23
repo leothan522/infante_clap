@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\model\Bloque;
 use app\model\Municipio;
@@ -293,7 +293,7 @@ if ($_POST) {
                     if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
                         echo '<div id="dataContainerParroquia">';
-                        require_once "_layout/table_bloques.php";
+                        require_once "../_layout/table_bloques.php";
                         echo '</div>';
                     } else {
                         echo '<div id="dataContainerParroquia">';
