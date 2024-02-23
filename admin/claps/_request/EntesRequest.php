@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\model\Ente;
 
@@ -141,7 +141,7 @@ if ($_POST) {
                     $model = new Ente();
                     $listarBloques = $model->getAll();
 
-                    require '_layout/table_entes.php';
+                    require '../_layout/table_entes.php';
                     break;
 
                 //Por defecto

@@ -20,7 +20,7 @@ $('#entes_form').submit(function (e) {
 
     if (procesar){
 
-        ajaxRequest({ url: 'procesar_entes.php', data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/EntesRequest.php', data: $(this).serialize() }, function (data) {
             if (data.result){
                 let table = $('#entes_tabla').DataTable();
 
@@ -69,7 +69,7 @@ $('#entes_form').submit(function (e) {
 
 function editEnte(id){
 
-    ajaxRequest({ url: 'procesar_entes.php', data: { opcion: 'get_ente', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'get_ente', id: id } }, function (data) {
         if (data.result){
             $('#entes_input_nombre').val(data.nombre);
             $('#entes_id').val(data.id);
@@ -84,7 +84,7 @@ function eliminarEnte(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({ url: 'procesar_entes.php', data: { opcion: 'eliminar_ente', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'eliminar_ente', id: id } }, function (data) {
                 if (data.result) {
                     let table = $('#entes_tabla').DataTable();
                     let item = $('#btn_eliminar_ente_' + id).closest('tr');
@@ -118,7 +118,7 @@ function quitarClass() {
 }
 
 function getEntes() {
-    ajaxRequest({ url: 'procesar_entes.php', data: { opcion: 'get_entes' }, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'get_entes' }, html: 'si' }, function (data) {
         $('#mostrar_entes').html(data);
         datatable('entes_tabla');
     });
