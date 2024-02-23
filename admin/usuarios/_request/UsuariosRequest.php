@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\model\User;
 use app\controller\UsersController;
@@ -37,9 +37,9 @@ if ($_POST) {
                     $i = $offset;
                     $user = $model->find($_SESSION['id']);
                     $user_role = $user['role'];
-                    echo '<div id="dataContainer">';
-                    require_once "_layout/card_table.php";
-                    echo '</div>';
+
+                    require_once "../_layout/card_table.php";
+
 
                     $paginate = true;
 
@@ -57,7 +57,7 @@ if ($_POST) {
                     $links = paginate('procesar.php', 'usuario_table_acceso', $limit, $model->count(1, 'acceso_municipio', '!=', 'null'), $offset, 'paginate_acceso', 'usuario_card_table_acceso')->createLinks();
                     $i = $offset;
                     echo '<div id="usuario_card_table_acceso">';
-                    require_once "_layout/card_table_acceso.php";
+                    require_once "../_layout/card_table_acceso.php";
                     echo '</div>';
                     $paginate = true;
 
@@ -571,9 +571,9 @@ if ($_POST) {
                     $listarUsuarios = $model->paginate($limit, null, 'id', 'DESC', 1, 'acceso_municipio', '!=', 'null');
                     $links = paginate('procesar.php', 'usuario_table_acceso', $limit, $model->count(1, 'acceso_municipio', '!=', 'null'), null, 'paginate_acceso', 'usuario_card_table_acceso', '_acceso')->createLinks();
 
-                    echo '<div id="usuario_card_table_acceso">';
-                    require '_layout/card_table_acceso.php';
-                    echo '</div>';
+
+                    require '../_layout/card_table_acceso.php';
+
                     break;
 
                 case 'set_acceso_municipios':

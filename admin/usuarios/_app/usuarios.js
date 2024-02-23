@@ -11,7 +11,7 @@ inputmaskTelefono('#edit_telefono');
 //Generar Clave Aleatoria
 function generarClave() {
 
-    ajaxRequest({data: {opcion: 'generar_clave'}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'generar_clave'}}, function (data) {
         if (data.result) {
             $('#password').val(data.message);
         }
@@ -106,7 +106,7 @@ $('#form_create_user').submit(function (e) {
 
     if (procesar) {
 
-        ajaxRequest({data: $(this).serialize()}, function (data) {
+        ajaxRequest({ url: '_request/UsuariosRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result) {
 
@@ -260,7 +260,7 @@ function getUser(id = null) {
         enviar_id = $('#edit_id').val();
     }
 
-    ajaxRequest({data: {opcion: 'get_user', id: enviar_id}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php',  data: {opcion: 'get_user', id: enviar_id}}, function (data) {
         if (data.result) {
             setUser(data);
             $('#ver_new_password').addClass('d-none');
@@ -274,7 +274,7 @@ function getUser(id = null) {
 function cambiarEstatus() {
     let id = $('#edit_id').val();
 
-    ajaxRequest({data: {opcion: 'cambiar_estatus', id: id}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'cambiar_estatus', id: id}}, function (data) {
         if (data.result) {
             setUser(data);
             let table = $('#tabla_usuarios').DataTable();
@@ -292,7 +292,7 @@ function resetPassword() {
     let ver = $('#ver_new_password');
     let input = $('#profile_new_password');
 
-    ajaxRequest({data: {opcion: 'reset_password', id: id, password: input.val()}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'reset_password', id: id, password: input.val()}}, function (data) {
         if (data.result) {
             ver.removeClass('d-none');
             input.val(data.message);
@@ -348,7 +348,7 @@ $('#form_editar_user').submit(function (e) {
 
     if (procesar) {
 
-        ajaxRequest({data: $(this).serialize()}, function (data) {
+        ajaxRequest({ url: '_request/UsuariosRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result) {
 
@@ -382,7 +382,7 @@ function destroyUser(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({data: {opcion: 'eliminar', id: id}}, function (data) {
+            ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'eliminar', id: id}}, function (data) {
 
                 if (data.result) {
 
@@ -446,7 +446,7 @@ function destroyUser(id) {
 //Actualizar datos del usuario en Modal Permisos
 function getPermisos(id) {
 
-    ajaxRequest({data: {opcion: 'get_permisos', id: id}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'get_permisos', id: id}}, function (data) {
 
         if (data.result) {
 
@@ -478,7 +478,7 @@ function getPermisos(id) {
 $('#form_permisos_usuario').submit(function (e) {
     e.preventDefault();
 
-    ajaxRequest({data: $(this).serialize()}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: $(this).serialize() }, function (data) {
         //muestro toast
     });
 
@@ -508,7 +508,7 @@ $('#form_permisos_usuario').submit(function (e) {
 });
 
 function getUsuariosMunicipios() {
-    ajaxRequest({url: 'procesar.php', data: {opcion: 'get_usuarios_municipios'}}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'get_usuarios_municipios'}}, function (data) {
 
         if (data.result) {
             let selectUsuarios = $('#usuarios_select_usuarios');
@@ -535,7 +535,7 @@ function getUsuariosMunicipios() {
 }
 
 function getAccesosMunicipio() {
-    ajaxRequest({url: 'procesar.php', data: {opcion: 'get_acceso_municipios'}, html: 'si'}, function (data) {
+    ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'get_acceso_municipios'}, html: 'si'}, function (data) {
         $('#usuario_card_table').html(data);
         datatable('usuario_table_acceso');
         $('#btn_reset_acceso_municipio').click();
@@ -568,7 +568,7 @@ $('#modal_acceso_form').submit(function (e) {
 
     if (procesar) {
 
-        ajaxRequest({data: $(this).serialize()}, function (data) {
+        ajaxRequest({ url: '_request/UsuariosRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result){
 
@@ -610,7 +610,7 @@ function destroyAcceso(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({data: {opcion: 'eliminar_acceso', id: id}}, function (data) {
+            ajaxRequest({ url: '_request/UsuariosRequest.php', data: {opcion: 'eliminar_acceso', id: id}}, function (data) {
 
                 if (data.result) {
 

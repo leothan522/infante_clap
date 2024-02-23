@@ -26,7 +26,7 @@ class UsersController extends Admin
     {
         $model = new User();
         $limit = numRowsPaginate();
-        $this->linksPaginate = paginate('procesar.php', 'tabla_usuarios', $limit, $model->count(1))->createLinks();
+        $this->linksPaginate = paginate('_request/UsuariosRequest.php', 'tabla_usuarios', $limit, $model->count(1))->createLinks();
         return $model->paginate($limit, null, 'role', 'DESC', 1);
     }
 
