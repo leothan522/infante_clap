@@ -55,7 +55,7 @@ $('#form_perfil_datos').submit(function (e){
 
     if (procesar){
 
-        ajaxRequest({ data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/PerfilRequest.php', data: $(this).serialize() }, function (data) {
             if (data.result){
                 $('#profile_name').text(data.nombre);
                 $('#profile_email').text(data.email);
@@ -175,7 +175,7 @@ $('#form_perfil_seguridad').submit(function (e){
 
     if (procesar){
 
-        ajaxRequest({ data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/PerfilRequest.php', data: $(this).serialize() }, function (data) {
 
             if (data.result){
 
