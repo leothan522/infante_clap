@@ -27,7 +27,7 @@ class TerritorioController extends Admin
         $model = new Municipio();
         if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
         $limit = $paginate;
-        $this->linksPaginate = paginate('procesar_municipio.php', 'tabla_municipios', $limit, $model->count(), null, 'paginate_municipio', 'dataContainerMunicipio', '_municipio')->createLinks();
+        $this->linksPaginate = paginate('MunicipiosRequest.php', 'tabla_municipios', $limit, $model->count(), null, 'paginate_municipio', 'dataContainerMunicipio', '_municipio')->createLinks();
         return $model->paginate($limit, null, 'nombre', 'ASC');
     }
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\model\Municipio;
 use app\model\Parroquia;
@@ -37,7 +37,7 @@ if ($_POST) {
                     $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerMunicipio', '_municipio')->createLinks();
                     $i = $offset;
                     echo '<div id="dataContainerMunicipio">';
-                    require_once "_layout/card_table_municipios.php";
+                    require_once "../_layout/card_table_municipios.php";
                     echo '</div>';
 
                     break;

@@ -45,7 +45,7 @@ $('#form_territorio_municipio').submit(function (e) {
 
     if (procesar){
 
-        ajaxRequest({ url: 'procesar_municipio.php', data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/MunicipiosRequest.php', data: $(this).serialize() }, function (data) {
 
             if (data.result){
 
@@ -171,7 +171,7 @@ function editMunicipio(id) {
 
     resetMunicipio();
 
-    ajaxRequest({ url: 'procesar_municipio.php', data: { opcion: 'get_municipio', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'get_municipio', id: id } }, function (data) {
         if (data.result){
             $('#municipio_nombre').val(data.nombre);
             $('#municipio_id').val(data.id);
@@ -191,7 +191,7 @@ function destroyMunicipio(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({ url: 'procesar_municipio.php', data: { opcion: 'eliminar_municipio', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'eliminar_municipio', id: id } }, function (data) {
 
                 if (data.result){
 
@@ -229,7 +229,7 @@ function estatusMunicipio(id)
 {
     let boton = $('#btn_estatus_' + id);
 
-    ajaxRequest({ url: 'procesar_municipio.php', data: { opcion: 'estatus_municipio', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'estatus_municipio', id: id } }, function (data) {
         if (data.result){
             if (data.estatus === 1){
                 boton.html(' <i class="fas fa-eye"></i>');
