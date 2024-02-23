@@ -125,6 +125,6 @@ $controller = new GuestController();
 <script src="<?php asset('public/js/sweetalert-app.js'); ?>"></script>
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
-<script src="_app/login.js"></script>
+<script src="<?php asset('login/_app/login.js', true); ?>"></script>
 </body>
 </html>

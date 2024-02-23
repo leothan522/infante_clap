@@ -24,7 +24,7 @@ $('#form_login').submit(function (e) {
 
     if (procesar){
 
-        ajaxRequest({ data: $(this).serialize() }, function (data) {
+        ajaxRequest({ url: '_request/LoginRequest.php', data: $(this).serialize() }, function (data) {
                 if (data.result){
                     window.location.replace("../admin/");
                 }else {
