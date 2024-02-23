@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../vendor/autoload.php";
+require_once "../../../vendor/autoload.php";
 
 use app\controller\ClapsController;
 use app\model\Clap;
@@ -87,7 +87,7 @@ if ($_POST) {
                     $controller->links = $links;
 
                     echo '<div id="card_listar_claps">';
-                    require ('_layout/card_listar_claps.php');
+                    require '../_layout/card_listar_claps.php';
                     echo '</div>';
                     break;
 
@@ -752,11 +752,11 @@ if ($_POST) {
 
                         //traer todos los datos del municipio
                         $municipio = $modelMunicipio->find($id);
-                        if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
-                        $limit = $paginate;
+                        //if (numRowsPaginate() < 15){$paginate = 15; }else{ $paginate = numRowsPaginate(); }
+                        $limit = numRowsPaginate();
                         $i = 0;
                         $links = paginate(
-                            'procesar_claps.php',
+                            '_request/ClapsRequest.php',
                             'tabla_claps',
                             $limit,
                             $model->count(1, 'municipios_id', '=', $id),
@@ -796,7 +796,7 @@ if ($_POST) {
                         $controller->links = $links;
                     }
 
-                    require ('_layout/card_listar_claps.php');
+                    require('../_layout/card_listar_claps.php');
 
                     break;
 
@@ -842,7 +842,7 @@ if ($_POST) {
                         $controller->links = $links;
                     }
 
-                    require ('_layout/card_listar_claps.php');
+                    require('../_layout/card_listar_claps.php');
                     break;
 
 

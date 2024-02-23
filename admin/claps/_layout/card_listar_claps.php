@@ -39,7 +39,7 @@
             Seleccione un <strong>Municipio</strong> para empezar...
             <?php
                 }else {
-                    require '_layout/table_claps.php';
+                    require '../_layout/table_claps.php';
                 }
              ?>
             </div>

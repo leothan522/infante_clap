@@ -149,7 +149,7 @@ $('#form_create_clap').submit(function (e) {
 
 
     if (procesar) {
-        ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
+        ajaxRequest({url: '_request/ClapsRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result) {
                 cerrarModal('#modal-claps');
@@ -313,7 +313,7 @@ function resetClap(select_municipios, select_entes, opcion = 'create') {
     resetDatosClap(opcion);
     resetDatosJefes(opcion);
 
-    ajaxRequest({url: 'procesar_claps.php', data: {opcion: 'get_municipios_select'}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_municipios_select'}}, function (data) {
         if (data.result) {
             let select_municipio = $('#' + select_municipios);
             let municipios = data.municipios.length;
@@ -344,7 +344,7 @@ function getBloquesParroquias(selectMunicipio, selectBloque, selectParroquia) {
     let idMunicipio = $(selectMunicipio);
     if (idMunicipio.val() !== '') {
         ajaxRequest({
-            url: 'procesar_claps.php',
+            url: '_request/ClapsRequest.php',
             data: {opcion: 'get_bloque_parroquia', id: idMunicipio.val()}
         }, function (data) {
             if (data.result) {
@@ -385,7 +385,7 @@ function editClap(id_clap = 0) {
 
     setTimeout(function () {
 
-        ajaxRequest({url: 'procesar_claps.php', data: {opcion: 'get_datos_clap', id: id}}, function (data) {
+        ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_datos_clap', id: id}}, function (data) {
             if (data.result) {
 
                 $('#clap_edit_select_municipio')
@@ -503,7 +503,7 @@ $('#form_edit_clap').submit(function (e) {
     }
 
     if (procesar) {
-        ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
+        ajaxRequest({url: '_request/ClapsRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result) {
                 cerrarModal('#editar-clap');
@@ -554,7 +554,7 @@ function editJefe(id_jefe = 0) {
     }
     cerrarModal('#modal-show-claps');
     resetDatosJefes(opcion = 'edit');
-    ajaxRequest({url: 'procesar_claps.php', data: {opcion: 'get_datos_jefe', id: id}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_datos_jefe', id: id}}, function (data) {
 
         if (data.result) {
             $('#jefe_edit_input_cedula').val(data.cedula);
@@ -623,7 +623,7 @@ $('#form_edit_jefe').submit(function (e) {
     }
 
     if (procesar) {
-        ajaxRequest({url: 'procesar_claps.php', data: $(this).serialize()}, function (data) {
+        ajaxRequest({url: '_request/ClapsRequest.php', data: $(this).serialize()}, function (data) {
 
             if (data.result) {
                 cerrarModal('#editar-jefe');
@@ -673,7 +673,7 @@ function destroyClap(id_clap = 0) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({url: 'procesar_claps.php', data: {opcion: 'eliminar_clap', id: id}}, function (data) {
+            ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'eliminar_clap', id: id}}, function (data) {
                 if (data.result){
                     cerrarModal('#modal-show-claps');
                     let table = $('#tabla_claps').DataTable();
@@ -697,7 +697,7 @@ function editarClapJefe() {
 }
 
 function showClapJefe(id) {
-    ajaxRequest({url: 'procesar_claps.php', data: {opcion: 'show_clap', id: id}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'show_clap', id: id}}, function (data) {
         if (data.result) {
             $('#show_clap_municipio').text(data.clap_municipio);
             $('#show_clap_parroquia').text(data.clap_parroquia);
@@ -721,7 +721,7 @@ function showClapJefe(id) {
 $('#global_select_id_municipio').change(function (e) {
     e.preventDefault();
     let id = $(this).val()
-    ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
         $('#card_listar_claps').html(data);
         datatable('tabla_claps');
@@ -731,7 +731,7 @@ $('#global_select_id_municipio').change(function (e) {
 });
 
 function getClapsMunicipio(id) {
-    ajaxRequest({url: 'procesar_claps.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
     $('#card_listar_claps').html(data);
     datatable('tabla_claps');
@@ -753,7 +753,7 @@ $('#navbar_form_buscar').submit(function (e) {
 
     $(this).append(html);
 
-    ajaxRequest({ url: 'procesar_claps.php', data: $(this).serialize(), html:'si' }, function (data) {
+    ajaxRequest({ url: '_request/ClapsRequest.php', data: $(this).serialize(), html:'si' }, function (data) {
 
         $('#card_listar_claps').html(data);
         datatable('tabla_claps');
