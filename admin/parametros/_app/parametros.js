@@ -40,54 +40,6 @@ $('#form_parametros').submit(function (e){
         }else {
             guardarParametro();
         }
-
-        /*ajaxRequest({ data: $(this). serialize() }, function (data) {
-
-            if (data.result) {
-
-                let table = $('#table_parametros').DataTable();
-                let buttons = '<div class="btn-group btn-group-sm">\n' +
-                    '                            <button type="button" class="btn btn-info" onclick="edit(' + data.id + ')">\n' +
-                    '                                <i class="fas fa-edit"></i>\n' +
-                    '                            </button>\n' +
-                    '                            <button type="button" class="btn btn-info" onclick="borrar(' + data.id + ')" id="btn_eliminar_' + data.id + '"  >\n' +
-                    '                                <i class="far fa-trash-alt"></i>\n' +
-                    '                            </button>\n' +
-                    '                        </div>';
-
-                if (data.add) {
-                    //nueva row
-
-                    table.row.add([
-                        '<span class="text-bold">' + data.item + '</span>',
-                        data.nombre,
-                        data.tabla_id,
-                        data.valor,
-                        buttons
-                    ]).draw();
-
-                    $('#paginate_leyenda').text(data.total);
-
-                    let nuevo = $('#table_parametros tr:last');
-                    nuevo.attr('id', 'tr_item_' + data.id);
-                    nuevo.find("td:eq(1)").addClass('nombre');
-                    nuevo.find("td:eq(2)").addClass('tabla_id');
-                    nuevo.find("td:eq(3)").addClass('valor');
-
-                } else {
-                    //editando
-
-                    let tr = $('#tr_item_' + data.id);
-                    table
-                        .cell(tr.find('.nombre')).data(data.nombre)
-                        .cell(tr.find('.tabla_id')).data(data.tabla_id)
-                        .cell(tr.find('.valor')).data(data.valor)
-                        .draw();
-                }
-                $('#btn_cancelar').click();
-            }
-
-        });*/
     }
 });
 
@@ -141,7 +93,7 @@ function edit(id) {
 function borrar(id) {
     MessageDelete.fire().then((result_parametros) => {
         if (result_parametros.isConfirmed){
-
+            let valor_x = $('#input_hidden_x').val();
             ajaxRequest({ data: { id: id, opcion: 'eliminar' } }, function (data) {
 
                 if (data.result){
@@ -156,7 +108,12 @@ function borrar(id) {
 
                     $('#paginate_leyenda').text(data.total);
                     $('#btn_cancelar').click();
-
+                    valor_x = valor_x - 1;
+                    if (valor_x === 0){
+                        reconstruirTabla();
+                    }else {
+                        $('#input_hidden_x').val(valor_x);
+                    }
                 }
 
             });
@@ -193,6 +150,12 @@ $('#navbar_form_buscar').submit(function (e) {
     });
 
 });
+
+function reconstruirTabla() {
+    ajaxRequest({ url: 'procesar.php', data: { opcion: 'index'}, html: 'si' }, function (data) {
+        $('#dataContainerParametros').html(data);
+    });
+}
 
 console.log('hi!');
 

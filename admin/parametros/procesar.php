@@ -38,9 +38,22 @@ if ($_POST) {
                     $listarParametros = $model->paginate($limit, $offset, 'id', 'DESC',);
                     $linksPaginate= paginate($baseURL, $tableID, $limit, $model->count(), $offset, 'paginate', 'dataContainerParametros')->createLinks();
                     $i = $offset;
+                    $x = 0;
 
                     require "_layout/table.php";
 
+                    break;
+
+                case 'index':
+                    $controller->listarParametros();
+                    $listarParametros = $controller->rows;
+                    $linksPaginate = $controller->links;
+                    $totalRows = $controller->totalRows;
+                    $limit = $controller->limit;
+
+                    $i = 0;
+                    $x = 0;
+                    require_once "_layout/table.php";
                     break;
 
                 case "guardar":
@@ -81,6 +94,7 @@ if ($_POST) {
                         )->createLinks();
                         $listarParametros = $model->paginate($limit,null, 'id','DESC');
                         $i = 0;
+                        $x = 0;
 
                         require '_layout/table.php';
 
@@ -194,6 +208,8 @@ if ($_POST) {
                         //datos extras para el $response
                         $response['total'] = $model->count();
 
+
+
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
@@ -206,6 +222,7 @@ if ($_POST) {
                         $keyword = $_POST['keyword'];
 
                         $i = 0;
+                        $x = 0;
                         $listarParametros = $model->getList('nombre', 'LIKE', "%$keyword%");
 
                         require_once "_layout/table.php";

@@ -13,6 +13,7 @@ class ParametrosController extends Admin
     public $links;
     public $totalRows;
     public $limit;
+    public $rows;
 
     public function isAdmin()
     {
@@ -23,13 +24,13 @@ class ParametrosController extends Admin
     }
 
 
-    public function listarParametros(): array
+    public function listarParametros()
     {
         $model = new Parametros();
         $this->limit = numRowsPaginate();
         $this->totalRows = $model->count();
         $this->links = paginate('procesar.php','table_parametros', $this->limit, $this->totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
-        return $model->paginate($this->limit,null, 'id','DESC');
+        $this->rows = $model->paginate($this->limit,null, 'id','DESC');
     }
 
 

@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                 <?php
-                foreach ($listarParametros as $parametro){ ?>
+                foreach ($listarParametros as $parametro){  $x++; ?>
                     <tr id="tr_item_<?php echo $parametro['id']; ?>">
                         <td><span class="text-bold"><?php echo ++$i; ?></span></td>
                         <td class="nombre">
@@ -59,6 +59,7 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer clearfix">
+        <input type="hidden" placeholder="valor_$x" value="<?php echo $x ?>" name="input_hidden_x" id="input_hidden_x">
         <?php
         if (isset($linksPaginate)){
             echo $linksPaginate;

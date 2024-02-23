@@ -5,12 +5,14 @@
     <div class="col-md-8">
         <div id="dataContainerParametros">
         <?php
-        $listarParametros = $controller->listarParametros();
+        $controller->listarParametros();
+        $listarParametros = $controller->rows;
         $linksPaginate = $controller->links;
         $totalRows = $controller->totalRows;
         $limit = $controller->limit;
 
         $i = 0;
+        $x = 0;
         require_once "table.php";
         ?>
         </div>
