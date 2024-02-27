@@ -195,6 +195,7 @@ class PaginationController
         'totalRows' : '$this->totalRows', 
         'tableID' : '$this->tableID', 
         'opcion': '$this->opcion', 
+        'contentDiv': '$this->contentDiv', 
         'campo': '$this->campo', 
         'operador': '$this->operador', 
         'valor': '$this->valor', 

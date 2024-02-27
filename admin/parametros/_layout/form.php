@@ -45,7 +45,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <input type="hidden" name="opcion" value="guardar" id="opcion">
+            <input type="hidden" name="opcion" value="store" id="opcion">
             <input type="hidden" name="id" id="id">
             <button type="submit" class="btn btn-primary">Enviar</button>
             <button type="reset" class="btn btn-default float-right" id="btn_cancelar">Cancelar</button>

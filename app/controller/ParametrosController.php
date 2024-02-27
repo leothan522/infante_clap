@@ -14,6 +14,8 @@ class ParametrosController extends Admin
     public $totalRows;
     public $limit;
     public $rows;
+    public $offset;
+    public $keyword;
 
     public function isAdmin()
     {
@@ -24,13 +26,143 @@ class ParametrosController extends Admin
     }
 
 
-    public function listarParametros()
+    public function index(
+        $baseURL = '_request/ParametrosRequest.php',
+        $tableID = 'table_parametros',
+        $limit = null,
+        $totalRows = null,
+        $offset = null,
+        $opcion = 'paginate',
+        $contentDiv = 'dataContainerParametros'
+    ){
+
+        $model = new Parametros();
+        if (is_null($limit)) { $this->limit = numRowsPaginate(); }else{ $this->limit = $limit; }
+        if (is_null($totalRows)) { $this->totalRows = $model->count(); }else{ $this->totalRows = $totalRows; }
+        if (is_null($offset)) { $this->offset = 0; }else{ $this->offset = $offset; }
+
+        $this->links = paginate(
+            $baseURL,
+            $tableID,
+            $this->limit,
+            $this->totalRows,
+            $offset,
+            $opcion,
+            $contentDiv
+        )->createLinks();
+        $this->rows = $model->paginate($this->limit,$offset, 'id','DESC');
+    }
+
+    public function store($name, $tabla_id, $valor)
     {
         $model = new Parametros();
-        $this->limit = numRowsPaginate();
-        $this->totalRows = $model->count();
-        $this->links = paginate('_request/ParametrosRequest.php','table_parametros', $this->limit, $this->totalRows, null, 'paginate', 'dataContainerParametros')->createLinks();
-        $this->rows = $model->paginate($this->limit,null, 'id','DESC');
+        if (empty($tabla_id) && $tabla_id != 0) {
+            $tabla_id = null;
+        }
+
+        $data = [
+            $name,
+            $tabla_id,
+            $valor
+        ];
+
+        $model->save($data);
+    }
+
+    public function edit($id)
+    {
+        $model = new Parametros();
+        $row = $model->find($id);
+
+        $response = crearResponse(
+            null,
+            true,
+            'Editar Parametro.',
+            'Editar Parametro.',
+            'info'
+        );
+
+        //datos extras para el $response
+        $response['id'] = $row['id'];
+        $response['nombre'] = $row['nombre'];
+        $response['tabla_id'] = $row['tabla_id'];
+        $response['valor'] = $row['valor'];
+        return $response;
+    }
+
+    public function update($id, $name, $tabla_id, $valor)
+    {
+        $model = new Parametros();
+
+        if (empty($tabla_id)) {
+            $tabla_id = null;
+        }
+
+        $parametro = $model->find($id);
+        $db_nombre = $parametro['nombre'];
+        $db_tabla_id = $parametro['tabla_id'];
+        $db_valor = $parametro['valor'];
+
+        $cambios = false;
+
+        if ($db_nombre != $name) {
+            $cambios = true;
+            $model->update($id, "nombre", $name);
+        }
+
+        if ($db_tabla_id != $tabla_id) {
+            $cambios = true;
+            $model->update($id, "tabla_id", $tabla_id);
+        }
+
+        if ($db_valor != $valor) {
+            $cambios = true;
+            $model->update($id, 'valor', $valor);
+        }
+
+        if ($cambios) {
+
+            $response = crearResponse(
+                null,
+                true,
+                'Parametro Actualizado.',
+                'Parametro Actualizado.'
+            );
+
+            //datos extras para el $response
+            $response['id'] = $id;
+            $response['nombre'] = $name;
+            $response['tabla_id'] = $tabla_id;
+            $response['valor'] = $valor;
+
+        } else {
+            $response = crearResponse('no_cambios');
+        }
+
+        return $response;
+
+    }
+
+    public function delete($id)
+    {
+        $model = new Parametros();
+        $model->delete($id);
+        $response = crearResponse(
+            null,
+            true,
+            'Parametro Borrado.',
+            'Parametro Borrado.'
+        );
+        //datos extras para el $response
+        $response['total'] = $model->count();
+        return $response;
+    }
+
+    public function search($keyword){
+        $model = new Parametros();
+        $this->totalRows = $model->count(null, 'nombre', 'LIKE', "%$keyword%");
+        $this->rows = $model->getList('nombre', 'LIKE', "%$keyword%");
+        $this->keyword = $keyword;
     }
 
 

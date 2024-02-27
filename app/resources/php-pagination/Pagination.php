@@ -237,6 +237,7 @@ $limit = !empty($_POST['limit']) ? $_POST['limit'] : 10;
 $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
 $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
 $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+$contenDiv = !empty($_POST['contentDiv']) ? $_POST['contentDiv'] : 'dataContainer';
 $campo = !empty($_POST['campo']) ? $_POST['campo'] : '';
 $operador = !empty($_POST['operador']) ? $_POST['operador'] : '';
 $valor = !empty($_POST['valor']) ? $_POST['valor'] : '';

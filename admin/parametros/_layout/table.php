@@ -1,7 +1,28 @@
+<?php
+$listarParametros = $controller->rows;
+$links = $controller->links;
+$totalRows = $controller->totalRows;
+$limit = $controller->limit;
+$keyword = $controller->keyword;
+$i = $controller->offset;
+$x = 0;
+?>
+
 <div class="card card-outline card-primary">
 
     <div class="card-header">
-        <h3 class="card-title">Parametros Registrados</h3>
+        <h3 class="card-title">
+            <?php if (!$keyword){ ?>
+                Parametros Registrados
+            <?php }else{ ?>
+                Resultados para la busqueda [ <strong class="text-danger"><?php echo $keyword; ?></strong> ]
+                <button type="button" class="btn btn-tool" onclick="reconstruirTabla()">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+
+            <?php } ?>
+
+        </h3>
 
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="maximize">
@@ -61,8 +82,8 @@
     <div class="card-footer clearfix">
         <input type="hidden" placeholder="valor_$x" value="<?php echo $x ?>" name="input_hidden_x" id="input_hidden_x">
         <?php
-        if (isset($linksPaginate)){
-            echo $linksPaginate;
+        if (isset($links)){
+            echo $links;
         }
          ?>
     </div>

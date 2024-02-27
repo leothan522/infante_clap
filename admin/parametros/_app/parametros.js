@@ -35,7 +35,7 @@ $('#form_parametros').submit(function (e){
 
     if (condicion){
         let opcion = $('#opcion').val();
-        if (opcion === 'editar'){
+        if (opcion === 'update'){
             editParametros();
         }else {
             guardarParametro();
@@ -77,12 +77,12 @@ function guardarParametro() {
 //cambiamos los datos en formulariopara editar
 function edit(id) {
 
-    ajaxRequest({ url: '_request/ParametrosRequest.php', data:{ id: id, opcion: 'get_parametro'} }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data:{ id: id, opcion: 'edit'} }, function (data) {
         if (data.result){
             $('#name').val(data.nombre);
             $('#tabla_id').val(data.tabla_id);
             $('#valor').val(data.valor);
-            $('#opcion').val("editar");
+            $('#opcion').val("update");
             $('#id').val(data.id);
         }
     });
@@ -94,7 +94,7 @@ function borrar(id) {
     MessageDelete.fire().then((result_parametros) => {
         if (result_parametros.isConfirmed){
             let valor_x = $('#input_hidden_x').val();
-            ajaxRequest({ url: '_request/ParametrosRequest.php', data: { id: id, opcion: 'eliminar' } }, function (data) {
+            ajaxRequest({ url: '_request/ParametrosRequest.php', data: { id: id, opcion: 'delete' } }, function (data) {
 
                 if (data.result){
 
@@ -126,7 +126,7 @@ function reset() {
     $('#nombre').removeClass('is-invalid');
     $('#tabla_id').removeClass('is-invalid');
     $('#valor').removeClass('is-invalid');
-    $('#opcion').val("guardar");
+    $('#opcion').val("store");
     $('#id').val("");
 }
 
@@ -145,7 +145,7 @@ function ocultarForm() {
 $('#navbar_form_buscar').submit(function (e) {
     e.preventDefault();
     let keyword = $('#navbar_input_buscar').val();
-    ajaxRequest({ url: '_request/ParametrosRequest.php', data: {opcion: 'navbar_buscar', keyword: keyword}, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/ParametrosRequest.php', data: {opcion: 'search', keyword: keyword}, html: 'si' }, function (data) {
         $('#dataContainerParametros').html(data);
     });
 
