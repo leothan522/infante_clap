@@ -157,7 +157,8 @@ $('#form_create_clap').submit(function (e) {
 
                 if (data.nuevo) {
                     let buttons = '<div class="btn-group btn-group-sm">\n' +
-                        '                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-show-claps" onclick="showClapJefe('+ data.id +')">\n' +
+                        '                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-show-claps" onclick="showClapJefe('+ data.id +')" \n' +
+                        '                                 id="btn_elimiar_clap_'+ data.id +'">\n' +
                         '                                    <i class="fas fa-eye"></i>\n' +
                         '                                </button>\n' +
                         '                            </div>';
