@@ -1,4 +1,4 @@
-<div class="card card-outline card-primary">
+<div class="card card-outline card-primary" id="usuario_card_table_acceso">
     <div class="card-header">
         <h3 class="card-title">Accesos Registrados </h3>
 

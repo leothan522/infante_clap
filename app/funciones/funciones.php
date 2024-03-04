@@ -15,7 +15,6 @@ function asset($url, $noCache = false): void
             $version = "?v=".rand();
         }
     }
-
     echo ROOT_PATH . $url . $version;
 }
 
@@ -78,44 +77,6 @@ function verCargando(): void
       </div>
  </div>
       ';
-}
-
-function verEstatusUsuario($estatus, $icon = true): string
-{
-    if (!$icon) {
-        $suspendido = "Suspendido";
-        $activado = "Activo";
-    } else {
-        $suspendido = '<i class="fas fa-user-times"></i>';
-        $activado = '<i class="fa fa-user-check"></i>';
-    }
-
-    $status = [
-        '0' => '<span class="text-danger">' . $suspendido . '</span>',
-        '1' => '<span class="text-success">' . $activado . '</span>'/*,
-        '2' => '<span class="text-success">Confirmado</span>'*/
-    ];
-    return $status[$estatus];
-}
-
-function verRoleUsuario($role)
-{
-    $verRole = null;
-    switch ($role) {
-        case 0:
-            $verRole = 'Público';
-            break;
-        case 99:
-            $verRole = 'Administrador';
-            break;
-        case 100:
-            $verRole = 'Root';
-            break;
-        default:
-            $verRole = 'Estandar';
-            break;
-    }
-    return $verRole;
 }
 
 function formatoMillares($cantidad, $decimales = 0): string
@@ -194,6 +155,16 @@ function crearResponse($error = null, $result = false, $title = null, $message =
             $response['message'] = "El usuario actual no tiene permisos suficientes para realizar esta acción. Contacte con su Administrador.";
             break;
 
+        case 'vinculado':
+            $response['result'] = false;
+            $response['alerta'] = true;
+            $response['error'] = "si_vinculado";
+            $response['icon'] = "warning";
+            $response['title'] = "¡No se puede Borrar!";
+            $response['message'] = "El registro que intenta borrar ya se encuentra vinculado con otros procesos.";
+
+            break;
+
         default:
             $response['result'] = $result;
             $response['alerta'] = $alerta;
@@ -233,10 +204,6 @@ function mesEspanol($numMes = null){
     }
 }
 
-
-
-//**************************************************************** */
-
 function cerosIzquierda($numero, $cant_ceros): string
 {
     $numeroConCeros = str_pad($numero, $cant_ceros, "0", STR_PAD_LEFT);
@@ -249,7 +216,36 @@ function verHora($hora): string
     return $newHora;
 }
 
+function verUtf8($string){
+    //$utf8_string = "Some UTF-8 encoded BATE QUEBRADO ÑñíÍÁÜ niño ó Ó string: é, ö, ü";
+    return mb_convert_encoding($string, 'UTF-8');
+}
 
+function numRowsPaginate(){
+    $default = 30;
+    $model = new Parametros();
+    $parametro = $model->first('nombre', '=', 'numRowsPaginate');
+    if ($parametro) {
+        if (is_numeric($parametro['valor'])) {
+            return $parametro['valor'];
+        }
+    }
+    return $default;
+}
+
+//**************************************************************** */
+
+function numSizeCodigo(){
+    $default = 6;
+    $model = new Parametros();
+    $parametro = $model->first('nombre', '=', 'size_codigo');
+    if ($parametro) {
+        if (is_numeric($parametro['tabla_id'])) {
+            return $parametro['tabla_id'];
+        }
+    }
+    return $default;
+}
 
 function verFechaLetras($fecha): string
 {
@@ -302,34 +298,7 @@ function validateJSON(string $json): bool
     }
 }
 
-function verUtf8($string){
-    //$utf8_string = "Some UTF-8 encoded BATE QUEBRADO ÑñíÍÁÜ niño ó Ó string: é, ö, ü";
-    return mb_convert_encoding($string, 'UTF-8');
-}
 
-function numRowsPaginate(){
-    $default = 30;
-    $model = new Parametros();
-    $parametro = $model->first('nombre', '=', 'numRowsPaginate');
-    if ($parametro) {
-        if (is_numeric($parametro['valor'])) {
-            return $parametro['valor'];
-        }
-    }
-    return $default;
-}
-
-function numSizeCodigo(){
-    $default = 6;
-    $model = new Parametros();
-    $parametro = $model->first('nombre', '=', 'size_codigo');
-    if ($parametro) {
-        if (is_numeric($parametro['tabla_id'])) {
-            return $parametro['tabla_id'];
-        }
-    }
-    return $default;
-}
 
 
 /*

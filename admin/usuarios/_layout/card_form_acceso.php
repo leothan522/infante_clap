@@ -50,7 +50,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <input type="hidden" name="opcion" value="set_acceso_municipios" id="opcion">
+            <input type="hidden" name="opcion" value="set_acceso" id="opcion">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" class="btn btn-default float-right" onclick="resetFormAcceso()" id="btn_reset_acceso_municipio">Cancelar</button>
         </div>

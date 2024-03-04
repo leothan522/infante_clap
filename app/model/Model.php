@@ -54,7 +54,7 @@ class Model
         return $rows;
     }
 
-    public function getList($campo, $operador, $valor, $band = null, $orderBy = null, $opt ='ASC'): array
+    public function getList($campo, $operador, $valor, $band = null, $orderBy = null, $opt ='ASC', $limit = null): array
     {
         $extra = null;
         $order = null;
@@ -64,8 +64,15 @@ class Model
         if (!is_null($orderBy)) {
             $order = "ORDER BY `$orderBy` $opt";
         }
+
+        if (!is_null($limit)){
+            $limit = 'LIMIT '.$limit;
+        }
+
+
+
         $query = new Query();
-        $sql = "SELECT * FROM `$this->TABLA` WHERE `$campo` $operador '$valor' $extra $order; ";
+        $sql = "SELECT * FROM `$this->TABLA` WHERE `$campo` $operador '$valor' $extra $order $limit; ";
         $rows = $query->getAll($sql);
         return $rows;
     }
