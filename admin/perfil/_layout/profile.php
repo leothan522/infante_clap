@@ -8,7 +8,7 @@
 
         <h3 class="profile-username text-center" id="profile_name"><?php echo $controller->USER_NAME?></h3>
 
-        <p class="text-muted text-center" id="profile_tipo"><?php echo verRoleUsuario($controller->USER_ROLE) ?></p>
+        <p class="text-muted text-center" id="profile_tipo"><?php echo $controller->getRol($controller->USER_ROLE, $controller->USER_ROLE_ID) ?></p>
 
         <ul class="list-group list-group-unbordered">
             <li class="list-group-item">
@@ -18,7 +18,7 @@
                 <b>Teléfono</b> <a class="float-right" id="profile_telefono"><?php echo $controller->USER_TELEFONO ?></a>
             </li>
             <li class="list-group-item">
-                <b>Estatus</b> <a class="float-right" id="profile_estatus"><span class="text-success"><?php echo verEstatusUsuario($controller->USER_STATUS, false) ?></span></a>
+                <b>Estatus</b> <a class="float-right" id="profile_estatus"><span class="text-success"><?php echo $controller->verEstatusUsuario($controller->USER_STATUS, false) ?></span></a>
             </li>
             <li class="list-group-item">
                 <b>Fecha Registro</b> <a class="float-right" id="profile_fecha"><?php echo verFecha($controller->USER_CREATED_AT)?></a>

@@ -3,7 +3,6 @@
 namespace app\controller;
 
 use app\middleware\Admin;
-use app\model\Model;
 use app\model\Municipio;
 use app\model\Parametros;
 use app\model\User;
@@ -20,9 +19,6 @@ class UsersController extends Admin
     public $offset;
     public $roles;
     public $keyword;
-    public $listarAcceso;
-    public $linksAcceso;
-    public $totalRowsAcceso;
 
     public function isAdmin()
     {
@@ -71,47 +67,6 @@ class UsersController extends Admin
         );
 
 
-    }
-
-    public function indexAcceso(
-        $baseURL = '_request/UsersRequest.php',
-        $tableID = 'usuario_table_acceso',
-        $limit = null,
-        $totalRows = null,
-        $offset = null
-    )
-    {
-        $model = new User();
-        if (is_null($limit)) {
-            $this->limit = numRowsPaginate();
-        } else {
-            $this->limit = $limit;
-        }
-        if (is_null($totalRows)) {
-            $this->totalRowsAcceso = $model->count(1);
-        } else {
-            $this->totalRowsAcceso = $totalRows;
-        }
-        $this->offset = $offset;
-        $listarAcceso = $model->paginate($limit,
-            $offset,
-            'id',
-            'DESC',
-            1,
-            'acceso_municipio',
-            '!=',
-            'null'
-        );
-        $linksAcceso = paginate(
-            $baseURL,
-            $tableID,
-            $limit,
-            $model->count(1, 'acceso_municipio', '!=', 'null'),
-            $offset,
-            'paginate_acceso',
-            'usuario_card_table_acceso'
-        )->createLinks();
-        $i = $offset;
     }
 
     public function store($name, $email, $password, $telefono, $tipo): array
@@ -442,85 +397,6 @@ class UsersController extends Admin
         $this->keyword = $keyword;
         $sql = "SELECT * FROM users WHERE name LIKE '%$keyword%' OR email LIKE '%$keyword%' OR telefono LIKE '%$keyword%' LIMIT 100;";
         $this->rows = $model->sqlPersonalizado($sql, 'getAll');
-    }
-
-    public function setAcceso($id, $municipios)
-    {
-        $model = new User();
-        $user = $model->find($id);
-
-        $accesos = array();
-        $listarMunicipios = array();
-        $modelmunicipio = new Municipio();
-        foreach ($municipios as $municipio) {
-            $getMunicipio = $modelmunicipio->find($municipio);
-            $accesos[] = $municipio;
-            $listarMunicipios[] = " ".$getMunicipio['mini'];
-        }
-
-        $model->update($id, 'acceso_municipio', crearJson($accesos));
-
-        $count = $model->count(1, 'acceso_municipio', '!=', 'null');
-
-        $response = crearResponse(
-            null,
-            true,
-            'Datos Guardados.',
-            "Mostrando Usuario " . $user['name']
-        );
-        //datos extras para el response
-        $response['id'] = $user['id'];
-        $response['name'] = $user['name'];
-        $response['email'] = $user['email'];
-        $response['municipios'] = $listarMunicipios;
-        $response['item'] = $count;
-        $response['total'] = $count;
-
-        if (is_null($user['acceso_municipio'])){
-            $response['remove'] = false;
-        }else{
-            $response['remove'] = true;
-        }
-        return $response;
-    }
-
-    public function getMunicipio($id)
-    {
-        $model = new Municipio();
-        $municipio = $model->find($id);
-        return $municipio['mini'];
-
-    }
-
-    public function destroyAcceso($id, $user)
-    {
-        $model = new User();
-        if ($user) {
-
-            $model->update($id, 'acceso_municipio', null);
-
-            $count = $model->count(1, 'acceso_municipio', '!=', 'null');
-
-            $response = crearResponse(
-                null,
-                true,
-                'Acceso Eliminado.',
-                'Acceso Eliminado.'
-            );
-            //datos extras para el $response
-            $response['total'] = $model->count(1, 'acceso_municipio', '!=', 'null');
-
-        } else {
-            $response = crearResponse(
-                'no_user',
-                false,
-                'Usuario NO encontrado."',
-                'El id del usuario no esta disponible.',
-                'warning',
-                true
-            );
-        }
-        return $response;
     }
 
 }

@@ -88,7 +88,7 @@ $('#form_create_user').submit(function (e) {
                 }
             }else {
                 $('#dataContainer').html(data.html);
-                //datatable('tabla_usuarios');
+                datatable('tabla_usuarios');
                 $('#btn_reset_create_user').click();
             }
 
@@ -389,56 +389,6 @@ $('#navbar_form_buscar').submit(function (e) {
     });
 
 });
-
-function getUsuariosMunicipios() {
-    ajaxRequest({ url: '_request/UsersRequest.php', data: {opcion: 'get_municipios'}}, function (data) {
-
-        if (data.result) {
-            let selectUsuarios = $('#usuarios_select_usuarios');
-            let selectMunicipios = $('#usuarios_select_municipios');
-            let municipios = data.municipios.length;
-            selectMunicipios.empty();
-            selectMunicipios.append('<option value="">Seleccione</option>');
-            for (let i = 0; i < municipios; i++) {
-                let id = data.municipios[i]['id'];
-                let nombre = data.municipios[i]['nombre'];
-                selectMunicipios.append('<option value="' + id + '">' + nombre + '</option>');
-            }
-            let usuarios = data.usuarios.length;
-            selectUsuarios.empty();
-            selectUsuarios.append('<option value="">Seleccione</option>');
-            for (let i = 0; i < usuarios; i++) {
-                let id = data.usuarios[i]['id'];
-                let nombre = data.usuarios[i]['email'];
-                selectUsuarios.append('<option value="' + id + '">' + nombre + '</option>');
-            }
-        }
-
-    });
-}
-
-function getAccesosMunicipio() {
-    ajaxRequest({ url: '_request/UsersRequest.php', data: {opcion: 'get_acceso'}, html: 'si'}, function (data) {
-        $('#usuario_card_table_acceso').html(data);
-        datatable('usuario_table_acceso');
-        $('#btn_reset_acceso_municipio').click();
-    });
-}
-
-function resetFormAcceso() {
-    let usuario = $('#usuarios_select_usuarios');
-    let municipios = $('#usuarios_select_municipios');
-    usuario
-        .removeClass('is-valid')
-        .removeClass('is-invalid')
-        .val("")
-        .trigger('change');
-    municipios
-        .removeClass('is-valid')
-        .removeClass('is-invalid')
-        .val("")
-        .trigger('change');
-}
 
 
 console.log('Usuarios.!');

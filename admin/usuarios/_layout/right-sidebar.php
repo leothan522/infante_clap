@@ -6,11 +6,6 @@ $controller->index();
 <div class="p-3">
     <h5>Roles de Usuarios</h5>
     <hr class="mb-2">
-    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="getUsuariosMunicipios(), getAccesosMunicipio()" data-toggle="modal" data-target="#modal-acceso_municipio">
-        CONFIGURAR ACCESO
-    </button>
-    <hr class="mb-2">
-    <hr class="mb-2">
     <h6>Crear nuevo Rol</h6>
     <form id="right_sidebar_from_role">
         <div class="input-group input-group-sm">

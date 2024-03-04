@@ -45,7 +45,7 @@
 
 
 
-        <input type="hidden" name="opcion" value="editar_seguridad" id="edit_opcion">
+        <input type="hidden" name="opcion" value="set_password" id="edit_opcion">
         <button type="submit" class="btn bg-lightblue btn-block">Guardar Cambios</button>
         <!--<button type="reset" class="btn btn-default float-right">Restablecer</button>-->
 

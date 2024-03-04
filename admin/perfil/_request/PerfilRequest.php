@@ -1,12 +1,10 @@
 <?php
 session_start();
 require_once "../../../vendor/autoload.php";
+use app\controller\PerfilController;
+$controller = new PerfilController();
 
-use app\database\Query;
-use app\model\User;
-use app\controller\UsersController;
 
-$controller = new UsersController();
 $response = array();
 
 if ($_POST) {
@@ -17,12 +15,10 @@ if ($_POST) {
 
         try {
 
-            $model = new User();
-
             switch ($opcion) {
 
                 //definimos las opciones a procesar
-                case 'editar_datos':
+                case 'update':
 
                     if (
                         !empty($_POST['name']) &&
@@ -35,126 +31,22 @@ if ($_POST) {
                         $email = $_POST['email'];
                         $telefono = $_POST['telefono'];
                         $password = $_POST['password'];
-                        $updated_at = date("Y-m-d");
-
-                        //datos DATABASE
-                        $id = $controller->USER_ID;
-                        $user = $model->find($id);
-
-
-                        if (password_verify($password, $user['password'])) {
-                            //variable local
-                            $cambios = false;
-
-                            if ($user['name'] != $name) {
-                                $cambios = true;
-                                $model->update($id, 'name', $name);
-                            }
-
-                            if ($user['email'] != $email) {
-                                $cambios = true;
-                                $model->update($id, 'email', $email);
-                            }
-
-                            if ($user['telefono'] != $telefono) {
-                                $cambios = true;
-                                $model->update($id, 'telefono', $telefono);
-
-                            }
-
-                            if ($cambios) {
-                                //sucess
-                                $model->update($id, 'updated_at', $updated_at);
-                                $user = $model->find($id);
-                                $response = crearResponse(
-                                    null,
-                                    true,
-                                    'Cambios guardados.',
-                                    'Cambios guardados exitosamente.'
-                                );
-                                $response['nombre'] = $user['name'];
-                                $response['email'] = $user['email'];
-                                $response['telefono'] = $user['telefono'];
-                            } else {
-                                //manejo el error
-                                $response = crearResponse('no_cambios');
-                            }
-
-                        } else {
-                            //manejo el error
-                            $response = crearResponse(
-                                'no_password',
-                                false,
-                                'Contraseña Incorrecta.',
-                                'Se debe ingresar la contraseña actual.',
-                                'error',
-                            );
-                        }
+                        $response = $controller->update($password, $name, $email, $telefono);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-                case "editar_seguridad":
+                case "set_password":
 
                     if (
                         !empty($_POST['contrasea_actual']) &&
-                        !empty($_POST['contrasea_nueva']) &&
-                        !empty($_POST['confirmar'])
+                        !empty($_POST['contrasea_nueva'])
                     ) {
-                        $contrasea_actual = $_POST['contrasea_actual'];
-                        $contrasea_nueva = $_POST['contrasea_nueva'];
-                        $confirmar = $_POST['confirmar'];
-                        $updated_at = date("Y-m-d");
-                        $id = $controller->USER_ID;
-                        $get_user = $model->find($id);
-
-                        if (password_verify($contrasea_actual, $get_user['password'])) {
-                            if (strlen($contrasea_nueva) >= 7) {
-                                if (!password_verify($contrasea_nueva, $get_user['password'])) {
-                                    $contrasea_nueva = password_hash($contrasea_nueva, PASSWORD_DEFAULT);
-                                    $model->update($id, 'password', $contrasea_nueva);
-                                    $model->update($id, 'updated_at', $updated_at);
-
-                                    $response = crearResponse(
-                                        null,
-                                        true,
-                                        'Cambios guardados.',
-                                        'Cambios guardados exitosamente.',
-                                    );
-
-                                } else {
-                                    $response = crearResponse(
-                                        'password_iguales',
-                                        false,
-                                        'Contraseña nueva incorrecta.',
-                                        'El contraseña nueva no debe ser igual a la contraseña anterior.',
-                                        'error',
-                                        true
-                                    );
-                                }
-
-                            } else {
-                                $response = crearResponse(
-                                    'no_password_tamaño',
-                                    false,
-                                    'Contraseña nueva incorrecta.',
-                                    'El contraseña es obligatoria, debe tener al menos 8 caracteres.',
-                                    'error',
-                                );
-                            }
-                        } else {
-                            $response = crearResponse(
-                                'no_password',
-                                false,
-                                'Contraseña actual incorrecta.',
-                                'La contraseña actual es incorrecta.',
-                                'error',
-                            );
-                        }
-
-
+                        $old_password = $_POST['contrasea_actual'];
+                        $new_password = $_POST['contrasea_nueva'];
+                        $response = $controller->setPassword($old_password, $new_password);
                     } else {
                         //manejo los errores
                         $response = crearResponse('faltan_datos');

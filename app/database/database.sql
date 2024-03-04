@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bloques` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.bloques: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.bloques: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla alguarisa_distribucion.claps
 CREATE TABLE IF NOT EXISTS `claps` (
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `entes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.entes: ~1 rows (aproximadamente)
 INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
 	(1, 'Alguarisa', 1);
 
@@ -141,11 +141,12 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   `tabla_id` int DEFAULT NULL,
   `valor` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.parametros: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.parametros: ~2 rows (aproximadamente)
 INSERT INTO `parametros` (`id`, `nombre`, `tabla_id`, `valor`) VALUES
-	(1, 'precio_modulo', 1, '123');
+	(1, 'fecha_complacion', NULL, '2024-03-04 09:28:56'),
+	(2, 'php', NULL, 'v8.2');
 
 -- Volcando estructura para tabla alguarisa_distribucion.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
@@ -231,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `telefono`, `token`, `date_token`, `path`, `role`, `role_id`, `permisos`, `acceso_municipio`, `estatus`, `band`, `created_at`, `updated_at`, `deleted_at`, `dispositivo`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', '$2y$10$AsJ1CdJSb0yg2QxpgIpjJOfEjMv/iYY9dGavWhQDhewyvHyY.cwjG', '(0424) 338-66.00', NULL, NULL, NULL, 100, 0, NULL, '{"9":true,"10":true,"12":true,"15":true}', 1, 1, '2023-08-12', '2024-02-06', NULL, 0),
 	(2, 'Antonny Maluenga', 'gabrielmalu15@gmail.com', '$2y$10$k0hDjkv2UVWA3Qp/OpesrOL5ruFtjBWHWxJVNEMt4yBi4bbuJQGYu', '(0412) 199-56.47', 'QBT2FEwoc9NB8NuZoGGoebxBobGHa04Pl4KhYTTSkYR9fqdDsi', '2024-02-06 12:36:22', NULL, 100, 0, NULL, '{"5":true, "7":true, "1":true}', 1, 1, '2023-08-28', '2023-09-23', NULL, 0),
-	(3, 'Pedro', 'pedro@gmail.com', '$2y$10$JReqDvBZQ5uUUOgoSwoc0.u0HzzuZbTB9FcpNLwAn6CVTjubrqYba', '(4354) 453-45.33', NULL, NULL, NULL, 1, 0, '{"claps.index":true,"jefes.edit":true,"claps.create":true,"claps.edit":true,"claps.destroy":true,"bloques.index":true,"bloques.create":true,"bloques.destroy":true,"pagos.index":true}', '{"1":true}', 1, 1, '2024-02-16', NULL, NULL, 0);
+	(3, 'Administrador', 'admin@alguarisa.com', '$2y$10$JReqDvBZQ5uUUOgoSwoc0.u0HzzuZbTB9FcpNLwAn6CVTjubrqYba', '(0246) 123.45.67', NULL, NULL, NULL, 99, 0, NULL, NULL, 1, 1, '2024-02-16', NULL, NULL, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

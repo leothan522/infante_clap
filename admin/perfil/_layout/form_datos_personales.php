@@ -56,7 +56,7 @@
             </label>
         </div>
     </div>
-    <input type="hidden" name="opcion" value="editar_datos" id="edit_opcion">
+    <input type="hidden" name="opcion" value="update" id="edit_opcion">
     <button type="submit" class="btn bg-indigo btn-block">Guardar Cambios</button>
     <!--<button type="reset" class="btn btn-default float-right">Restablecer</button>-->
 

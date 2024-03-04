@@ -1,9 +1,9 @@
 {
     "require": {
-        "vlucas/phpdotenv": "^5.5",
-        "phpmailer/phpmailer": "^6.8",
+        "vlucas/phpdotenv": "^v5.6.0",
+        "phpmailer/phpmailer": "^v6.9.1",
       "ext-pdo": "*",
-        "phpoffice/phpspreadsheet": "^1.29"
+        "phpoffice/phpspreadsheet": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -15,9 +15,9 @@
         "files": [
             "app/funciones/funciones.php",
             "app/funciones/menu.php",
+            "app/funciones/validar.php",
             "app/funciones/permisos.php",
-            "app/funciones/paginate.php",
-            "app/funciones/styles_excel.php"
+            "app/funciones/paginate.php"
         ]
     }
 }

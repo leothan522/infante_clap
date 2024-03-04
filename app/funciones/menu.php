@@ -17,39 +17,7 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => []
         ],
-        [
-            'permiso' => validarPermisos('pagos.index'),
-            'url' => public_url('admin/pagos'),
-            'active' => $modulo == 'pagos.index',
-            'icono' => '<i class="nav-icon fas fa-money-check"></i>',
-            'titulo' => 'Validación Pagos',
-            'badge' => null,
-            'treeview' => []
-        ],
-        [
-            'permiso'       => validarPermisos('claps.index'),
-            'url'           => '#',
-            'active'        => $modulo == 'claps.index',
-            'icono'         => '<i class="fas fa-boxes nav-icon"></i> ',
-            'titulo'        => '  Distribución',
-            'badge'         => null,
-            'treeview'      => [
-                [
-                    'permiso'   => validarPermisos('claps.index'),
-                    'url'       => public_url('admin/claps'),
-                    'active'    => $modulo == 'claps.index',
-                    'icono'     => '<i class="fas fa-users nav-icon"></i>',
-                    'titulo'    =>  'Gestionar CLAP'
-                ],
-                /*[
-                    'permiso'       => true,
-                    'url'       => '#88',
-                    'active'    => false,
-                    'icono'     => '<i class="far fa-circle nav-icon"></i>',
-                    'titulo'    =>  'Inactive Page'
-                ]*/
-            ]
-        ],
+
         [
             'permiso' => validarPermisos('territorio.index') || validarPermisos('usuarios.index') || validarPermisos('root'),
             'url' => '#',
@@ -59,17 +27,10 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => [
                 [
-                    'permiso' => validarPermisos('territorio.index'),
-                    'url' => public_url('admin/territorio'),
-                    'active' => $modulo == 'territorio.index',
-                    'icono' => '<i class="fas fa-globe-americas nav-icon"></i>',
-                    'titulo' => 'Territorio'
-                ],
-                [
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',
-                    'icono' => '<i class="fas fa-users-cog nav-icon"></i>',
+                    'icono' => '<i class="fas fa-users"></i> ',
                     'titulo' => 'Usuarios'
                 ],
                 [
@@ -191,152 +152,10 @@ function sidebar($modulo = null): ?string
     return $html;
 }
 
-function verPermisos(): array
+function verPermisos($role = null): array
 {
 
-    $permisos = [
-        [
-            'permiso' => 'usuarios.index',
-            'text' => 'Usuarios',
-            'opciones' => [
-                [
-                    'permiso' => 'usuarios.create',
-                    'text' => 'Crear Usuarios'
-                ],
-                [
-                    'permiso' => 'usuarios.edit',
-                    'text' => 'Editar Usuarios'
-                ],
-                [
-                    'permiso' => 'usuarios.estatus',
-                    'text' => 'Cambiar Estatus'
-                ],
-                [
-                    'permiso' => 'usuarios.reset',
-                    'text' => 'Reset Password'
-                ],
-                [
-                    'permiso' => 'usuarios.destroy',
-                    'text' => 'Borrar Usuarios'
-                ]
-            ]
-        ],
-        [
-            'permiso' => 'territorio.index',
-            'text' => 'Territorio',
-            'opciones' => [
-                [
-                    'permiso' => 'municipios.create',
-                    'text' => 'Crear Municipios'
-                ],
-                [
-                    'permiso' => 'municipios.edit',
-                    'text' => 'Editar Municipios'
-                ],
-                [
-                    'permiso' => 'municipios.destroy',
-                    'text' => 'Borrar Municipios'
-                ],
-                [
-                    'permiso' => 'municipios.estatus',
-                    'text' => 'Estatus Municipios'
-                ],
-                [
-                    'permiso' => 'parroquias.create',
-                    'text' => 'Crear Parroquias'
-                ],
-                [
-                    'permiso' => 'parroquias.edit',
-                    'text' => 'Editar Parroquias'
-                ],
-                [
-                    'permiso' => 'parroquias.destroy',
-                    'text' => 'Borrar Parroquias'
-                ],
-                [
-                    'permiso' => 'parroquias.estatus',
-                    'text' => 'Estatus Parroquias'
-                ]
-            ]
-        ],
-
-        [ 'permiso' => 'claps.index',
-            'text' => 'Distribución',
-            'opciones' => [
-                [
-                    'permiso' => 'claps.create',
-                    'text' => 'Crear Claps'
-                ],
-                [
-                    'permiso' => 'jefes.edit',
-                    'text' => 'Editar Jefes'
-                ],
-                [
-                    'permiso' => 'claps.edit',
-                    'text' => 'Editar Claps'
-                ],
-                [
-                    'permiso' => 'claps.destroy',
-                    'text' => 'Eliminar Claps'
-                ]
-            ]
-        ],
-        [ 'permiso' => 'bloques.index',
-            'text' => 'Bloques',
-            'opciones' => [
-                [
-                    'permiso' => 'bloques.create',
-                    'text' => 'Crear Bloques'
-                ],
-                [
-                    'permiso' => 'bloques.destroy',
-                    'text' => 'Eliminar Bloques'
-                ]
-            ]
-        ],
-        [ 'permiso' => 'entes.index',
-            'text' => 'Entes',
-            'opciones' => [
-                [
-                    'permiso' => 'entes.create',
-                    'text' => 'Crear Entes'
-                ],
-                [
-                    'permiso' => 'entes.destroy',
-                    'text' => 'Eliminar Entes'
-                ]
-            ]
-        ],
-        [ 'permiso' => 'pagos.index',
-            'text' => 'Validacion Pagos',
-            'opciones' => [
-                /*[
-                    'permiso' => 'pagos.create',
-                    'text' => 'Crear '
-                ]*/
-            ]
-        ]
-
-        /*
-         * Ejemplo de permiso
-         *
-         *
-        [ 'permiso' => 'usuarios.index',
-            'text' => 'Usuarios',
-            'opciones' => [
-                [
-                    'permiso' => 'usuarios.create',
-                    'text' => 'Crear Usuarios'
-                ],
-                [
-                    'permiso' => 'usuarios.edit',
-                    'text' => 'Editar Usuarios'
-                ]
-            ]
-        ]
-
-        */
-    ];
+    $permisos = permisos();
 
     $array = array();
     $html = null;
@@ -344,7 +163,7 @@ function verPermisos(): array
     foreach ($permisos as $menu) {
         $i++;
         $explode = explode('.', $menu['permiso']);
-        $id = $explode[0] . '_' . $explode[1];
+        $id = $explode[0] . '_' . $explode[1] . $role;
         $array[] = $id;
         $html .= '<div class="col-md-4">
                 <div class="card card-primary card-outline collapsed-card">
@@ -367,7 +186,7 @@ function verPermisos(): array
         foreach ($menu['opciones'] as $item) {
             $i++;
             $explode = explode('.', $item['permiso']);
-            $id = $explode[0] . '_' . $explode[1];
+            $id = $explode[0] . '_' . $explode[1] . $role;
             $array[] = $id;
             $html .= '<div class="form-group">
                     <div class="custom-control custom-checkbox">';

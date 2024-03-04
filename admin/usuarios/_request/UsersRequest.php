@@ -229,35 +229,6 @@ if ($_POST) {
 
                     break;
 
-                case 'get_municipios':
-                    $modelmunicipio = new municipio();
-
-                    $response = crearResponse(null, true, null, null, 'success', false, true);
-
-                    foreach ($modelmunicipio->getAll() as $municipio) {
-                        $id = $municipio['id'];
-                        $nombre = $municipio['mini'];
-                        $response['municipios'][] = array("id" => $id, "nombre" => $nombre);
-                    }
-
-                    foreach ($model->getAll(1) as $user) {
-                        $id = $user['id'];
-                        $email = $user['email'];
-                        $nombre = $user['name'];
-                        $response['usuarios'][] = array("id" => $id, "email" => $email, "name" => $nombre);
-                    }
-                    break;
-
-                case 'get_acceso':
-                    $paginate = true;
-                    $i = 0;
-                    $x = 0;
-                    $limit = 1;
-                    $listarUsuarios = $model->paginate($limit, null, 'id', 'DESC', 1, 'acceso_municipio', '!=', 'null');
-                    $links = paginate('_request/UsersRequest.php', 'usuario_table_acceso', $limit, $model->count(1, 'acceso_municipio', '!=', 'null'), null, 'paginate_acceso', 'usuario_card_table_acceso', '_acceso')->createLinks();
-                    require '../_layout/card_table_acceso.php';
-                    break;
-
             //Por defecto
         default:
             $response = crearResponse('no_opcion', false, null, $opcion);
