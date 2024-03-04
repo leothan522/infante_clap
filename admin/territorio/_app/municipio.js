@@ -162,7 +162,7 @@ function resetMunicipio() {
         .removeClass('is-invalid')
         .removeClass('is-valid');
     $('#municipio_id').val('');
-    $('#municipio_opcion').val('guardar_municipio');
+    $('#municipio_opcion').val('store');
     $('#municipio_title').text('Crear Municipio');
 }
 
@@ -171,7 +171,7 @@ function editMunicipio(id) {
 
     resetMunicipio();
 
-    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'get_municipio', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'edit', id: id } }, function (data) {
         if (data.result){
             $('#municipio_nombre').val(data.nombre);
             $('#municipio_id').val(data.id);

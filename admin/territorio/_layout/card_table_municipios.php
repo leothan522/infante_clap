@@ -1,3 +1,9 @@
+<?php
+$listarMunicipios = $controller->rows;
+$links = $controller->links;
+$i = $controller->offset;
+?>
+
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Municipios</h3>

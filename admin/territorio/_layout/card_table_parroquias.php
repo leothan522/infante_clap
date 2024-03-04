@@ -1,3 +1,8 @@
+<?php
+$listarParroquias = $controller->rows;
+$links = $controller->links;
+$i = $controller->offset;
+?>
 
 <div class="card card-outline card-primary">
     <div class="card-header">

@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once "../../../vendor/autoload.php";
+use app\controller\TerritorioController;
+$controller  = new TerritorioController();
 
 use app\model\Parroquia;
 use app\model\Municipio;
-use app\controller\TerritorioController;
 
 $response = array();
 $paginate = false;
@@ -25,7 +26,7 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
 
-                case 'paginate_parroquia':
+                case 'paginate_parroquias':
 
                     $paginate = true;
 
@@ -34,16 +35,14 @@ if ($_POST) {
                     $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+                    $contenDiv = !empty($_POST['contentDiv']) ? $_POST['contentDiv'] : 'dataContainer';
 
-                    $listarParroquias = $model->paginate($limit, $offset, 'nombre', 'ASC');
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerParroquia', '_parroquia')->createLinks();
-                    $i = $offset;
-                    echo '<div id="dataContainerParroquia">';
-                    require_once "../_layout/card_table_parroquias.php";
-                    echo '</div>';
+                    $controller->index('parroquia', $limit, $totalRows, $offset);
+                    require "../_layout/card_table_parroquias.php";
+
                     break;
 
-                case 'guardar_parroquia':
+                case 'store':
 
                     $modelMunicipio = new Municipio();
 
@@ -54,152 +53,21 @@ if ($_POST) {
                     ) {
                         //declaramos en variables lo que resivimos por el metodo post
                         $municipio = $_POST['parroquia_municipio'];
-                        $parroquia = ucwords($_POST['parroquia_nombre']);
+                        $nombre = ucwords($_POST['parroquia_nombre']);
                         $mini = $_POST['parroquia_mini'];
                         $asignacion = $_POST['parroquia_asignacion'];
-
-                        if (empty($asignacion)) {
-                            if ($asignacion != 0) {
-                                $asignacion = null;
-                            }
-                            $asignacion_sql = "";
-                        } else {
-                            $asignacion_sql = "AND `familias` = '$asignacion'";
-                        }
-
-                        $existeNombre = $model->existe('nombre', '=', $parroquia, null);
-                        $existeMini = $model->existe('mini', '=', $mini, null);
-
-                        $getMunicipio = $modelMunicipio->find($municipio);
-                        $asignacionMax = $getMunicipio['familias'];
-                        $getParroquias = $model->getList('municipios_id', '=', $municipio);
-                        $suma = 0;
-
-                        foreach ($getParroquias as $getParroquia){
-                            $suma = $suma + $getParroquia['familias'];
-                        }
-
-                        $asignacionCargar = $suma + $asignacion;
-
-
-
-
-                        if (!$existeNombre && !$existeMini && $asignacionMax >= $asignacionCargar) {
-                            //se guarda
-                            $data = [
-                                $parroquia,
-                                $mini,
-                                $municipio,
-                                $asignacion,
-                                $hoy
-                            ];
-
-                            $model->save($data);
-                            $parroquias = $model->existe('nombre', '=', $parroquia, null);
-                            $municipio = $modelMunicipio->find($parroquias['municipios_id']);
-
-                            //incremento contador de parroquis al municipio
-                            $count = $municipio['parroquias'] + 1;
-                            $modelMunicipio->update($municipio['id'], 'parroquias', $count);
-
-                            $response = crearResponse(
-                                null,
-                                true,
-                                'Parroquia Creada Exitosamente.',
-                                "Parroquia Creado exitosamente" . $parroquia
-                            );
-                            //datos extras para el $response
-                            $response['id'] = $parroquias['id'];
-                            $response['item'] = '<p class="text-center">' . $model->count() . '.</p>';
-                            $response['municipio'] = $municipio['nombre'];
-                            $response['municipios_id'] = $municipio['id'];
-                            $response['municipio_parroquias'] = $count;
-                            $response['parroquia'] = '<p class="text-uppercase">'.$parroquias['nombre'].'</p>';
-                            $response['mini'] = '<p class="text-center text-uppercase">'.$parroquias['mini'].'</p>';
-                            $response['asignacion'] = '<p class="text-right">'.formatoMillares($parroquias['familias'], 0).'</p>';
-                            $response['nuevo'] = true;
-                            $response['total'] = $model->count();
-                            $response['btn_editar'] = validarPermisos('parroquias.edit');
-                            $response['btn_eliminar'] = validarPermisos('parroquias.destroy');
-                            $response['btn_estatus'] = validarPermisos('parroquias.estatus');
-
-                        } else {
-                            //la parroquia ya existe
-
-                            //datos extras para el $response
-
-                            if ($existeNombre) {
-                                $response = crearResponse(
-                                    'nombre_duplicado',
-                                    false,
-                                    'Nombre Duplicado.',
-                                    'La parroquia ya esta registrada.',
-                                    'warning'
-                                );
-                                $response['error_nombre'] = true;
-                                $response['message_nombre'] = 'El nombre de la parroquia ya esta registrado.';
-                            } else {
-                                $response['error_nombre'] = false;
-                            }
-
-                            if ($existeMini) {
-                                $response = crearResponse(
-                                    'nombre_duplicado',
-                                    false,
-                                    'Abreviatura Duplicada.',
-                                    'La parroquia ya esta registrada.',
-                                    'warning'
-                                );
-                                $response['error_mini'] = true;
-                                $response['message_mini'] = 'La abreviatura ya esta registrada.';
-                            } else {
-                                $response['error_mini'] = false;
-                            }
-
-                            if ($asignacionMax < $asignacionCargar){
-                                $response = crearResponse(
-                                    'nombre_duplicado',
-                                    false,
-                                    'Revisar Asignacion.',
-                                    'La parroquia ya esta registrada.',
-                                    'warning'
-                                );
-                                $response['error_asignacion'] = true;
-                                $response['message_asignacion'] = 'La Asignación de las parroquias no debe ser mayor a la del municipio.';
-                            }else{
-                                $response['error_asignacion'] = false;
-                            }
-
-                        }
-
-
+                        $response = $controller->store('parroquia', $nombre, $mini, $asignacion, $municipio);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-                case 'get_parroquia':
+                case 'edit':
 
                     if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
-                        $parroquia = $model->find($id);
-                        $response = crearResponse(
-                            null,
-                            true,
-                            'Editar Parroquia.',
-                            "parroquia " . $parroquia['nombre'],
-                            'success',
-                            false,
-                            true
-                        );
-                        //datos extras para el $response
-                        $response['id'] = $parroquia['id'];
-                        $response['municipios'] = $parroquia['municipios_id'];
-                        $response['parroquia'] = $parroquia['nombre'];
-                        $response['mini'] = $parroquia['mini'];
-                        $response['asignacion'] = $parroquia['familias'];
-
+                        $response = $controller->edit('parroquia', $id);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }

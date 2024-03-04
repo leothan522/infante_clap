@@ -157,7 +157,7 @@ $('#form_parroquias').submit(function (e) {
 function editParroquia(id) {
     resetParroquia();
 
-    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_parroquia', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'edit', id: id } }, function (data) {
         if (data.result){
             $('#parroquia_municipio')
                 .val(data.municipios)
@@ -237,7 +237,7 @@ function resetParroquia(){
         .val('')
         .removeClass('is-valid')
         .removeClass('is-invalid');
-    $('#parroquia_opcion').val('guardar_parroquia');
+    $('#parroquia_opcion').val('store');
     $('#title_parroquia').text('Crear Parroquia');
 }
 

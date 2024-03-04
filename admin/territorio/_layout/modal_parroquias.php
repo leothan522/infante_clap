@@ -68,7 +68,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <input type="hidden" name="id" id="parroquia_id">
-                <input type="hidden" name="opcion" value="guardar_parroquia" id="parroquia_opcion">
+                <input type="hidden" name="opcion" value="store" id="parroquia_opcion">
                 <button type="submit" class="btn btn-primary" id="parroquia_btn_guardar">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="parroquia_btn_cancelar">Cancelar</button>
             </div>

@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once "../../../vendor/autoload.php";
+use app\controller\TerritorioController;
+$controller = new TerritorioController();
 
 use app\model\Municipio;
 use app\model\Parroquia;
@@ -23,6 +25,7 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
 
+
                 case 'paginate_municipio':
 
                     $paginate = true;
@@ -32,17 +35,14 @@ if ($_POST) {
                     $baseURL = !empty($_POST['baseURL']) ? $_POST['baseURL'] : 'getData.php';
                     $totalRows = !empty($_POST['totalRows']) ? $_POST['totalRows'] : 0;
                     $tableID = !empty($_POST['tableID']) ? $_POST['tableID'] : 'table_database';
+                    $contenDiv = !empty($_POST['contentDiv']) ? $_POST['contentDiv'] : 'dataContainer';
 
-                    $listarMunicipios = $model->paginate($limit, $offset, 'nombre', 'DESC',);
-                    $links = paginate($baseURL, $tableID, $limit, $model->count(), $offset, $opcion, 'dataContainerMunicipio', '_municipio')->createLinks();
-                    $i = $offset;
-                    echo '<div id="dataContainerMunicipio">';
-                    require_once "../_layout/card_table_municipios.php";
-                    echo '</div>';
+                    $controller->index('municipios', $limit, $totalRows, $offset);
+                    require "../_layout/card_table_municipios.php";
 
                     break;
 
-                case 'guardar_municipio':
+                case 'store':
 
                     if (
                         !empty($_POST['mun_municipio']) &&
@@ -53,93 +53,19 @@ if ($_POST) {
                         $nombre = ucwords($_POST['mun_municipio']);
                         $mini = $_POST['municipio_mini'];
                         $asignacion = $_POST['municipio_asignacion'];
+                        $response = $controller->store('municipio', $nombre, $mini, $asignacion);
 
-                        $existeMunicipio = $model->existe('nombre', '=', $nombre, null);
-                        $existeMini = $model->existe('mini', '=', $mini, null);
-
-                        if (!$existeMunicipio && !$existeMini) {
-
-                            $data = [
-                                $nombre,
-                                $mini,
-                                $asignacion,
-                                $hoy
-                            ];
-
-                            $model->save($data);
-                            $municipios = $model->first('nombre', '=', $nombre);
-                            $response = crearResponse(
-                                null,
-                                true,
-                                'Municipio Creado Exitosamente.',
-                                "Municipio Creado " . $nombre
-                            );
-                            //datos extras para el $response
-                            $response['id'] = $municipios['id'];
-                            $response['item'] = '<p> ' . $model->count() . '. </p>';
-                            $response['nombre'] = '<p class="text-uppercase">'.$municipios['nombre'].'</p>';
-                            $response['mini'] = '<p class="text-uppercase">'.$municipios['mini'].'</p>';
-                            $response['asignacion'] = '<p class="text-right">'.formatoMillares($municipios['familias'], 0).'</p>';
-                            $response['parroquias'] = formatoMillares($municipios['parroquias'], 0);
-                            $response['nuevo'] = true;
-                            $response['total'] = $model->count();
-                            $response['btn_editar'] = validarPermisos('municipios.edit');
-                            $response['btn_eliminar'] = validarPermisos('municipios.destroy');
-                            $response['btn_estatus'] = validarPermisos('municipios.estatus');
-
-                        } else {
-
-                            $response = crearResponse(
-                                'nombre_duplicado',
-                                false,
-                                'Nombre Duplicado.',
-                                'El nombre ya esta registrado.',
-                                'warning'
-                            );
-
-                            //datos extras para el $response
-
-                            if ($existeMunicipio) {
-                                $response['error_municipio'] = true;
-                                $response['message_municipio'] = 'El nombre ya esta registrado.';
-                            } else {
-                                $response['error_municipio'] = false;
-                            }
-
-                            if ($existeMini) {
-                                $response['error_mini'] = true;
-                                $response['message_mini'] = 'La abreviatura ya esta registrada.';
-                            } else {
-                                $response['error_mini'] = false;
-                            }
-
-                        }
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-                case 'get_municipio':
+                case 'edit':
 
                     if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
-                        $municipio = $model->find($id);
-                        $response = crearResponse(
-                            null,
-                            true,
-                            'Editar Muncipio.',
-                            "Municipio " . $municipio['nombre'],
-                            'success',
-                            false,
-                            true
-                        );
-                        //datos extras para el $response
-                        $response['id'] = $municipio['id'];
-                        $response['nombre'] = $municipio['nombre'];
-                        $response['mini'] = $municipio['mini'];
-                        $response['asignacion'] = $municipio['familias'];
-
+                        $response = $controller->edit('municipio', $id);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
