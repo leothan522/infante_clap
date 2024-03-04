@@ -22,6 +22,12 @@ class PagosController extends Admin
         }
     }
 
+    public function listarmunicipios()
+    {
+        $model = new Municipio();
+        $listarMunicipio = $model->getAll();
+        return $listarMunicipio;
+    }
 
 
     public function listarCuotas($municipio)

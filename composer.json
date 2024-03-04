@@ -17,7 +17,9 @@
             "app/funciones/menu.php",
             "app/funciones/validar.php",
             "app/funciones/permisos.php",
-            "app/funciones/paginate.php"
+            "app/funciones/paginate.php",
+            "app/funciones/accesoMunicipios.php",
+            "app/funciones/styles_excel.php"
         ]
     }
 }

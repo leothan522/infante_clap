@@ -119,7 +119,7 @@ function quitarClass() {
 
 function getEntes() {
     ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'get_entes' }, html: 'si' }, function (data) {
-        $('#mostrar_entes').html(data);
+        $('#mostrar_entes').html(data.html);
         datatable('entes_tabla');
     });
 }

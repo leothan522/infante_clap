@@ -14,8 +14,8 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table">
-            <table class="table" id="tabla_municipios">
+        <div class="table table-responsive">
+            <table class="table table-sm" id="tabla_municipios">
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>

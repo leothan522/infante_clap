@@ -18,8 +18,8 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="table mt-3">
-            <table class="table" id="tabla_parroquias">
+        <div class="table table-responsive mt-3">
+            <table class="table table-sm" id="tabla_parroquias">
                 <thead>
                 <tr>
                     <th style="width: 15px">#</th>

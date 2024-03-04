@@ -17,7 +17,39 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => []
         ],
-
+        [
+            'permiso' => validarPermisos('pagos.index'),
+            'url' => public_url('admin/pagos'),
+            'active' => $modulo == 'pagos.index',
+            'icono' => '<i class="nav-icon fas fa-money-check"></i>',
+            'titulo' => 'Validación Pagos',
+            'badge' => null,
+            'treeview' => []
+        ],
+        [
+            'permiso'       => validarPermisos('claps.index'),
+            'url'           => '#',
+            'active'        => $modulo == 'claps.index',
+            'icono'         => '<i class="fas fa-boxes nav-icon"></i> ',
+            'titulo'        => '  Distribución',
+            'badge'         => null,
+            'treeview'      => [
+                [
+                    'permiso'   => validarPermisos('claps.index'),
+                    'url'       => public_url('admin/claps'),
+                    'active'    => $modulo == 'claps.index',
+                    'icono'     => '<i class="fas fa-users nav-icon"></i>',
+                    'titulo'    =>  'Gestionar CLAP'
+                ],
+                /*[
+                    'permiso'       => true,
+                    'url'       => '#88',
+                    'active'    => false,
+                    'icono'     => '<i class="far fa-circle nav-icon"></i>',
+                    'titulo'    =>  'Inactive Page'
+                ]*/
+            ]
+        ],
         [
             'permiso' => validarPermisos('territorio.index') || validarPermisos('usuarios.index') || validarPermisos('root'),
             'url' => '#',
@@ -27,10 +59,17 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => [
                 [
+                    'permiso' => validarPermisos('territorio.index'),
+                    'url' => public_url('admin/territorio'),
+                    'active' => $modulo == 'territorio.index',
+                    'icono' => '<i class="fas fa-globe-americas nav-icon"></i>',
+                    'titulo' => 'Territorio'
+                ],
+                [
                     'permiso' => validarPermisos('usuarios.index'),
                     'url' => public_url('admin/usuarios'),
                     'active' => $modulo == 'usuarios.index',
-                    'icono' => '<i class="fas fa-users"></i> ',
+                    'icono' => '<i class="fas fa-users-cog nav-icon"></i>',
                     'titulo' => 'Usuarios'
                 ],
                 [

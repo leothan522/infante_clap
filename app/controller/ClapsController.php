@@ -27,6 +27,13 @@ class ClapsController extends Admin
         }
     }
 
+    public function listarmunicipios()
+    {
+        $model = new Municipio();
+        $listarMunicipio = $model->getAll();
+        return $listarMunicipio;
+    }
+
 
     public function listarBloques($municipio)
     {

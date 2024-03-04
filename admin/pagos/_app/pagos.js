@@ -47,7 +47,7 @@ function getCuotas() {
     let id = $('#cuotas_select_municipios').val();
     ajaxRequest({ url: '_request/CuotasRequest.php', data: { opcion: 'listar_cuotas', id: id }, html: 'si' }, function (data) {
 
-        $('#card_body_cuotas').html(data);
+        $('#card_body_cuotas').html(data.html);
         datatable('tabla_cuotas');
         $('#input_hidde_municipios_id').val(id);
 

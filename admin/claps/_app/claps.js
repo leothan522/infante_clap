@@ -724,7 +724,7 @@ $('#global_select_id_municipio').change(function (e) {
     let id = $(this).val()
     ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
-        $('#card_listar_claps').html(data);
+        $('#card_listar_claps').html(data.html);
         datatable('tabla_claps');
         $('#clap_input_municipio_id').val(id);
 
@@ -734,7 +734,7 @@ $('#global_select_id_municipio').change(function (e) {
 function getClapsMunicipio(id) {
     ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
 
-    $('#card_listar_claps').html(data);
+    $('#card_listar_claps').html(data.html);
     datatable('tabla_claps');
     $('#clap_input_municipio_id').val(id);
 
@@ -756,7 +756,7 @@ $('#navbar_form_buscar').submit(function (e) {
 
     ajaxRequest({ url: '_request/ClapsRequest.php', data: $(this).serialize(), html:'si' }, function (data) {
 
-        $('#card_listar_claps').html(data);
+        $('#card_listar_claps').html(data.html);
         datatable('tabla_claps');
         $('#clap_input_municipio_id').val(id);
 
