@@ -72,7 +72,7 @@ if ($_POST) {
 
                     break;
 
-                case 'editar_municipio':
+                case 'update':
 
                     if (
                         !empty($_POST['mun_municipio']) &&
@@ -84,162 +84,31 @@ if ($_POST) {
                         $nombre = $_POST['mun_municipio'];
                         $mini = $_POST['municipio_mini'];
                         $asignacion = $_POST['municipio_asignacion'];
-
-                        $existeMunicipio = $model->existe('nombre', '=', $nombre, $id);
-                        $existeMini = $model->existe('mini', '=', $mini, $id);
-
-                        if (!$existeMunicipio && !$existeMini) {
-
-                            $municipio = $model->find($id);
-                            $db_nombre = $municipio['nombre'];
-                            $db_mini = $municipio['mini'];
-                            $db_asignacion = $municipio['familias'];
-                            $cambios = false;
-
-                            if ($db_nombre != $nombre) {
-                                $cambios = true;
-                                $model->update($id, 'nombre', $nombre);
-                                $model->update($id, 'updated_at', $hoy);
-                            }
-
-                            if ($db_mini != $mini) {
-                                $cambios = true;
-                                $model->update($id, 'mini', $mini);
-                                $model->update($id, 'updated_at', $hoy);
-                            }
-
-                            if ($db_asignacion != $asignacion) {
-                                $cambios = true;
-                                $model->update($id, 'familias', $asignacion);
-                                $model->update($id, 'updated_at', $hoy);
-                            }
-
-                            if ($cambios) {
-                                $response = crearResponse(
-                                    null,
-                                    true,
-                                    'Municipio Actualizado.',
-                                    "Municipio Creado " . $nombre
-                                );
-
-                                //datos extras para el $response
-
-                                $response['id'] = $id;
-                                $response['nombre'] = $nombre;
-                                $response['mini'] = $mini;
-                                $response['asignacion'] = '<p class="text-right">'.formatoMillares($asignacion, 0).'</p>';
-                                $response['total'] = $model->count();
-                                $response['nuevo'] = false;
-
-                                //busco las parroquias vinculadas al municipio
-                                $modelParroquia = new Parroquia();
-                                $response['parroquias'] = array();
-                                foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
-                                    $response['parroquias'][] = array('id' => $parroquia['id']);
-                                }
-
-                            } else {
-                                $response = crearResponse('no_cambios');
-                            }
-
-                        } else {
-
-                            $response = crearResponse(
-                                'nombre_duplicado',
-                                false,
-                                'Nombre Duplicado.',
-                                'El nombre ya esta registrado.',
-                                'warning'
-                            );
-
-                            //datos extras para el $response
-
-                            if ($existeMunicipio) {
-                                $response['error_municipio'] = true;
-                                $response['message_municipio'] = 'El nombre ya esta registrado.';
-                            } else {
-                                $response['error_municipio'] = false;
-                            }
-
-                            if ($existeMini) {
-                                $response['error_mini'] = true;
-                                $response['message_mini'] = 'La abreviatura ya esta registrada.';
-                            } else {
-                                $response['error_mini'] = false;
-                            }
-
-                        }
+                        $response = $controller->update('municipios', $id, $nombre, $mini, $asignacion);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-                case 'eliminar_municipio':
+                case 'delete':
 
-                    if (
-                        !empty($_POST['id'])
-                    ) {
-
+                    if (!empty($_POST['id'])) {
                         //proceso
                         $id = $_POST['id'];
-                        $response = crearResponse(
-                            null,
-                            true,
-                            'Municipio Eliminado.',
-                            'Municipio Eliminado.'
-                        );
-
-                        //chequeo las parroquias vinculadas a ese municipio
-                        $modelParroquia = new Parroquia();
-                        $response['parroquias'] = array();
-                        foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
-                            $response['parroquias'][] = array("id" => $parroquia['id']);
-                        }
-                        $model->delete($id);
-
-                        //datos extras para el $response
-                        $response['total'] = $model->count();
-                        $response['total_parroquias'] = $modelParroquia->count();
-
+                        $response = $controller->delete('municipios', $id);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }
 
                     break;
 
-                case 'estatus_municipio':
+                case 'set_estatus':
 
-                    if (
-                        !empty($_POST['id'])
-                    ) {
-
+                    if (!empty($_POST['id'])) {
                         //proceso
                         $id = $_POST['id'];
-                        $municipio = $model->find($id);
-
-                        $response = crearResponse(
-                            null,
-                            true,
-                            '',
-                            'Municipio Actualizado.'
-                        );
-
-                        //datos extras para el $response
-
-                        if ($municipio['estatus']) {
-                            $response['title'] = "Municipio Inactivo.";
-                            $estatus = 0;
-                            $response['icon'] = "info";
-                        } else {
-                            $response['title'] = "Municipio Activo.";
-                            $estatus = 1;
-                            $response['icon'] = "success";
-                        }
-                        $model->update($id, 'estatus', $estatus);
-
-                        $response['estatus'] = $estatus;
-
+                        $response = $controller->setEstatus('municipios', $id);
                     } else {
                         $response = crearResponse('faltan_datos');
                     }

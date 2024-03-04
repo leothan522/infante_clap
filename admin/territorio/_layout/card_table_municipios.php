@@ -43,10 +43,10 @@ $i = $controller->offset;
                         <td class="mini text-uppercase"><?php echo $municipio['mini']; ?></td>
                         <td class="asignacion text-right"> <?php echo formatoMillares($municipio['familias'], 0); ?> </td>
                         <td class="text-center parroquias">
-                            <div class="btn-group btn-group-sm parroquia">
-                                <button type="button" class="btn btn-success"
-                                        onclick="filtrarParroquias(<?php echo $municipio['id'] ?>)">
-                                    <?php echo formatoMillares($municipio['parroquias'], 0); ?>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-success" onclick="filtrarParroquias(<?php echo $municipio['id'] ?>)"
+                                id="btn_count_parroquias_<?php echo $municipio['id'] ?>">
+                                    <?php echo formatoMillares($controller->countParroquias($municipio['id']), 0); ?>
                                 </button>
                             </div>
                         </td>
@@ -55,7 +55,7 @@ $i = $controller->offset;
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-info"
                                         onclick="estatusMunicipio(<?php echo $municipio['id']; ?>)"
-                                        id="btn_estatus_<?php echo $municipio['id']; ?>"
+                                        id="btn_estatus_mun_<?php echo $municipio['id']; ?>"
                                         <?php if (!validarPermisos('municipios.estatus')) {
                                         echo 'disabled';
                                     } ?> >

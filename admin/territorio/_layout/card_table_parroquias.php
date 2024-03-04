@@ -9,9 +9,11 @@ $i = $controller->offset;
         <h3 class="card-title">Parroquias</h3>
 
         <div class="card-tools">
+            <?php if (isset($restablecer) && $restablecer){ ?>
             <button class="btn btn-tool d-none" onclick="filtrarParroquias('')" id="parroquias_btn_restablecer">
                 <i class="fas fa-sync-alt"></i> Reestablacer
             </button>
+            <?php } ?>
             <button class="btn btn-tool" data-toggle="modal"
                     onclick="resetParroquia()"
                     data-target="#modal-parroquias"

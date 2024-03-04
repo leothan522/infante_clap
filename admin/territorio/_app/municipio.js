@@ -175,7 +175,7 @@ function editMunicipio(id) {
         if (data.result){
             $('#municipio_nombre').val(data.nombre);
             $('#municipio_id').val(data.id);
-            $('#municipio_opcion').val('editar_municipio');
+            $('#municipio_opcion').val('update');
             $('#municipio_btn_button').text('Guardar Cambios');
             $('#municipio_mini').val(data.mini);
             $('#municipio_asignacion').val(data.asignacion);
@@ -191,7 +191,7 @@ function destroyMunicipio(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'eliminar_municipio', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'delete', id: id } }, function (data) {
 
                 if (data.result){
 
@@ -227,14 +227,16 @@ function destroyMunicipio(id) {
 
 function estatusMunicipio(id)
 {
-    let boton = $('#btn_estatus_' + id);
+    let boton = $('#btn_estatus_mun_' + id);
 
-    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'estatus_municipio', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'set_estatus', id: id } }, function (data) {
         if (data.result){
             if (data.estatus === 1){
-                boton.html(' <i class="fas fa-eye"></i>');
+                boton.html('<i class="fas fa-eye"></i>');
+                //alert('#btn_estatus_' + id);
             }else {
                 boton.html('<i class="fas fa-eye-slash"></i>');
+                //alert(data.estatus);
             }
         }
     });
