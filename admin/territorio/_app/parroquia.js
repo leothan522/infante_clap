@@ -243,15 +243,18 @@ function resetParroquia(){
 
 function municipioParroquias(id, parroquias) {
     let table_municipio = $('#tabla_municipios').DataTable();
-    let tr = $('#tr_item_' + id);
-    let html = '<div class="text-center"><div class="btn-group btn-group-sm">\n' +
-        '                                <button type="button" class="btn btn-success" onclick="filtrarParroquias('+ id +')">\n' +
-                                            parroquias +
-        '                                </button>\n' +
-        '                            </div></div>';
-    table_municipio
-        .cell(tr.find('.parroquias')).data(html)
-        .draw();
+    if (existeElemento('#tr_item_' + id)){
+        let tr = $('#tr_item_' + id);
+        let html = '<div class="text-center"><div class="btn-group btn-group-sm">\n' +
+         '                                <button type="button" class="btn btn-success" onclick="filtrarParroquias('+ id +')">\n' +
+                                             parroquias +
+         '                                </button>\n' +
+         '                            </div></div>';
+     table_municipio
+         .cell(tr.find('.parroquias')).data(html)
+         .draw();
+    }
+
 }
 
 function filtrarParroquias(id) {
@@ -270,11 +273,48 @@ function estatusParroquia(id) {
 
     ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'set_estatus', id: id } }, function (data) {
         if (data.result){
+            let icono;
+
             if (data.estatus === 1){
-                boton.html('<i class="fas fa-eye"></i>');
+                icono = '<i class="fas fa-eye"></i>';
             }else {
-                boton.html('<i class="fas fa-eye-slash"></i>');
+                icono = '<i class="fas fa-eye-slash"></i>';
             }
+
+            let btn_editar = '';
+            let btn_eliminar = '';
+            let btn_estatus = '';
+
+            if (!data.btn_editar){
+                btn_editar = 'disabled';
+            }
+
+            if (!data.btn_eliminar){
+                btn_eliminar = 'disabled';
+            }
+
+            if (!data.btn_estatus){
+                btn_estatus = 'disabled';
+            }
+
+            let buttons = '<div class="btn-group btn-group-sm">\n' +
+                '<button type="button" class="btn btn-info" onclick="estatusParroquia('+ id +')" id="btn_estatus_parroquia_'+ id +'" '+ btn_estatus +'>\n' +
+                '                               ' + icono +
+                '                                </button>' +
+                '                                <button type="button" class="btn btn-info" onclick="editParroquia('+ id +')" data-toggle="modal"\n' +
+                '                                        data-target="#modal-parroquias" '+ btn_editar +'>\n' +
+                '                                    <i class="fas fa-edit"></i>\n' +
+                '                                </button>\n' +
+                '                                <button type="button" class="btn btn-info" onclick="elimParroquia('+ id +')" id="btn_eliminar_p_'+ id +'" '+ btn_eliminar +' >\n' +
+                '                                    <i class="far fa-trash-alt"></i>\n' +
+                '                                </button>\n' +
+                '                            </div>';
+
+            let table = $('#tabla_parroquias').DataTable();
+            let tr = $('#tr_item_p_' + id);
+            table
+                .cell(tr.find('.botones')).data(buttons)
+                .draw();
         }
     });
 

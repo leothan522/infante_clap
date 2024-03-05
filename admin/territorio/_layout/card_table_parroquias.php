@@ -48,7 +48,7 @@ $i = $controller->offset;
                         <td class="municipio text-center">
                             <?php echo $controller->getMunicipio($parroquia['municipios_id']); ?>
                         </td>
-                        <td>
+                        <td class="botones">
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-info"
                                         onclick="estatusParroquia(<?php echo $parroquia['id']; ?>)"

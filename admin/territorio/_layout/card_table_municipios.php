@@ -51,7 +51,7 @@ $i = $controller->offset;
                             </div>
                         </td>
 
-                        <td>
+                        <td class="botones">
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-info"
                                         onclick="estatusMunicipio(<?php echo $municipio['id']; ?>)"

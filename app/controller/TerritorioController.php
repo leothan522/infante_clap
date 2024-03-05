@@ -593,6 +593,16 @@ class TerritorioController extends Admin
 
         $response['estatus'] = $estatus;
 
+        if ($table == 'municipios'){
+            $response['btn_editar'] = validarPermisos('municipios.edit');
+            $response['btn_eliminar'] = validarPermisos('municipios.destroy');
+            $response['btn_estatus'] = validarPermisos('municipios.estatus');
+        }else{
+            $response['btn_editar'] = validarPermisos('parroquias.edit');
+            $response['btn_eliminar'] = validarPermisos('parroquias.destroy');
+            $response['btn_estatus'] = validarPermisos('parroquias.estatus');
+        }
+
         return $response;
     }
 

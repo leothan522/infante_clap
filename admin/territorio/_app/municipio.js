@@ -227,17 +227,50 @@ function destroyMunicipio(id) {
 
 function estatusMunicipio(id)
 {
-    let boton = $('#btn_estatus_mun_' + id);
 
     ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'set_estatus', id: id } }, function (data) {
         if (data.result){
+            let icono;
+
             if (data.estatus === 1){
-                boton.html('<i class="fas fa-eye"></i>');
-                //alert('#btn_estatus_' + id);
+                icono = '<i class="fas fa-eye"></i>';
             }else {
-                boton.html('<i class="fas fa-eye-slash"></i>');
-                //alert(data.estatus);
+                icono = '<i class="fas fa-eye-slash"></i>';
             }
+
+            let btn_editar = '';
+            let btn_eliminar = '';
+            let btn_estatus = '';
+
+            if (!data.btn_editar){
+                btn_editar = 'disabled';
+            }
+
+            if (!data.btn_eliminar){
+                btn_eliminar = 'disabled';
+            }
+
+            if (!data.btn_estatus){
+                btn_estatus = 'disabled';
+            }
+
+            let buttons = '<div class="btn-group btn-group-sm">\n' +
+                '<button type="button" class="btn btn-info" onclick="estatusMunicipio('+ id +')" id="btn_estatus_'+ id +'" '+ btn_estatus +' >\n' +
+                '                               ' + icono +
+                '                                </button>' +
+                '                                <button type="button" class="btn btn-info" onclick="editMunicipio('+ id +')" data-toggle="modal" data-target="#modal-municipios" '+ btn_editar +' >\n' +
+                '                                    <i class="fas fa-edit"></i>\n' +
+                '                                </button>\n' +
+                '                                <button type="button" class="btn btn-info" onclick="destroyMunicipio('+ id +')" id="btn_eliminar_'+ id +'" '+ btn_eliminar +' >\n' +
+                '                                    <i class="far fa-trash-alt"></i>\n' +
+                '                                </button>\n' +
+                '                            </div>';
+
+            let table = $('#tabla_municipios').DataTable();
+            let tr = $('#tr_item_' + id);
+            table
+                .cell(tr.find('.botones')).data(buttons)
+                .draw();
         }
     });
 
