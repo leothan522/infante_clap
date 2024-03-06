@@ -6,6 +6,8 @@ inputmask('#municipio_asignacion', 'numerico', 3, 10, '');
 //Inicializamos la Funcion creada para Datatable pasando el ID de la tabla
 datatable('tabla_municipios');
 
+$("#navbar_buscar").removeClass('d-none');
+
 //Aqui se hace la solicitud ajax para registrar un nuevo municipio o editar uno existente
 $('#form_territorio_municipio').submit(function (e) {
     e.preventDefault();
@@ -275,5 +277,15 @@ function estatusMunicipio(id)
     });
 
 }
+
+$('#navbar_form_buscar').submit(function (e) {
+    e.preventDefault();
+    let keyword = $('#navbar_input_buscar').val();
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'search', keyword: keyword}, html: 'si' }, function (data) {
+        $('#dataContainerMunicipio').html(data.html);
+        datatable('tabla_municipios');
+    });
+
+});
 
 console.log('Municipio.!');

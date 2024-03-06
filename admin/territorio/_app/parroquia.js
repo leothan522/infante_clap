@@ -321,4 +321,13 @@ function estatusParroquia(id) {
 
 }
 
+$('#navbar_form_buscar').submit(function (e) {
+    e.preventDefault();
+    let keyword = $('#navbar_input_buscar').val();
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'search', keyword: keyword}, html: 'si' }, function (data) {
+        $('#dataContainerParroquia').html(data.html);
+        datatable('tabla_parroquias');
+    });
+
+});
 console.log('Parroquia.!');

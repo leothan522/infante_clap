@@ -139,6 +139,19 @@ if ($_POST) {
                     require_once "../_layout/card_table_parroquias.php";
                     break;
 
+                case 'search':
+                    $paginate = true;
+
+                    if (!empty($_POST['keyword'])){
+                        $keyword = $_POST['keyword'];
+                        $controller->search($keyword, 'parroquias');
+                        require "../_layout/card_table_parroquias.php";
+                    }else{
+                        $response = crearResponse('faltan_datos');
+                    }
+
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);

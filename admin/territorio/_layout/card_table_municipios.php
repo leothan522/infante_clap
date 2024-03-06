@@ -2,11 +2,21 @@
 $listarMunicipios = $controller->rows;
 $links = $controller->links;
 $i = $controller->offset;
+$x = 0;
 ?>
 
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">Municipios</h3>
+        <h3 class="card-title">
+            <?php if (empty($controller->keyword)){ ?>
+            Municipios
+            <?php }else{ ?>
+                Resultados para la busqueda [ <strong class="text-danger"><?php echo $controller->keyword; ?></strong> ] en Municipios
+                <button type="button" class="btn btn-tool" onclick="reconstruirTabla()">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            <?php } ?>
+        </h3>
 
         <div class="card-tools">
             <button class="btn btn-tool"
@@ -36,6 +46,7 @@ $i = $controller->offset;
                 <?php
                 foreach ($listarMunicipios as $municipio) {
                     $i++;
+                    $x++;
                     ?>
                     <tr id="tr_item_<?php echo $municipio['id']; ?>">
                         <td class="text-center item"><?php echo $i; ?>.</td>
@@ -87,7 +98,14 @@ $i = $controller->offset;
     </div>
     <!-- /.card-body -->
     <div class="card-footer clearfix">
-        <?php echo $links; ?>
+        <?php
+        if (empty($controller->keyword)){
+            echo $links;
+        }else{
+            echo "Mostrando ".$x;
+        }
+
+        ?>
         <!--<ul class="pagination pagination-sm m-0 float-right">
             <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>

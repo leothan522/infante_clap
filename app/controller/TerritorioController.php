@@ -5,6 +5,7 @@ namespace app\controller;
 use app\middleware\Admin;
 use app\model\Municipio;
 use app\model\Parroquia;
+use app\model\User;
 
 class TerritorioController extends Admin
 {
@@ -645,6 +646,19 @@ class TerritorioController extends Admin
     {
         $model = new Parroquia();
         return $model->count(null, 'municipios_id', '=', $id);
+    }
+
+    public function search($keyword, $table){
+        $model = new User();
+        $this->keyword = $keyword;
+        if ($table == 'municipios'){
+            $sql = "SELECT * FROM municipios WHERE nombre LIKE '%$keyword%' OR mini LIKE '%$keyword%' OR parroquias LIKE '%$keyword%' OR familias LIKE '%$keyword%';";
+            $this->rows = $model->sqlPersonalizado($sql, 'getAll');
+        }
+        if ($table == 'parroquias'){
+            $sql = "SELECT * FROM parroquias WHERE nombre LIKE '%$keyword%' OR mini LIKE '%$keyword%' OR municipios_id LIKE '%$keyword%' OR familias LIKE '%$keyword%';";
+            $this->rows = $model->sqlPersonalizado($sql, 'getAll');
+        }
     }
 
 }

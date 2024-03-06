@@ -115,6 +115,19 @@ if ($_POST) {
 
                     break;
 
+                case 'search':
+                    $paginate = true;
+
+                    if (!empty($_POST['keyword'])){
+                        $keyword = $_POST['keyword'];
+                        $controller->search($keyword, 'municipios');
+                        require "../_layout/card_table_municipios.php";
+                    }else{
+                        $response = crearResponse('faltan_datos');
+                    }
+
+                    break;
+
                 //Por defecto
                 default:
                     $response = crearResponse('no_opcion', false, null, $opcion);
