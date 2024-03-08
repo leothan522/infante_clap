@@ -12,7 +12,7 @@ $x = 0;
             Municipios
             <?php }else{ ?>
                 Resultados para la busqueda [ <strong class="text-danger"><?php echo $controller->keyword; ?></strong> ] en Municipios
-                <button type="button" class="btn btn-tool" onclick="reconstruirTabla()">
+                <button type="button" class="btn btn-tool" onclick="reconstruirTablaMunicipios()">
                     <i class="fas fa-times-circle"></i>
                 </button>
             <?php } ?>
@@ -104,15 +104,8 @@ $x = 0;
         }else{
             echo "Mostrando ".$x;
         }
-
         ?>
-        <!--<ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>-->
+        <input type="hidden" value="<?php echo $x; ?>" id="input_hidden_municipios_valor_x">
     </div>
     <?php verCargando(); ?>
 </div>

@@ -192,7 +192,7 @@ function editMunicipio(id) {
 function destroyMunicipio(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
-
+            let valor_x = $('#input_hidden_municipios_valor_x').val();
             ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'delete', id: id } }, function (data) {
 
                 if (data.result){
@@ -218,8 +218,14 @@ function destroyMunicipio(id) {
                                 .draw();
                         }
                     }
-
                     $('#paginate_leyenda_parroquia').text(data.total_parroquias);
+                    valor_x = valor_x - 1;
+                    if (valor_x === 0){
+                        reconstruirTablaMunicipios();
+                    }else {
+                        $('#input_hidden_municipios_valor_x').val(valor_x);
+                    }
+                    //capturar lo correspondiente a parroquias
 
                 }
             });
@@ -227,8 +233,7 @@ function destroyMunicipio(id) {
     });
 }
 
-function estatusMunicipio(id)
-{
+function estatusMunicipio(id) {
 
     ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'set_estatus', id: id } }, function (data) {
         if (data.result){
@@ -287,5 +292,14 @@ $('#navbar_form_buscar').submit(function (e) {
     });
 
 });
+
+function reconstruirTablaMunicipios() {
+    ajaxRequest({ url: '_request/MunicipiosRequest.php', data: { opcion: 'index'}, html: true }, function (data) {
+        $('#dataContainerMunicipio').html(data.html);
+        datatable('tabla_municipios');
+    });
+
+
+}
 
 console.log('Municipio.!');

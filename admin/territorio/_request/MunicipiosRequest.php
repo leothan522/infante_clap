@@ -25,7 +25,6 @@ if ($_POST) {
 
                 //definimos las opciones a procesar
 
-
                 case 'paginate_municipio':
 
                     $paginate = true;
@@ -40,6 +39,12 @@ if ($_POST) {
                     $controller->index('municipios', $limit, $totalRows, $offset);
                     require "../_layout/card_table_municipios.php";
 
+                    break;
+
+                case 'index':
+                    $paginate = true;
+                    $controller->index();
+                    require "../_layout/card_table_municipios.php";
                     break;
 
                 case 'store':

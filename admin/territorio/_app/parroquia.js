@@ -176,7 +176,7 @@ function editParroquia(id) {
 function elimParroquia(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed){
-
+            let valor_x = $('#input_hidden_parroquia_valor_x').val();
             ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'delete', id: id } }, function (data) {
 
                 if (data.result){
@@ -191,8 +191,14 @@ function elimParroquia(id) {
 
                         //disminuir el numero de parroquias en el municipio
                         municipioParroquias(data.municipios_id, data.municipio_parroquias);
-                    }
+                        valor_x = valor_x - 1;
+                        if (valor_x === 0){
+                            reconstruirTablaParroquias();
+                        }else {
+                            $('#input_hidden_parroquia_valor_x').val(valor_x);
+                        }
 
+                }
 
             });
 
@@ -258,7 +264,6 @@ function municipioParroquias(id, parroquias) {
 }
 
 function filtrarParroquias(id) {
-
     ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_parroquias', id: id }, html: true }, function (data) {
         $('#dataContainerParroquia').html(data.html); datatable('tabla_parroquias');
         $('#parroquias_btn_restablecer').removeClass('d-none');
@@ -330,4 +335,13 @@ $('#navbar_form_buscar').submit(function (e) {
     });
 
 });
+
+function reconstruirTablaParroquias() {
+    ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_parroquias'}, html: true }, function (data) {
+        $('#dataContainerParroquia').html(data.html); datatable('tabla_parroquias');
+        $('#parroquias_btn_restablecer').removeClass('d-none');
+    });
+
+
+}
 console.log('Parroquia.!');
