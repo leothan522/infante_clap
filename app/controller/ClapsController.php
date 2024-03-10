@@ -26,9 +26,8 @@ class ClapsController extends Admin
     public $verMunicipio = false;
     public $idMunicipio;
 
-    public function __construct($index = false)
+    public function __construct()
     {
-        parent::__construct($index);
         $this->mountMunicipios();
     }
 

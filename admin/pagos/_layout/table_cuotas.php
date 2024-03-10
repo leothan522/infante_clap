@@ -1,3 +1,8 @@
+<?php
+$listarCuotas = $controller->rows;
+$i = $controller->offset;
+$links = $controller->links;
+?>
 <div class="card-body">
 
     <div class="table table-sm mt-3">

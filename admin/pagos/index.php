@@ -131,5 +131,6 @@ $controller = new PagosController();
 <script src="<?php asset('public/js/app.js'); ?>"></script>
 
 <script src="<?php asset('admin/pagos/_app/pagos.js', true); ?>"></script>
+<script src="<?php asset('admin/pagos/_app/cuotas.js', true); ?>"></script>
 </body>
 </html>

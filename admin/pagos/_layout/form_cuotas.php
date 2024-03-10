@@ -79,7 +79,7 @@
 
         <div class="card-footer">
             <input type="hidden" placeholder="id" name="cuotas_id" id="cuotas_id">
-            <input type="hidden" name="opcion" value="guardar_cuotas" id="cuotas_opcion">
+            <input type="hidden" name="opcion" value="store" id="cuotas_opcion">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" class="btn btn-default float-right">Cancel</button>
         </div>

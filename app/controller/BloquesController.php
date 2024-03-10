@@ -10,9 +10,8 @@ class BloquesController extends Admin
 {
     public $rows;
 
-    public function __construct($index = false)
+    public function __construct()
     {
-        parent::__construct($index);
         $this->mountMunicipios();
     }
 
