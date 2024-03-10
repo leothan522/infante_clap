@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <input type="hidden" name="clap_edit_id" placeholder="clap_id" id="clap_edit_id">
-                    <input type="hidden" name="opcion" value="editar_clap">
+                    <input type="hidden" name="opcion" value="update_clap">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>

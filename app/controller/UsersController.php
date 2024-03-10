@@ -17,8 +17,8 @@ class UsersController extends Admin
     public $limit;
     public $totalRows;
     public $offset;
-    public $roles;
     public $keyword;
+    public $roles;
 
     public function isAdmin()
     {

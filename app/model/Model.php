@@ -69,8 +69,6 @@ class Model
             $limit = 'LIMIT '.$limit;
         }
 
-
-
         $query = new Query();
         $sql = "SELECT * FROM `$this->TABLA` WHERE `$campo` $operador '$valor' $extra $order $limit; ";
         $rows = $query->getAll($sql);

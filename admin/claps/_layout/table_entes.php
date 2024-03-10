@@ -1,3 +1,6 @@
+<?php
+$listarEntes = $controller->rows;
+?>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">
@@ -34,7 +37,7 @@
                 <tbody>
                 <?php
                 $i = 0;
-                foreach ($listarBloques as $ente){
+                foreach ($listarEntes as $ente){
                     $i++;
                     ?>
                     <tr id="tr_item_ente_<?php echo $ente['id']; ?>">
@@ -48,7 +51,7 @@
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button" class="btn btn-info"
-                                        onclick="eliminarEnte(<?php echo $ente['id']; ?>)"
+                                        onclick="destroyEnte(<?php echo $ente['id']; ?>)"
                                         id="btn_eliminar_ente_<?php echo $ente['id']; ?>"
                                     <?php if ($ente['band'] || !validarPermisos("entes.destroy")){ echo 'disabled'; } ?> >
                                     <i class="far fa-trash-alt"></i>

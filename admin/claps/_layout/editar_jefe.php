@@ -19,7 +19,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <input type="hidden" name="jefe_edit_id" placeholder="jefe_id" id="jefe_edit_id">
-                        <input type="hidden" name="opcion" value="editar_jefe">
+                        <input type="hidden" name="opcion" value="update_jefe">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>

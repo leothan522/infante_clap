@@ -96,8 +96,7 @@ $controller->isAdmin();
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
-<script src="<?php asset('public/js/app.js'); ?>"></script>
-<script src="<?php asset('admin/index/_app.js'); ?>"></script>
+<script src="<?php asset('public/js/app.js', true); ?>"></script>
 
 </body>
 </html>

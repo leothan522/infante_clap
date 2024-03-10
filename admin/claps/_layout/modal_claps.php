@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <input type="hidden" name="opcion" value="guardar_clap">
+                    <input type="hidden" name="opcion" value="store">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>

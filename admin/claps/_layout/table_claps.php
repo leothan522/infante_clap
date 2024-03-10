@@ -1,3 +1,9 @@
+<?php
+$listarClaps = $controller->rows;
+$i = $controller->offset;
+$col_municipio = $controller->verMunicipio;
+$idMunicipio = $controller->idMunicipio;
+?>
 <div class="table-responsive">
     <table class="table table-sm" id="tabla_claps">
         <thead>
@@ -16,16 +22,14 @@
         </thead>
         <tbody>
         <?php
-        foreach ($controller->listarClap as $clap) {
+        foreach ($listarClaps as $clap) {
             $i++;
 
-            $jefe = getJefe($clap['id']);
-            $municipio = $modelMunicipio->find($clap['municipios_id']);
-
-            if (!empty($id)) {
-                if ($id == $clap['municipios_id']) {
-                    $ver = true;
-                } else {
+            $jefe = $controller->getJefe($clap['id']);
+            $municipio = $controller->getMunicipio($clap['municipios_id']);
+            $ver = true;
+            if (!empty($idMunicipio)) {
+                if ($idMunicipio != $clap['municipios_id']) {
                     $ver = false;
                 }
             }

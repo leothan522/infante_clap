@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once "../../../vendor/autoload.php";
-
-use app\model\Ente;
+use app\controller\EntesController;
+$controller = new EntesController();
 
 $response = array();
 $paginate = false;
@@ -14,134 +14,61 @@ if ($_POST) {
         $opcion = $_POST['opcion'];
 
         try {
-            $model = new Ente();
+
             switch ($opcion) {
 
                 //definimos las opciones a procesar
 
-                case 'guardar_ente':
+                case 'index':
+
+                    $paginate = true;
+                    $controller->index();
+                    require '../_layout/table_entes.php';
+
+                    break;
+
+                case 'store':
+
                     if (!empty($_POST['entes_nombre'])){
                         $nombre = $_POST['entes_nombre'];
-
-                        $existe = $model->existe('nombre', '=', $nombre);
-
-                        if (!$existe){
-
-                            $data = [
-                                $nombre
-                            ];
-
-                            $model->save($data);
-                            $entes = $model->first('nombre', '=', $nombre);
-                            $response = crearResponse(
-                                null,
-                                true,
-                                'Ente registrado.',
-                                'El nombre se registro perfectamente.'
-                            );
-                            $response['id'] = $entes['id'];
-                            $response['item'] = '<p class="text-center"> ' . $model->count() . ' </p>';
-                            $response['nombre'] = '<p class="text-uppercase"> ' . $entes['nombre'] . ' </p>';
-                            $response['nuevo'] = true;
-                            $response['total'] = $model->count();
-                        }else{
-                            $response = crearResponse(
-                                'nombre_duplicado',
-                                false,
-                                'Nombre duplicado.',
-                                'El nombre ya se encuentra registrado.',
-                                'warning'
-                            );
-                        }
-
+                        $response = $controller->store($nombre);
                     }else{
                         $response = crearResponse('faltan_datos');
                     }
+
                     break;
 
-                case 'get_ente':
+                case 'edit':
                     if (!empty($_POST['id'])){
                         $id = $_POST['id'];
-                        $ente = $model->find($id);
-                        $response = crearResponse(
-                            null,
-                            true,
-                            'Editar Ente.',
-                            'Editar Ente.'
-                        );
-                        $response['id'] = $ente['id'];
-                        $response['nombre'] = $ente['nombre'];
+                        $response = $controller->edit($id);
                     }else{
                         $response = crearResponse('faltan_datos');
                     }
                     break;
 
-                case 'editar_ente':
+                case 'update':
+
                     if (!empty($_POST['entes_nombre'])){
                         $nombre = $_POST['entes_nombre'];
                         $id = $_POST['id'];
-
-                        $existe = $model->existe('nombre', '=', $nombre, $id);
-
-                        if (!$existe){
-                            $bloques = $model->find($id);
-                            if ($bloques['nombre'] != $nombre){
-                                $model->update($id,'nombre', $nombre);
-                                $ente = $model->first('nombre', '=', $nombre);
-                                $response = crearResponse(
-                                    null,
-                                    true,
-                                    'Ente Actualizado Exitosamente.',
-                                    'El nombre se actualizo perfectamente.'
-                                );
-                                $response['id'] = $ente['id'];
-                                $response['nombre'] = '<p class="text-uppercase"> ' . $ente['nombre'] . ' </p>';
-                                $response['total'] = $model->count();
-                                $response['item'] = '<p class="text-center"> ' . $model->count() . ' </p>';
-                                $response['nuevo'] = false;
-                            }else{
-                                $response = crearResponse('no_cambios');
-                                $response['item'] = $model->count();
-                            }
-                        }else{
-                            $response = crearResponse(
-                                'nombre_duplicado',
-                                false,
-                                'Nombre duplicado.',
-                                'El nombre ya se encuentra registrado.',
-                                'warning'
-                            );
-                        }
-
+                        $response = $controller->update($id, $nombre);
                     }else{
                         $response = crearResponse('faltan_datos');
                     }
+
                     break;
 
-                case 'eliminar_ente':
+                case 'delete':
+
                     if (!empty($_POST['id'])) {
                         $id = $_POST['id'];
-
-                        $model->delete($id);
-                        $response = crearResponse(
-                            null,
-                            true,
-                            'Ente Eliminado.',
-                            'El ente se ha eliminado exitosamente.'
-                        );
-
+                        $response = $controller->delete($id);
                     } else {
                         //manejo el error
                         $response = crearResponse('faltan_datos');
                     }
-                    break;
 
-                case 'get_entes':
-                    $paginate = true;
-                    $model = new Ente();
-                    $listarBloques = $model->getAll();
-
-                    require '../_layout/table_entes.php';
                     break;
 
                 //Por defecto

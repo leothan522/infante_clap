@@ -1,6 +1,6 @@
 <div class="card-body">
     <button type="button" class="btn btn-primary btn-block btn-sm"
-            onclick="getMunicipios()" data-toggle="modal" data-target="#modal-bloques"
+            onclick="modalBloques()" data-toggle="modal" data-target="#modal-bloques"
             <?php if (!validarPermisos('bloques.index')){ echo 'disabled ' ; } ?> >
         BLOQUES
     </button>

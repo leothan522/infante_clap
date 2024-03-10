@@ -69,22 +69,22 @@ $('#entes_form').submit(function (e) {
 
 function editEnte(id){
 
-    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'get_ente', id: id } }, function (data) {
+    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'edit', id: id } }, function (data) {
         if (data.result){
             $('#entes_input_nombre').val(data.nombre);
             $('#entes_id').val(data.id);
-            $('#entes_opcion').val('editar_ente');
+            $('#entes_opcion').val('update');
             $('#title_form_ente').text('Editar Ente');
         }
     });
 
 }
 
-function eliminarEnte(id) {
+function destroyEnte(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'eliminar_ente', id: id } }, function (data) {
+            ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'delete', id: id } }, function (data) {
                 if (data.result) {
                     let table = $('#entes_tabla').DataTable();
                     let item = $('#btn_eliminar_ente_' + id).closest('tr');
@@ -107,8 +107,7 @@ function resetEnte() {
         .removeClass('is-valid');
     $('#entes_id').val('');
     $('#error_entes_nombre').text('');
-    $('#entes_opcion').val('guardar_ente');
-
+    $('#entes_opcion').val('store');
     getEntes();
 }
 
@@ -118,7 +117,7 @@ function quitarClass() {
 }
 
 function getEntes() {
-    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'get_entes' }, html: 'si' }, function (data) {
+    ajaxRequest({ url: '_request/EntesRequest.php', data: { opcion: 'index' }, html: 'si' }, function (data) {
         $('#mostrar_entes').html(data.html);
         datatable('entes_tabla');
     });

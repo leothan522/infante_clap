@@ -12,12 +12,20 @@ inputmask('#jefe_edit_input_cedula', 'numerico', 7, 8, '');
 inputmask('#jefe_create_input_nombre', 'alfa', 3, 100);
 inputmask('#jefe_edit_input_nombre', 'alfa', 3, 100);
 
-//Initialize Select2 Elements
-/*$('.select2').select2({
-    theme: 'bootstrap4'
-});*/
-
 $('#navbar_buscar').removeClass('d-none');
+
+//listo los clap del municipio elegido
+$('#global_select_id_municipio').change(function (e) {
+    e.preventDefault();
+    let id = $(this).val()
+    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'index', id: id }, html: 'si'}, function (data) {
+
+        $('#card_listar_claps').html(data.html);
+        datatable('tabla_claps');
+        $('#clap_input_municipio_id').val(id);
+
+    });
+});
 
 //funcion para guardar
 $('#form_create_clap').submit(function (e) {
@@ -235,7 +243,6 @@ $('#form_create_clap').submit(function (e) {
 
 });
 
-
 function resetDatosClap(opcion = 'create') {
     $('#clap_' + opcion + '_select_municipio')
         .val('')
@@ -314,8 +321,9 @@ function resetClap(select_municipios, select_entes, opcion = 'create') {
     resetDatosClap(opcion);
     resetDatosJefes(opcion);
 
-    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_municipios_select'}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'create'}}, function (data) {
         if (data.result) {
+            verSpinner(true);
             let select_municipio = $('#' + select_municipios);
             let municipios = data.municipios.length;
             select_municipio.empty();
@@ -336,7 +344,16 @@ function resetClap(select_municipios, select_entes, opcion = 'create') {
                 select_ente.append('<option value="' + id + '" >' + nombre + '</option>');
             }
 
+            if (opcion === 'create'){
+                let idMunicipio = $('#clap_input_municipio_id').val();
+                if (idMunicipio.length > 0){
+                    setTimeout(function () {
+                        select_municipio.val(idMunicipio).trigger('change');
+                    }, 150);
+                }
+            }
         }
+        verSpinner(false);
     });
 }
 
@@ -346,7 +363,7 @@ function getBloquesParroquias(selectMunicipio, selectBloque, selectParroquia) {
     if (idMunicipio.val() !== '') {
         ajaxRequest({
             url: '_request/ClapsRequest.php',
-            data: {opcion: 'get_bloque_parroquia', id: idMunicipio.val()}
+            data: {opcion: 'change_municipio', id: idMunicipio.val()}
         }, function (data) {
             if (data.result) {
                 let select_bloque = $(selectBloque);
@@ -377,7 +394,6 @@ function editClap(id_clap = 0) {
     let id;
     if (id_clap === 0) {
         id = $('#show_id_clap').val();
-
     } else {
         id = id_clap;
     }
@@ -386,7 +402,7 @@ function editClap(id_clap = 0) {
 
     setTimeout(function () {
 
-        ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_datos_clap', id: id}}, function (data) {
+        ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'edit_clap', id: id}}, function (data) {
             if (data.result) {
 
                 $('#clap_edit_select_municipio')
@@ -414,7 +430,7 @@ function editClap(id_clap = 0) {
                     $('#clap_edit_select_bloque')
                         .val(data.bloques_id)
                         .trigger('change');
-                }, 500);
+                }, 150);
 
             }
         });
@@ -555,7 +571,7 @@ function editJefe(id_jefe = 0) {
     }
     cerrarModal('#modal-show-claps');
     resetDatosJefes(opcion = 'edit');
-    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'get_datos_jefe', id: id}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'edit_jefe', id: id}}, function (data) {
 
         if (data.result) {
             $('#jefe_edit_input_cedula').val(data.cedula);
@@ -656,7 +672,6 @@ $('#form_edit_jefe').submit(function (e) {
 
 });
 
-
 //funcion para cerrar los modals
 function cerrarModal(idModal) {
     $(idModal).modal('hide');
@@ -674,7 +689,7 @@ function destroyClap(id_clap = 0) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
 
-            ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'eliminar_clap', id: id}}, function (data) {
+            ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'delete', id: id}}, function (data) {
                 if (data.result){
                     cerrarModal('#modal-show-claps');
                     let table = $('#tabla_claps').DataTable();
@@ -692,13 +707,12 @@ function destroyClap(id_clap = 0) {
     });
 }
 
-
 function editarClapJefe() {
     cerrarModal('#modal-show-claps');
 }
 
 function showClapJefe(id) {
-    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'show_clap', id: id}}, function (data) {
+    ajaxRequest({url: '_request/ClapsRequest.php', data: {opcion: 'show', id: id}}, function (data) {
         if (data.result) {
             $('#show_clap_municipio').text(data.clap_municipio);
             $('#show_clap_parroquia').text(data.clap_parroquia);
@@ -716,28 +730,6 @@ function showClapJefe(id) {
             $('#show_id_clap').val(data.clap_id);
             $('#show_id_jefe').val(data.jefe_id);
         }
-    });
-}
-
-$('#global_select_id_municipio').change(function (e) {
-    e.preventDefault();
-    let id = $(this).val()
-    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
-
-        $('#card_listar_claps').html(data.html);
-        datatable('tabla_claps');
-        $('#clap_input_municipio_id').val(id);
-
-    });
-});
-
-function getClapsMunicipio(id) {
-    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'get_claps_municipio', id: id }, html: 'si'}, function (data) {
-
-    $('#card_listar_claps').html(data.html);
-    datatable('tabla_claps');
-    $('#clap_input_municipio_id').val(id);
-
     });
 }
 
@@ -766,6 +758,17 @@ $('#navbar_form_buscar').submit(function (e) {
     $('#nabvar_temp_municipio').remove();
     $('#nabvar_x_cerrar').click();
 });
+
+function reconstruirTabla() {
+    let idMunicipio = $('#clap_input_municipio_id').val();
+    ajaxRequest({url: '_request/ClapsRequest.php', data: { opcion: 'index', id: idMunicipio }, html: 'si'}, function (data) {
+
+        $('#card_listar_claps').html(data.html);
+        datatable('tabla_claps');
+        $('#clap_input_municipio_id').val(idMunicipio);
+
+    });
+}
 
 
 
