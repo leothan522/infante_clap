@@ -135,5 +135,6 @@ $controller->isAdmin();
 
 <script src="<?php asset('admin/usuarios/_app/usuarios.js', true); ?>"></script>
 <script src="<?php asset('admin/usuarios/_app/roles.js', true); ?>"></script>
+<script src="<?php asset('admin/usuarios/_app/acceso.js', true); ?>"></script>
 </body>
 </html>

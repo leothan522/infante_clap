@@ -37,3 +37,16 @@ $controller->index();
     </div>
     <?php verCargando(); ?>
 </div>
+
+<div class="p-3">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <span class="text-small text-muted float-right">Acceso</span>
+        </li>
+        <li class="dropdown-divider"></li>
+        <button type="button" class="btn btn-primary btn-sm btn-block m-1" data-toggle="modal"
+                data-target="#modal-acceso_municipio" onclick="getUsuariosMunicipios(), getAccesosMunicipio()" >
+            Acceso a Municipios
+        </button>
+    </ul>
+</div>

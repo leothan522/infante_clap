@@ -1,3 +1,10 @@
+<?php
+$listarUsuarios = $controller->rows;
+$links = $controller->links;
+$i = $controller->offset;
+$x = 0;
+?>
+
 <div class="card card-outline card-primary" id="usuario_card_table_acceso">
     <div class="card-header">
         <h3 class="card-title">Accesos Registrados </h3>
@@ -6,7 +13,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table">
-            <table class="table" id="usuario_table_acceso">
+            <table class="table table-sm" id="usuario_table_acceso">
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
@@ -19,6 +26,7 @@
                 <?php
                 foreach ($listarUsuarios as $user){
                     $i++;
+                    $x++;
                     if (!empty($user['acceso_municipio'])) {
                         $municipios = json_decode($user['acceso_municipio']);
                     }else{
@@ -53,5 +61,6 @@
     <!-- /.card-body -->
     <div class="card-footer clearfix">
         <?php echo $links ?>
+        <input type="hidden" value="<?php echo $x; ?>" id="input_hidden_usuarios_valor_x">
     </div>
 </div>

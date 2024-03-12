@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="modal-acceso_municipio">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Acceso a Municipios</h4>

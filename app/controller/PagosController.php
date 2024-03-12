@@ -14,8 +14,10 @@ class PagosController extends Admin
     public $linksPaginate;
     public $pag = 0;
 
-    public function __construct()
+
+    public function __construct($index = false)
     {
+        parent::__construct($index);
         $this->mountMunicipios();
     }
 
