@@ -5,8 +5,8 @@ $links = $controller->links;
 ?>
 <div class="card-body">
 
-    <div class="table table-sm mt-3">
-        <table class="table" id="tabla_cuotas">
+    <div class="table  mt-3">
+        <table class="table table-sm" id="tabla_cuotas">
             <thead class="text-center">
             <tr>
                 <th style="width: 15px">#</th>

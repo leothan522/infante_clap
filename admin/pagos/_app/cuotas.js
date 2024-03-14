@@ -183,6 +183,7 @@ function editCuota(id) {
             $('#cuotas_input_fecha').val(data.fecha);
             $('#cuotas_input_precio').val(data.precio);
             $('#cuotas_input_adicional').val(data.adicional);
+            $('#cuotas_select_municipios').val(data.municipios_id);
             $('#cuotas_id').val(data.id);
             $('#cuotas_opcion').val('update');
         }

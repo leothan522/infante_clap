@@ -215,58 +215,91 @@ class CuotasController extends Admin
         $response['fecha'] = $cuota['fecha'];
         $response['precio'] = $cuota['precio'];
         $response['adicional'] = $cuota['adicional'];
+        $response['municipios_id'] = $cuota['municipios_id'];
         $response['id'] = $cuota['id'];
         return $response;
     }
 
-    public function update($id, $mes, $fecha, $precio, $adicional)
+    public function update($id, $mes, $fecha, $precio, $adicional, $municipios_id)
     {
         $model = new Cuota();
         $cambios = false;
         $cuota = $model->find($id);
+        $year = date("Y");
 
-        $db_mes = $cuota['mes'];
-        $db_fecha = $cuota['fecha'];
-        $db_precio = $cuota['precio'];
-        $db_adicional = $cuota['adicional'];
+        $existe = false;
+        $error_mes = false;
+        $error_fecha = false;
 
-        if ($db_mes != $mes){
-            $cambios = true;
-            $model->update($id, 'mes', $mes);
+        $sql = "SELECT * FROM `cuotas` WHERE `mes` = '$mes' AND `year` = '$year' AND municipios_id = $municipios_id;";
+        $existeCuota = $model->sqlPersonalizado($sql);
+
+        if ($existeCuota){
+            $existe = true;
+            $error_mes = true;
         }
 
-        if ($db_fecha != $fecha){
-            $cambios = true;
-            $model->update($id, 'fecha', $fecha);
+        $listarCuotas = $model->getAll(1, 'fecha', 'DESC');
+        if ($listarCuotas){
+            foreach ($listarCuotas as $cuota){
+                $db_fecha = $cuota['fecha'];
+                break;
+            }
+            if ($fecha < $db_fecha){
+                $existe = true;
+                $error_fecha = true;
+            }
         }
 
-        if ($db_precio != $precio){
-            $cambios = true;
-            $model->update($id, 'precio', $precio);
-        }
+        if (!$existe){
+            $db_mes = $cuota['mes'];
+            $db_fecha = $cuota['fecha'];
+            $db_precio = $cuota['precio'];
+            $db_adicional = $cuota['adicional'];
 
-        if ($db_adicional != $adicional){
-            $cambios = true;
-            $model->update($id, 'adicional', $adicional);
-        }
+            if ($db_mes != $mes){
+                $cambios = true;
+                $model->update($id, 'mes', $mes);
+            }
 
-        if ($cambios){
-            $response = crearResponse(
-                false,
-                true,
-                'Editado Exitosamente',
-                'Editado Exitosamente'
-            );
-            $cuota = $model->find($id);
-            $response['id'] = $cuota['id'];
-            $response['mes'] = mesEspanol($cuota['mes']);
-            $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
-            $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
-            $response['nuevo'] = false;
-            $response['total'] = $model->count(1);
+            if ($db_fecha != $fecha){
+                $cambios = true;
+                $model->update($id, 'fecha', $fecha);
+            }
 
+            if ($db_precio != $precio){
+                $cambios = true;
+                $model->update($id, 'precio', $precio);
+            }
+
+            if ($db_adicional != $adicional){
+                $cambios = true;
+                $model->update($id, 'adicional', $adicional);
+            }
+
+            if ($cambios){
+                $response = crearResponse(
+                    false,
+                    true,
+                    'Editado Exitosamente',
+                    'Editado Exitosamente'
+                );
+                $cuota = $model->find($id);
+                $response['id'] = $cuota['id'];
+                $response['mes'] = mesEspanol($cuota['mes']);
+                $response['fecha'] = '<p class="text-center"> ' . verFecha($cuota['fecha']) . ' </p>';
+                $response['item'] = '<p class="text-center"> ' . $model->count(1) . '. </p>';
+                $response['nuevo'] = false;
+                $response['total'] = $model->count(1);
+            } else{
+                    $response = crearResponse('no_cambios');
+                }
         }else{
-            $response = crearResponse('no_cambios');
+            $response = crearResponse(false, false, false, false, 'success', false, false);
+            $response['error_mes'] = false;
+            $response['error_fecha'] = false;
+            if ($error_mes){ $response['error_mes'] = true; }
+            if ($error_fecha){ $response['error_fecha'] = true; }
         }
 
         return $response;

@@ -114,14 +114,17 @@ if ($_POST) {
                     if (
                         !empty($_POST['cuotas_select_mes']) &&
                         !empty($_POST['cuotas_input_fecha']) &&
-                        !empty($_POST['cuotas_id'])
+                        !empty($_POST['cuotas_id'] &&
+                        !empty($_POST['municipios_id'])
+                        )
                     ){
                         $mes = $_POST['cuotas_select_mes'];
                         $fecha = $_POST['cuotas_input_fecha'];
                         $precio = $_POST['cuotas_input_precio'];
                         $adicional = $_POST['cuotas_input_adicional'];
+                        $municipios_id = $_POST['municipios_id'];
                         $id = $_POST['cuotas_id'];
-                        $response = $controller->update($id, $mes, $fecha, $precio, $adicional);
+                        $response = $controller->update($id, $mes, $fecha, $precio, $adicional, $municipios_id);
                     }else{
                         $response = crearResponse('faltan_datos');
                     }
