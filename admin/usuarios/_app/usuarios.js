@@ -2,8 +2,8 @@
 datatable('tabla_usuarios');
 
 //Inicializamos el InputMak
-inputmask('#name', 'alfa', 3, 50, ' ');
-inputmask('#edit_name', 'alfa', 3, 50, ' ');
+inputmask('#name', 'alfanumerico', 3, 50, ' ');
+inputmask('#edit_name', 'alfanumerico', 3, 50, ' ');
 inputmaskTelefono('#telefono');
 inputmaskTelefono('#edit_telefono');
 

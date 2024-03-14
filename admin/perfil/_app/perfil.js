@@ -1,5 +1,5 @@
 //Inicializamos el InputMak
-inputmask('#edit_name', 'alfa', 3, 100, ' ');
+inputmask('#edit_name', 'alfanumerico', 3, 100, ' ');
 inputmaskTelefono('#edit_telefono');
 
 //Inicializar el input de subir foto
