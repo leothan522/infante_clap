@@ -60,7 +60,13 @@ $x = 0;
                             <?php echo $parametro['tabla_id'] ?>
                         </td>
                         <td class="valor">
-                            <?php echo $parametro['valor'] ?>
+                            <?php
+                            if ($parametro['tabla_id'] == -1){
+                                echo 'JSON {...}';
+                            }else{
+                                echo $parametro['valor'];
+                            }
+                            ?>
                         </td>
                     <td>
                         <div class="btn-group btn-group-sm">

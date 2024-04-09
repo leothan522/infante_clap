@@ -3,6 +3,9 @@
 namespace app\controller;
 
 use app\middleware\Admin;
+use app\model\Bloque;
+use app\model\Clap;
+use app\model\Cuota;
 use app\model\Municipio;
 use app\model\Parroquia;
 use app\model\User;
@@ -515,49 +518,63 @@ class TerritorioController extends Admin
 
     public function delete($table, $id): array
     {
-        if ($table == 'municipios'){
-            $model = new Municipio();
-            $response = crearResponse(
-                null,
-                true,
-                'Municipio Eliminado.',
-                'Municipio Eliminado.'
-            );
+        $vinculado = false;
+        $modelBloque = new Bloque();
+        $modalClap = new Clap();
+        $modalCuota = new Cuota();
 
-            //chequeo las parroquias vinculadas a ese municipio
-            $modelParroquia = new Parroquia();
-            $response['parroquias'] = array();
-            foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
-                $response['parroquias'][] = array("id" => $parroquia['id']);
-            }
-            $model->delete($id);
-
-            //datos extras para el $response
-            $response['total'] = $model->count();
-            $response['total_parroquias'] = $modelParroquia->count();
-
+        $existeBloque = $modelBloque->existe('municipios_id', "=", $id);
+        $existeClap = $modalClap->existe('municipios_id', '=', $id);
+        $existeCuota = $modalCuota->existe('municipios_id', '=', $id);
+        
+        if ($existeBloque || $existeClap || $existeCuota){
+            $vinculado = true;
+            $response = crearResponse('vinculado');
         }else{
-            $model = new Parroquia();
-            //resto al contador de parroquias
-            $parroquia = $model->find($id);
-            $modelMunicipio = new Municipio();
-            $municipio = $modelMunicipio->find($parroquia['municipios_id']);
-            $count = $municipio['parroquias'] - 1;
-            $modelMunicipio->update($municipio['id'], 'parroquias', $count);
-            $model->delete($id);
+            if ($table == 'municipios'){
+                $model = new Municipio();
+                $response = crearResponse(
+                    null,
+                    true,
+                    'Municipio Eliminado.',
+                    'Municipio Eliminado.'
+                );
 
-            $response = crearResponse(
-                null,
-                true,
-                'Parroquia Eliminada.',
-                'Parroquia Eliminada Exitosamente.'
-            );
+                //chequeo las parroquias vinculadas a ese municipio
+                $modelParroquia = new Parroquia();
+                $response['parroquias'] = array();
+                foreach ($modelParroquia->getList('municipios_id', '=', $id) as $parroquia) {
+                    $response['parroquias'][] = array("id" => $parroquia['id']);
+                }
+                $model->delete($id);
 
-            //datos extras para el $response
-            $response['total'] = $model->count();
-            $response['municipios_id'] = $municipio['id'];
-            $response['municipio_parroquias'] = $count;
+                //datos extras para el $response
+                $response['total'] = $model->count();
+                $response['total_parroquias'] = $modelParroquia->count();
 
+            }else{
+                $model = new Parroquia();
+                //resto al contador de parroquias
+                $parroquia = $model->find($id);
+                $modelMunicipio = new Municipio();
+                $municipio = $modelMunicipio->find($parroquia['municipios_id']);
+                $count = $municipio['parroquias'] - 1;
+                $modelMunicipio->update($municipio['id'], 'parroquias', $count);
+                $model->delete($id);
+
+                $response = crearResponse(
+                    null,
+                    true,
+                    'Parroquia Eliminada.',
+                    'Parroquia Eliminada Exitosamente.'
+                );
+
+                //datos extras para el $response
+                $response['total'] = $model->count();
+                $response['municipios_id'] = $municipio['id'];
+                $response['municipio_parroquias'] = $count;
+
+            }
         }
 
         return $response;

@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\middleware\Admin;
 use app\model\Bloque;
+use app\model\Clap;
 use app\model\Municipio;
 
 class BloquesController extends Admin
@@ -231,14 +232,23 @@ class BloquesController extends Admin
 
     public function delete($id): array
     {
-        $model = new Bloque();
-        $model->delete($id);
-        $response = crearResponse(
-            null,
-            true,
-            'Bloque Eliminado.',
-            'El bloque se ha eliminado exitosamente.'
-        );
+        $vinculado = false;
+        $modelClap = new Clap();
+        $existeClap = $modelClap->existe('bloques_id', '=', $id);
+
+        if ($existeClap){
+            $vinculado = true;
+            $response = crearResponse('vinculado');
+        }else{
+            $model = new Bloque();
+            $model->delete($id);
+            $response = crearResponse(
+                null,
+                true,
+                'Bloque Eliminado.',
+                'El bloque se ha eliminado exitosamente.'
+            );
+        }
         return $response;
     }
 

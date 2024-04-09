@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\middleware\Admin;
+use app\model\Clap;
 use app\model\Ente;
 
 class EntesController extends Admin
@@ -109,14 +110,23 @@ class EntesController extends Admin
 
     public function delete($id): array
     {
-        $model = new Ente();
-        $model->delete($id);
-        $response = crearResponse(
-            null,
-            true,
-            'Ente Eliminado.',
-            'El ente se ha eliminado exitosamente.'
-        );
+        $vinculado = false;
+        $modelClap = new Clap();
+        $existeClap = $modelClap->existe('entes_id', '=', $id);
+
+        if ($existeClap){
+            $vinculado = true;
+            $response = crearResponse('vinculado');
+        }else{
+            $model = new Ente();
+            $model->delete($id);
+            $response = crearResponse(
+                null,
+                true,
+                'Ente Eliminado.',
+                'El ente se ha eliminado exitosamente.'
+            );
+        }
         return $response;
     }
 
