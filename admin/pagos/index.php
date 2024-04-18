@@ -128,9 +128,10 @@ $controller = new PagosController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 <script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
 <script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
-<script src="<?php asset('public/js/app.js'); ?>"></script>
+<script src="<?php asset('public/js/app.js', true); ?>"></script>
 
 <script src="<?php asset('admin/pagos/_app/pagos.js', true); ?>"></script>
 <script src="<?php asset('admin/pagos/_app/cuotas.js', true); ?>"></script>
+<script src="<?php asset('admin/pagos/_app/bancos.js', true); ?>"></script>
 </body>
 </html>

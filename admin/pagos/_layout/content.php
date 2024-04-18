@@ -3,11 +3,11 @@
 
     </div>
 
-
 </div>
 
 <div class="row">
     <?php
     require_once 'modal_cuotas.php';
+    require_once 'modal_bancos.php';
     ?>
 </div>

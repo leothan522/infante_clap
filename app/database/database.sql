@@ -19,6 +19,34 @@
 CREATE DATABASE IF NOT EXISTS `alguarisa_distribucion` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `alguarisa_distribucion`;
 
+-- Volcando estructura para tabla alguarisa_distribucion.bancos
+CREATE TABLE IF NOT EXISTS `bancos` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `mini` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `codigo` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcando datos para la tabla alguarisa_distribucion.bancos: ~15 rows (aproximadamente)
+INSERT INTO `bancos` (`id`, `nombre`, `mini`, `codigo`) VALUES
+	(1, 'Banco de Venezuela', NULL, '0102'),
+	(2, 'Banco Venezolano de Crédito', NULL, '0104'),
+	(3, 'Banco Mercantil C.A.', NULL, '0105'),
+	(4, 'Banco Provincial, S.A.', NULL, '0108'),
+	(5, 'Banco del Caribe C.A', NULL, '0114'),
+	(6, 'Banco Exterior C.A.', NULL, '0115'),
+	(7, 'Banco Caroní C.A.', NULL, '0128'),
+	(8, 'Banesco Banco Universal, C.A', NULL, '0134'),
+	(9, 'Banco Sofitasa Banco Universal, C.A .', NULL, '0137'),
+	(10, 'Banco Plaza', NULL, '0138'),
+	(11, 'Banco de la Gente Emprendedora C.A.', NULL, '0146'),
+	(12, 'Banco Fondo Común, C.A', NULL, '0151'),
+	(13, '100% Banco, Banco Comercial, C.A', NULL, '0156'),
+	(14, 'DelSur, Banco Universal C.A.', NULL, '0157'),
+	(15, 'Banco del Tesoro C.A.', NULL, '0163'),
+	(16, 'Banco Agrícola de Venezuela C.A.', NULL, '0166');
+
 -- Volcando estructura para tabla alguarisa_distribucion.bloques
 CREATE TABLE IF NOT EXISTS `bloques` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -72,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `entes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla alguarisa_distribucion.entes: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa_distribucion.entes: ~0 rows (aproximadamente)
 INSERT INTO `entes` (`id`, `nombre`, `band`) VALUES
 	(1, 'Alguarisa', 1);
 
