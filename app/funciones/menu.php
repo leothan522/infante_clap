@@ -17,7 +17,7 @@ function sidebar($modulo = null): ?string
             'badge' => null,
             'treeview' => []
         ],
-        [
+        /*[
             'permiso' => validarPermisos('pagos.index'),
             'url' => public_url('admin/pagos'),
             'active' => $modulo == 'pagos.index',
@@ -25,7 +25,7 @@ function sidebar($modulo = null): ?string
             'titulo' => 'Validación Pagos',
             'badge' => null,
             'treeview' => []
-        ],
+        ],*/
         [
             'permiso'       => validarPermisos('claps.index'),
             'url'           => '#',
