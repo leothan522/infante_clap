@@ -7,16 +7,44 @@
         <!-- /.card-header -->
         <div class="card-body">
             <div class="form-group">
-                <label for="exampleInputPassword1">Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre del Banco" name="bancos_form_nombre" id="bancos_form_nombre">
-                </select>
-                <div class="invalid-feedback" id="error_bancos_nombre"></div>
+                <label>Nombre</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nombre del Banco" name="bancos_form_nombre" id="bancos_form_nombre">
+                    <div class="input-group-append">
+                        <div class="input-group-text text-bold">
+                            <i class="fas fa-university"></i>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" id="error_bancos_nombre"></div>
+                </div>
+
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Código</label>
-                <input type="text" class="form-control" placeholder="Código del Banco" name="bancos_form_codigo" id="bancos_form_codigo">
-                <div class="invalid-feedback" id="error_bancos_codigo"></div>
+                <label>Abreviatura</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nombre Corto" name="bancos_form_mini" id="bancos_form_mini">
+                    <div class="input-group-append">
+                        <div class="input-group-text text-bold">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" id="error_bancos_mini"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Código</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Código del Banco" name="bancos_form_codigo" id="bancos_form_codigo">
+                    <div class="input-group-append">
+                        <div class="input-group-text text-bold">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" id="error_bancos_codigo"></div>
+                </div>
+
             </div>
 
         </div>

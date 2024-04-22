@@ -9,6 +9,7 @@ class Banco extends Model
         $this->TABLA = "bancos";
         $this->DATA = [
             'nombre',
+            'mini',
             'codigo'
         ];
     }

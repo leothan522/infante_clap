@@ -38,12 +38,14 @@ if ($_POST) {
                 case 'store':
                     if (
                         !empty($_POST['bancos_form_nombre']) &&
+                        !empty($_POST['bancos_form_mini']) &&
                         !empty($_POST['bancos_form_codigo'])
                     ){
                         $nombre = $_POST['bancos_form_nombre'];
                         $codigo = $_POST['bancos_form_codigo'];
+                        $mini = $_POST['bancos_form_mini'];
 
-                        $response = $controller->store($nombre, $codigo);
+                        $response = $controller->store($nombre, $codigo, $mini);
                         if ($response['result']){
                             $paginate = true;
                             $controller->index();
@@ -51,6 +53,42 @@ if ($_POST) {
                         }
 
                     }else{
+                        $response = crearResponse('faltan_datos');
+                    }
+                    break;
+
+                case 'edit':
+                    if (!empty($_POST['id'])){
+                        $id = $_POST['id'];
+                        $response = $controller->edit($id);
+                    }else{
+                        $response = crearResponse('faltan_datos');
+                    }
+                    break;
+
+                case 'update':
+                    if (
+                        !empty($_POST['bancos_form_nombre']) &&
+                        !empty($_POST['bancos_form_mini']) &&
+                        !empty($_POST['bancos_form_codigo']) &&
+                        !empty($_POST['bancos_id'])
+                    ){
+                        $nombre = $_POST['bancos_form_nombre'];
+                        $mini = $_POST['bancos_form_mini'];
+                        $codigo = $_POST['bancos_form_codigo'];
+                        $id = $_POST['bancos_id'];
+                        $response = $controller->update($nombre, $mini, $codigo, $id);
+                    }else{
+                        $response = crearResponse('faltan_datos');
+                    }
+                    break;
+
+                case 'delete':
+                    if (!empty($_POST['id'])) {
+                        //proceso
+                        $id = $_POST['id'];
+                        $response = $controller->delete($id);
+                    } else {
                         $response = crearResponse('faltan_datos');
                     }
                     break;

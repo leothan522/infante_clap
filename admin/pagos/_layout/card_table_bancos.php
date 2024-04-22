@@ -27,20 +27,27 @@ $i = $controllerBanco->offset;
                 foreach ($listarBancos as $banco){
                     $i++;
                 ?>
-                <tr style="text-align: center;">
-                    <td><?php echo $i; ?></td>
-                    <td>
+                <tr id="tr_item_banco_<?php echo $banco['id']; ?>" style="text-align: center;">
+
+                    <td><span class="text-bold"><?php echo $i; ?></span></td>
+
+                    <td class="nombre_banco">
                         <?php echo $banco['nombre']; ?>
                     </td>
-                    <td>
+
+                    <td class="codigo_banco">
                        <?php echo $banco['codigo']; ?>
                     </td>
+
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-info">
+                            <button type="button" class="btn btn-info"
+                                    onclick="editBanco(<?php echo $banco['id']; ?>)" >
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button type="button" class="btn btn-info">
+                            <button type="button" class="btn btn-info"
+                                    onclick="destroyBanco(<?php echo $banco['id']; ?>)"
+                                    id="btn_eliminar_banco_(<?php echo $banco['id']; ?>)">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>
