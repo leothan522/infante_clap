@@ -73,6 +73,7 @@ $('#bancos_form').submit(function (e) {
 
                 } else {
                     $('#dataContainerBancos').html(data.html);
+                    datatable('table_bancos');
                     resetForm();
                 }
             });
@@ -145,4 +146,4 @@ function destroyBanco(id) {
 }
 
 
-console.log('bancos');
+console.log('bancos..');

@@ -77,19 +77,21 @@ class BloquesController extends Admin
             ];
 
             $model->save($data);
-            $bloque = $model->first('numero', '=', $numero);
+            $sql = "SELECT * FROM bloques WHERE numero = '$numero' AND municipios_id = '$municipios_id';";
+            $bloque = $model->sqlPersonalizado($sql);
             $response = crearResponse(
                 null,
                 true,
                 'Guardado exitosamente.',
                 'Bloque guardado exitosamente.'
             );
+
             $response['id'] = $bloque['id'];
             $response['item'] = $model->count();
             $response['numero'] = $bloque['numero'];
             $response['nombre'] = '<p class="text-center">'.$bloque['nombre'].'</p>';
             $response['municipios_id'] = $bloque['municipios_id'];
-            $response['asignacion'] = '<p class="text-right">'.formatoMillares($bloque['familias']).'</p>';
+            $response['asignacion'] = '<p class="text-right">'.formatoMillares($bloque['familias'], 0).'</p>';
             $response['nuevo'] = true;
             $response['total'] = $model->count();
         } else {
