@@ -22,7 +22,7 @@ class RolesController extends Admin
     {
         $model = new Parametros();
 
-        if ($model->count() >= 10){
+        if ($model->count(null, 'tabla_id', '=', '-1') >= 10){
             $response = crearResponse(
                 'max_alcanzado',
                 false,

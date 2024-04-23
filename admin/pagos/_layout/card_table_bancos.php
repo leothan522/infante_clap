@@ -47,7 +47,7 @@ $i = $controllerBanco->offset;
                             </button>
                             <button type="button" class="btn btn-info"
                                     onclick="destroyBanco(<?php echo $banco['id']; ?>)"
-                                    id="btn_eliminar_banco_(<?php echo $banco['id']; ?>)">
+                                    id="btn_eliminar_banco_<?php echo $banco['id']; ?>">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>

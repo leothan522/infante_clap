@@ -109,7 +109,7 @@ $('#bloques_form').submit(function (e) {
                         '                                <button type="button" class="btn btn-info" onclick="editBloque('+ data.id +')">\n' +
                         '                                    <i class="fas fa-edit"></i>\n' +
                         '                                </button>\n' +
-                        '                                <button type="button" class="btn btn-info" onclick="eliminarBloque('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
+                        '                                <button type="button" class="btn btn-info" onclick="destroyBloque('+ data.id +')" id="btn_eliminar_'+ data.id +'">\n' +
                         '                                    <i class="far fa-trash-alt"></i>\n' +
                         '                                </button>\n' +
                         '                            </div>';
