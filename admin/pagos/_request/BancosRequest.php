@@ -32,6 +32,15 @@ if ($_POST) {
 
                     //vistas a renderizar
                     //require ...
+                    $controller->index($baseURL, $tableID, $limit, $totalRows, $offset, $opcion, $contenDiv);
+                    require "../_layout/card_table_bancos.php";
+
+                    break;
+
+                case 'index':
+                    $paginate = true;
+                    $controller->index();
+                    require "../_layout/card_table_bancos.php";
 
                     break;
 

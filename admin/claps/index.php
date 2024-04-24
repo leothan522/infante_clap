@@ -103,7 +103,7 @@ $controller = new ClapsController();
 <script src="<?php asset('app/resources/adminlte/dist/js/adminlte.min.js'); ?>"></script>
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
-<script src="<?php asset('public/js/sweetalert-app.js');  ?>"></script>
+<script src="<?php asset('public/js/sweetalert-app.js', true);  ?>"></script>
 
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
@@ -125,9 +125,9 @@ $controller = new ClapsController();
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
-<script src="<?php asset('public/js/datatable-app.js'); ?>"></script>
-<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
-<script src="<?php asset('public/js/app.js'); ?>"></script>
+<script src="<?php asset('public/js/datatable-app.js', true); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js', true); ?>"></script>
+<script src="<?php asset('public/js/app.js', true); ?>"></script>
 
 <script src="<?php asset('admin/claps/_app/bloques.js', true); ?>"></script>
 <script src="<?php asset('admin/claps/_app/entes.js', true); ?>"></script>

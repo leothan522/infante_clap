@@ -1,9 +1,8 @@
 <?php
-use app\controller\BancosController;
-$controllerBanco = new BancosController();
-$controllerBanco->index();
-$listarBancos = $controllerBanco->rows;
-$i = $controllerBanco->offset;
+$listarBancos = $controller->rows;
+$i = $controller->offset;
+$links = $controller->links;
+$valor_x = 0;
 ?>
 <div class="card card-outline card-primary">
     <div class="card-header">
@@ -15,7 +14,7 @@ $i = $controllerBanco->offset;
         <div class="table">
             <table class="table table-sm" id="table_bancos">
                 <thead>
-                <tr style="text-align: center;">
+                <tr class="text-center">
                     <th style="width: 10px">#</th>
                     <th>Nombre</th>
                     <th>Código</th>
@@ -26,16 +25,17 @@ $i = $controllerBanco->offset;
                <?php
                 foreach ($listarBancos as $banco){
                     $i++;
+                    $valor_x++;
                 ?>
-                <tr id="tr_item_banco_<?php echo $banco['id']; ?>" style="text-align: center;">
+                <tr id="tr_item_<?php echo $banco['id']; ?>">
 
-                    <td><span class="text-bold"><?php echo $i; ?></span></td>
+                    <td class="text-center"><span class="text-bold"><?php echo $i; ?></span></td>
 
                     <td class="nombre_banco">
                         <?php echo $banco['nombre']; ?>
                     </td>
 
-                    <td class="codigo_banco">
+                    <td class="codigo_banco text-center">
                        <?php echo $banco['codigo']; ?>
                     </td>
 
@@ -61,12 +61,7 @@ $i = $controllerBanco->offset;
     </div>
     <!-- /.card-body -->
     <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>
+        <?php echo $links; ?>
+        <input type="hidden" value="<?php echo $valor_x; ?>"  id="input_hidden_valor_x">
     </div>
 </div>

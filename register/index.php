@@ -152,12 +152,12 @@ if (config('app_register') == "false"){
 <script src="<?php asset('app/resources/adminlte/dist/js/adminlte.min.js'); ?>"></script>
 <!-- SweetAlert2 -->
 <script src="<?php asset('app/resources/adminlte/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
-<script src="<?php asset('public/js/sweetalert-app.js'); ?>"></script>
+<script src="<?php asset('public/js/sweetalert-app.js', true); ?>"></script>
 <!-- InputMask -->
 <script src="<?php asset('app/resources/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php asset('app/resources/adminlte/plugins/inputmask/jquery.inputmask.min.js'); ?>"></script>
-<script src="<?php asset('public/js/inputmask-app.js'); ?>"></script>
-<script src="<?php asset('public/js/app.js'); ?>"></script>
+<script src="<?php asset('public/js/inputmask-app.js', true); ?>"></script>
+<script src="<?php asset('public/js/app.js', true); ?>"></script>
 
 
 <script src="<?php asset('register/_app/register.js', true); ?>"></script>

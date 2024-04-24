@@ -14,7 +14,8 @@ function inputmask(selector, tipo, min = 0, max = 100, simbolos = ' ', utf8 = 'Ã
     }
 
     let regex = "[" + tipo + "" + utf8 + "" + simbolos + "]{"+ min +","+ max +"}";
-    $(selector).inputmask({regex: regex });
+    $(selector).inputmask({ regex: regex, placeholder: "" });
+    //$(selector).inputmask({ mask: "99999", placeholder: "" });
 }
 
 function inputmaskTelefono(selector) {
