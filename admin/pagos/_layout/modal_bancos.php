@@ -1,3 +1,8 @@
+<?php
+use app\controller\BancosController;
+$controller = new BancosController();
+?>
+
 <!-- Modal -->
 <div class="modal fade" id="modal-bancos">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -14,7 +19,11 @@
                        <?php require 'form_bancos.php'?>
                     </div>
                     <div class="col-md-8" id="dataContainerBancos">
-                       <?php require 'card_table_bancos.php'?>
+                       <?php
+
+                       $controller->index();
+                       require 'card_table_bancos.php'
+                       ?>
                     </div>
                 </div>
             </div>

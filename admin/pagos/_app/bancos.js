@@ -2,6 +2,9 @@
 datatable('table_bancos');
 
 inputmask('#bancos_form_codigo', 'numerico', 4, 4, '');
+inputmask('#bancos_form_nombre', 'alfanumerico', 5, 100, ' %.');
+inputmask('#bancos_form_mini', 'alfanumerico', 5, 100, ' %.');
+//$("#bancos_form_nombre").inputmask({ mask: "99999", placeholder: "" });
 
 $('#bancos_form').submit(function (e) {
     e.preventDefault();
@@ -83,14 +86,14 @@ $('#bancos_form').submit(function (e) {
                 if (data.result) {
 
                     let table = $('#table_bancos').DataTable();
-
-                    let tr = $('#tr_item_banco_' + data.id);
+                    let tr = $('#tr_item_' + data.id);
                     table
                         .cell(tr.find('.nombre_banco')).data(data.nombre_banco)
                         .cell(tr.find('.codigo_banco')).data(data.codigo_banco)
                         .draw();
 
                 }
+                resetForm();
             });
         }
     }
@@ -125,7 +128,7 @@ function resetForm() {
 function destroyBanco(id) {
     MessageDelete.fire().then((result) => {
         if (result.isConfirmed) {
-
+            let valor_x = $('#input_hidden_valor_x').val();
             ajaxRequest({ url: '_request/BancosRequest.php', data: { opcion: 'delete', id: id } }, function (data) {
                 if (data.result) {
                     let table = $('#table_bancos').DataTable();
@@ -136,12 +139,25 @@ function destroyBanco(id) {
                         .draw();
 
                     resetForm();
+                    valor_x = valor_x - 1;
+                    if (valor_x === 0){
+                        reconstruirTabla();
+                    }else {
+                        $('#input_hidden_valor_x').val(valor_x);
+                    }
                 }
             });
 
 
         }
 
+    });
+}
+
+function reconstruirTabla() {
+    ajaxRequest({ url: '_request/BancosRequest.php', data: { opcion: 'index'}, html: 'si' }, function (data) {
+        $('#dataContainerBancos').html(data.html);
+        datatable('table_bancos');
     });
 }
 

@@ -18,7 +18,9 @@ class BancosController extends Admin
         $tableID = 'table_bancos',
         $limit = null,
         $totalRows = null,
-        $offset = null
+        $offset = null,
+        $opcion = 'paginate',
+        $contentDiv = 'dataContainerBancos'
     ){
         $model = new Banco();
 
@@ -39,15 +41,12 @@ class BancosController extends Admin
             $tableID,
             $this->limit,
             $this->totalRows,
-            $offset
+            $offset,
+            $opcion,
+            $contentDiv
         )->createLinks();
 
-        $this->rows = $model->paginate(
-            $this->limit,
-            $offset,
-            'id',
-            'DESC'
-        );
+        $this->rows = $model->paginate($this->limit,$offset, 'id','DESC');
 
     }
 
@@ -185,6 +184,7 @@ class BancosController extends Admin
                 $response['nombre_banco'] = $banco['nombre'];
                 $response['mini_banco'] = $banco['mini'];
                 $response['codigo_banco'] = $banco['codigo'];
+                $response['id'] = $banco['id'];
                 $response['total'] = $model->count();
             }else{
                 $response = crearResponse('no_cambios');
