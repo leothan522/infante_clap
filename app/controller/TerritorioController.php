@@ -190,7 +190,7 @@ class TerritorioController extends Admin
                 //datos extras para el $response
                 $response['id'] = $parroquias['id'];
                 $response['item'] = '<p class="text-center">' . $model->count() . '.</p>';
-                $response['municipio'] = $municipio['nombre'];
+                $response['municipio'] ='<p class="text-center text-uppercase">'.$municipio['mini'].'</p>';
                 $response['municipios_id'] = $municipio['id'];
                 $response['municipio_parroquias'] = $count;
                 $response['parroquia'] = '<p class="text-uppercase">'.$parroquias['nombre'].'</p>';
