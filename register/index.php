@@ -52,6 +52,8 @@ if (config('app_register') == "false"){
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
 </head>
 <body class="hold-transition register-page">
+<!-- Preloader -->
+<?php require_once "../admin/_layout/preloader.php" ?>
 <div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center p-0">

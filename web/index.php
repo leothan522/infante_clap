@@ -43,6 +43,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
 </head>
 <body class="hold-transition layout-top-nav">
+<!-- Preloader -->
+<?php require_once "../admin/_layout/preloader.php" ?>
 <div class="wrapper">
 
   <!-- Navbar -->

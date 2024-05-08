@@ -43,6 +43,8 @@ $controller->index();
     <link rel="stylesheet" href="<?php asset('app/resources/adminlte/dist/css/adminlte.min.css'); ?>">
 </head>
 <body class="hold-transition login-page">
+<!-- Preloader -->
+<?php require_once "../admin/_layout/preloader.php" ?>
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center p-0">
