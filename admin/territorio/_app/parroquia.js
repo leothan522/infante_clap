@@ -267,6 +267,7 @@ function filtrarParroquias(id) {
     ajaxRequest({ url: '_request/ParroquiasRequest.php', data: { opcion: 'get_parroquias', id: id }, html: true }, function (data) {
         $('#dataContainerParroquia').html(data.html); datatable('tabla_parroquias');
         $('#parroquias_btn_restablecer').removeClass('d-none');
+        $('#custom-tabs-one-profile-tab').click();
     });
 
 

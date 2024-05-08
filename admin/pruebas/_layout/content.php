@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-8">
         <div class="card card-primary card-tabs">
             <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -22,16 +22,7 @@
 
 
 
-                        <div class="col-12">
-                            <div id="dataContainerMunicipio">
-                                <?php
-                                $controller->index();
-                                require_once "card_table_municipios.php"
-                                ?>
-                            </div>
-
-                            <?php require_once "modal_municipios.php" ?>
-                        </div>
+                        codigo MUNICIPIOP
 
 
 
@@ -43,15 +34,7 @@
 
 
 
-                        <div class="col-12">
-                            <div id="dataContainerParroquia">
-                                <?php
-                                $controller->index('parroquias');
-                                require_once "card_table_parroquias.php"
-                                ?>
-                            </div>
-                            <?php require_once "modal_parroquias.php" ?>
-                        </div>
+                        COGIDO PARROQUIA
 
 
 
@@ -64,15 +47,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
