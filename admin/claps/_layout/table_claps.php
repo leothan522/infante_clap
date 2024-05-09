@@ -36,7 +36,7 @@ $idMunicipio = $controller->idMunicipio;
                 }
             }
 
-            $vistos[$i] = $jefe['id'];
+            $vistos[$i] = $clap['id'];
 
             if (validarAccesoMunicipio($municipio['id']) && $ver) {
                 ?>
@@ -81,11 +81,11 @@ $idMunicipio = $controller->idMunicipio;
                 }
 
                 $repetido = false;
-                if (array_search($jefe['id'], $vistos)) {
+                if (array_search($clap['id'], $vistos)) {
                     $repetido = true;
                 }
 
-                $vistos[$i] = $jefe['id'];
+                $vistos[$i] = $clap['id'];
 
 
                 if ((validarAccesoMunicipio($municipio['id']) && $ver) && !$repetido) {
@@ -116,7 +116,7 @@ $idMunicipio = $controller->idMunicipio;
 
             }
             ?>
-            
+
         <?php
         }
         ?>
