@@ -21,6 +21,7 @@ class TerritorioController extends Admin
     public $totalRows;
     public $offset;
     public $keyword;
+    public $verMuncipio;
 
     public function isAdmin()
     {
@@ -648,6 +649,9 @@ class TerritorioController extends Admin
     public function getParroquias($id)
     {
         $model = new Parroquia();
+        $modelMunicipio = new Municipio();
+        $municipio = $modelMunicipio->find($id);
+        $this->verMuncipio = $municipio['nombre'];
         $this->rows = $model->getList('municipios_id', '=', $id);
     }
 

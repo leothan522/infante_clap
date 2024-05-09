@@ -8,9 +8,15 @@ $x = 0;
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">
-            <?php if (empty($controller->keyword)){ ?>
-            Parroquias
-            <?php }else{ ?>
+            <?php
+            if (empty($controller->keyword)){
+                if (isset($restablecer) && $restablecer){ ?>
+                    Filtrando por municipio [ <strong class="text-danger"><?php echo $controller->verMuncipio; ?></strong> ]
+                <?php }else{ ?>
+                    Parroquias
+                <?php
+                }
+            }else{?>
                 Resultados para la busqueda [ <strong class="text-danger"><?php echo $controller->keyword; ?></strong> ] en Parroquias
                 <button type="button" class="btn btn-tool" onclick="reconstruirTablaParroquias()">
                     <i class="fas fa-times-circle"></i>
