@@ -39,7 +39,7 @@
 
         <div class="row">
             <div class="col-12">
-            <?php if (empty($controller->rows) && is_null($controller->idMunicipio)){ ?>
+            <?php if (!isset($buscar) && empty($controller->rows) && is_null($controller->idMunicipio)){ ?>
             Seleccione un <strong>Municipio</strong> para empezar...
             <?php }else {
                 require '../_layout/table_claps.php';
@@ -55,7 +55,9 @@
         if (empty($controller->keyword)){
             echo $controller->links;
         }else{
-            echo "Mostrando ".$i;
+            if (isset($i)){
+                echo "Mostrando ".$i;
+            }
         }
         ?>
     </div>

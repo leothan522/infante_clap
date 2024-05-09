@@ -1,5 +1,6 @@
 <?php
 $listarClaps = $controller->rows;
+$listarJefes = $controller->rowsBuscar;
 $i = $controller->offset;
 $col_municipio = $controller->verMunicipio;
 $idMunicipio = $controller->idMunicipio;
@@ -34,7 +35,6 @@ $idMunicipio = $controller->idMunicipio;
                 }
             }
 
-
             if (validarAccesoMunicipio($municipio['id']) && $ver) {
                 ?>
                 <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
@@ -60,7 +60,63 @@ $idMunicipio = $controller->idMunicipio;
                 </tr>
                 <?php
             }
-        } ?>
+        }
+
+        if (isset($buscar)){ ?>
+
+
+            <?php
+            $vistos = array();
+            foreach ($listarJefes as $jefe) {
+                $i++;
+
+                $clap = $controller->getClap($jefe['claps_id']);
+                $municipio = $controller->getMunicipio($clap['municipios_id']);
+                $ver = true;
+                if (!empty($idMunicipio)) {
+                    if ($idMunicipio != $clap['municipios_id']) {
+                        $ver = false;
+                    }
+                }
+
+                $repetido = false;
+                if (!in_array($jefe['id'], $vistos)) {
+                    $repetido = true;
+                }
+
+                if ((validarAccesoMunicipio($municipio['id']) && $ver) && !$repetido) {
+                    $vistos[] = $jefe['id'];
+                    ?>
+                    <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
+                        <td class="text-center item"><?php echo $i; ?>.</td>
+                        <?php if ($col_municipio) { ?>
+                            <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
+                        <?php } ?>
+                        <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
+                        <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
+                        <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
+                        <td class="text-center telefono"> <?php echo $jefe['telefono']; ?> </td>
+                        <td class="text-right familias"><?php echo formatoMillares($clap['familias'], 0); ?></td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#modal-show-claps"
+                                        onclick="showClapJefe(<?php echo $clap['id']; ?>)"
+                                        id="btn_elimiar_clap_<?php echo $clap['id'] ?>">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+
+
+        <?php
+        }
+        ?>
         </tbody>
     </table>
 </div>

@@ -229,6 +229,7 @@ if ($_POST) {
                         $id = $_POST['id'];
                         $keyword = $_POST['keyword'];
                         $controller->search($keyword, $id);
+                        $buscar = true;
                     }
                     require('../_layout/card_listar_claps.php');
 

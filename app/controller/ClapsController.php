@@ -25,6 +25,7 @@ class ClapsController extends Admin
 
     public $verMunicipio = false;
     public $idMunicipio;
+    public $rowsBuscar;
 
 
     public function __construct($index = false)
@@ -697,6 +698,7 @@ class ClapsController extends Admin
     public function search($keyword, $id = null)
     {
         $model = new Clap();
+        $modeljefe = new Jefe();
 
         if (!empty($id)){
             $this->verMunicipio = true;
@@ -705,6 +707,13 @@ class ClapsController extends Admin
 
         $this->keyword = $keyword;
         $this->rows = $model->getList('nombre', 'LIKE', "%$keyword%", null, null, 'ASC', 100);
+        $sql = "SELECT * FROM `jefes` WHERE  `cedula` LIKE '%$keyword%' OR `nombre` LIKE '%$keyword%' OR `telefono` LIKE '%$keyword%' LIMIT 100;";
+        $this->rowsBuscar = $modeljefe->sqlPersonalizado($sql, 'getAll');
+    }
+
+    public function getClap($id){
+        $model = new Clap();
+        return $model->find($id);
     }
 
 }
