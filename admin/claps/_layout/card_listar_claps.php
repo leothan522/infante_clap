@@ -4,6 +4,13 @@
         <h3 class="card-title">
             <?php if (!isset($controller->keyword)){ ?>
             Claps Registrados
+                <?php
+                if ($controller->idMunicipio){
+                    $municipio = $controller->getMunicipio($controller->idMunicipio);
+                    ?>
+                    [<strong class="text-danger"><?php echo mb_strtoupper($municipio['mini']); ?></strong>]
+                <?php } ?>
+
             <?php }else { ?>
                 Resultados para la busqueda [<strong class="text-danger"><?php echo mb_strtoupper($controller->keyword); ?></strong>]
                 <?php

@@ -10,7 +10,7 @@ $idMunicipio = $controller->idMunicipio;
         <thead>
         <tr>
             <th style="width: 5%; text-align: center">#</th>
-            <?php if ($col_municipio) { ?>
+            <?php if ($col_municipio || isset($buscar)) { ?>
                 <th>Municipio</th>
             <?php } ?>
             <th>Nombre del CLAPS</th>
@@ -42,7 +42,7 @@ $idMunicipio = $controller->idMunicipio;
                 ?>
                 <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
                     <td class="text-center item"><?php echo $i; ?>.</td>
-                    <?php if ($col_municipio) { ?>
+                    <?php if ($col_municipio || isset($buscar)) { ?>
                         <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
                     <?php } ?>
                     <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
@@ -92,9 +92,7 @@ $idMunicipio = $controller->idMunicipio;
                     ?>
                     <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
                         <td class="text-center item"><?php echo $i; ?>.</td>
-                        <?php if ($col_municipio) { ?>
-                            <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
-                        <?php } ?>
+                        <td class="nombre_municipio text-uppercase"> <?php echo $municipio['mini']; ?> </td>
                         <td class="nombre_clap text-uppercase"> <?php echo $clap['nombre']; ?> </td>
                         <td class="nombre_jefe text-uppercase"> <?php echo $jefe['nombre']; ?> </td>
                         <td class="text-right cedula"> <?php echo formatoMillares($jefe['cedula'], 0); ?> </td>
