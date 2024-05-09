@@ -23,6 +23,7 @@ $idMunicipio = $controller->idMunicipio;
         </thead>
         <tbody>
         <?php
+        $vistos = [];
         foreach ($listarClaps as $clap) {
             $i++;
 
@@ -34,6 +35,8 @@ $idMunicipio = $controller->idMunicipio;
                     $ver = false;
                 }
             }
+
+            $vistos[$i] = $jefe['id'];
 
             if (validarAccesoMunicipio($municipio['id']) && $ver) {
                 ?>
@@ -64,9 +67,7 @@ $idMunicipio = $controller->idMunicipio;
 
         if (isset($buscar)){ ?>
 
-
             <?php
-            $vistos = array();
             foreach ($listarJefes as $jefe) {
                 $i++;
 
@@ -80,12 +81,14 @@ $idMunicipio = $controller->idMunicipio;
                 }
 
                 $repetido = false;
-                if (!in_array($jefe['id'], $vistos)) {
+                if (array_search($jefe['id'], $vistos)) {
                     $repetido = true;
                 }
 
+                $vistos[$i] = $jefe['id'];
+
+
                 if ((validarAccesoMunicipio($municipio['id']) && $ver) && !$repetido) {
-                    $vistos[] = $jefe['id'];
                     ?>
                     <tr id="tr_item_claps_<?php echo $clap['id'] ?>">
                         <td class="text-center item"><?php echo $i; ?>.</td>
@@ -110,10 +113,10 @@ $idMunicipio = $controller->idMunicipio;
                     </tr>
                     <?php
                 }
+
             }
             ?>
-
-
+            
         <?php
         }
         ?>
