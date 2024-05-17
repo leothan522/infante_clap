@@ -1,8 +1,8 @@
 <!-- Modal -->
-<div class="modal fade" id="modal-show-claps">
-    <div class="modal-dialog modal-lg">
-        <form id="form_create_clap">
-            <div class="modal-content">
+<div class="modal fade" aria-hidden="true" id="modal-show-claps">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form id="form_create_clap">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title" id="clap_title">Gestionar CLAPS</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                           <?php require 'card_show_clap.php'; ?>
+                            <?php require 'card_show_clap.php'; ?>
                         </div>
 
                         <div class="col-md-6">
@@ -26,14 +26,17 @@
                     <input type="hidden" placeholder="id_jefe" id="show_id_jefe">
                     <button type="button" class="btn btn-danger btn-sm"
                             onclick="destroyClap(0)"
-                        <?php if (!validarPermisos("claps.destroy")){ echo 'disabled';} ?>  >
+                        <?php if (!validarPermisos("claps.destroy")) {
+                            echo 'disabled';
+                        } ?> >
                         <i class="fas fa-trash-alt"> </i> Eliminar CLAP
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 <?php verCargando(); ?>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

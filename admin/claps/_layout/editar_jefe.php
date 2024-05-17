@@ -1,8 +1,8 @@
 <!-- Modal -->
 <div class="modal fade" id="editar-jefe">
-    <div class="modal-dialog modal-lm">
-        <form id="form_edit_jefe">
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-lm">
+        <div class="modal-content">
+            <form id="form_edit_jefe">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title" id="jefe_edit_title">Nombre del Jefe</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -25,8 +25,9 @@
                     </div>
                     <?php verCargando(); ?>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

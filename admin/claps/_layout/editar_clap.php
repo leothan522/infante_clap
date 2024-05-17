@@ -1,8 +1,8 @@
 <!-- Modal -->
 <div class="modal fade" id="editar-clap">
-    <div class="modal-dialog modal-lm">
-        <form id="form_edit_clap">
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-lm">
+        <div class="modal-content">
+            <form id="form_edit_clap">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title text-uppercase" id="clap_edit_title">Nombre del CLAP</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -25,8 +25,8 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
                 <?php verCargando(); ?>
-            </div>
-        </form>
+            </form>
+        </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

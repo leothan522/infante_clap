@@ -39,6 +39,8 @@ function ajaxRequest(solicitud, callback) {
     let type = 'POST';
     let url = 'procesar.php';
     let html = 'no';
+    let contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+    let processData = true;
 
     //comprobamos si recibimos valores personalizados
     //para reemplazar los valores por defecto
@@ -51,6 +53,12 @@ function ajaxRequest(solicitud, callback) {
     if (solicitud.html) {
         html = solicitud.html;
     }
+    if (solicitud.contentType === false) {
+        contentType = false;
+    }
+    if (solicitud.processData === false) {
+        processData = false;
+    }
 
     //realizamos la peticion AJAX
     $.ajax({
@@ -62,6 +70,9 @@ function ajaxRequest(solicitud, callback) {
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
         data: solicitud.data,
+        contentType: contentType,
+        // establece el procesamiento de los datos enviados
+        processData: processData,
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (response) {
