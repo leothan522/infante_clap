@@ -352,6 +352,40 @@ function verImagen($path, $user = false)
     }
 }
 
+function subirImagen($file, $nombre, $dir = 'public/img/', $path_file = '../../../'){
+    $imagen = $file; // Acceder al archivo de imagen
+    $nombreImagen = $imagen['name']; // Obtener el nombre del archivo
+    $extension = pathinfo($nombreImagen, PATHINFO_EXTENSION); //obtengo la extension del archivo si el punto
+    $nombre = $nombre.'.'.$extension;
+    $temporal = $imagen['tmp_name']; // Obtener el nombre temporal del archivo
+
+
+    // Definir la ruta donde se guardará la imagen
+    $carpetaDestino = $path_file.$dir;
+    $rutaDestino = $carpetaDestino . $nombre;
+    $path = $dir . $nombre;
+
+    if ($file['size'] > 2097152){
+        $resultado = [false, null, 'error_size', 'El tamaño de la imagen no puede ser mayor a 2MB.'];
+    }else{
+        // Mover el archivo de la ubicación temporal a la carpeta de destino
+        if(move_uploaded_file($temporal, $rutaDestino)){
+            $resultado = [true, $path, null, null];
+        } else {
+            $resultado = [false, null ,'error_subir', 'Error de servidor. contacte a su administrador.'];
+        }
+    }
+    return $resultado;
+
+}
+
+function borrarArchivos($path){
+    if (!empty($path)){
+        if (file_exists($path)){
+            unlink($path);
+        }
+    }
+}
 
 
 

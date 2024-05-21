@@ -44,7 +44,10 @@
         <!-- USER Dropdown Menu -->
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <img src="<?php asset('public/img/user_blank.png'); ?>" class="user-image img-circle elevation-2" alt="User Image">
+                <img src="<?php echo verImagen($controller->USER_PATH, true); ?>" class="user-image img-circle elevation-2" alt="User Image" id="navbar_image_profile" style="width: 40px;
+                                                                                                                                                                             height: 40px;
+                                                                                                                                                                             borderRadius: 100%;
+                                                                                                                                                                             object-fit: cover;">
                 <span class="d-none d-md-inline" id="navbar_header_name">
                     <?php if (isset($controller->USER_NAME)){ echo $controller->USER_NAME; } ?>
                 </span>
@@ -52,7 +55,10 @@
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
                 <li class="user-header bg-primary">
-                    <img src="<?php asset('public/img/user_blank.png'); ?>" class="img-circle elevation-2" alt="User Image">
+                    <img src="<?php echo verImagen($controller->USER_PATH, true); ?>" class="img-circle elevation-2" alt="User Image" id="dropdown_navbar_image" style="width: 110px;
+                                                                                                                                                                             height: 110px;
+                                                                                                                                                                             borderRadius: 100%;
+                                                                                                                                                                             object-fit: cover;">
 
                     <p>
                         <span id="ficha_nombre"><?php if (isset($controller->USER_NAME)){ echo $controller->USER_NAME; } ?></span>

@@ -55,35 +55,38 @@ if ($_POST) if (!empty($_POST['opcion'])) {
             case 'store_imagen':
                 $model = new User();
                 if(isset($_FILES['seleccionar_imagen'])){
-                    $imagen = $_FILES['seleccionar_imagen']; // Acceder al archivo de imagen
-                    $nombreImagen = $imagen['name']; // Obtener el nombre del archivo
-                    $temporal = $imagen['tmp_name']; // Obtener el nombre temporal del archivo
+                   $file = $_FILES['seleccionar_imagen'];
+                   $dir = 'public/img/profile/';
+                   $nombre = 'user_id_'.generar_string_aleatorio('6');
                     $id = $controller->USER_ID;
+                    $anterior = $controller->USER_PATH;
 
-                    // Definir la ruta donde se guardará la imagen
-                    $dir = 'public/img/profile/';
-                    $carpetaDestino = "../../../". $dir;
-                    $rutaDestino = $carpetaDestino . $nombreImagen;
-                    $path = $dir . $nombreImagen;
+                   $imagen = subirImagen($file, $nombre, $dir);
 
-                    // Mover el archivo de la ubicación temporal a la carpeta de destino
-                    if(move_uploaded_file($temporal, $rutaDestino)){
-                        $model->update($id, 'path', $path);
-                        $response = crearResponse(
-                            false,
-                            true,
-                            'Subida Exitosamente.',
-                            'Subida Exitosamente.'
-                        );
-                        $response['path'] = public_url($path);
-                    } else {
-                        $response = crearResponse(
-                            false,
-                            true,
-                            'Hubo un error.',
-                            'Hubo un error.'
-                        );
-                    }
+                   if ($imagen[0]){
+                       $model->update($id,'path', $imagen[1]);
+                       borrarArchivos('../../../'.$anterior);
+                       
+                       $response = crearResponse(
+                           null,
+                           true,
+                           'Subida Exitosamente.'
+                       );
+                   }else{
+                       $response = crearResponse(
+                           $imagen[2],
+                           false,
+                           'Error al subir.',
+                           $imagen[3],
+                           'error',
+                           true
+                       );
+                   }
+
+                   $response['path'] = !empty($imagen[1]) ? public_url($imagen[1]) : null;
+
+
+
                 }else{
                     $response = ('faltan_datos');
                 }

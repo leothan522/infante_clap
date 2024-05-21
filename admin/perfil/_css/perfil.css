@@ -1,6 +1,6 @@
 .ima_profile_user{
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     borderRadius: 100%;
-    objectFit: cover
+    object-fit: cover;
 }

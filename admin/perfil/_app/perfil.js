@@ -205,8 +205,8 @@ function leerImagen(input) {
             $('#profile_imagen').attr('src', e.target.result)
                 .show()
                 .css({
-                    width: '120px',
-                    height: '120px',
+                    width: '130px',
+                    height: '130px',
                     borderRadius: '100%',
                     objectFit: 'cover'
                 });
@@ -226,37 +226,16 @@ $('#form_profile_imagen').submit(function (e) {
     e.preventDefault();
     let datos = new FormData(this);
     ajaxRequest({ url: '_request/PerfilRequest.php', data: datos,  contentType: false, processData: false }, function (data) {
-
+        if (data.result){
+            $('#btn_guardar_cancelar').addClass('d-none');
+            $("#navbar_image_profile").attr("src", data.path);
+            $("#dropdown_navbar_image").attr("src", data.path);
+        }
     });
 });
 
-
-/*$(document).ready(function(){
-    // Escuchar el evento 'submit' del formulario con id 'form_profile_imagen'
-    $('#form_profile_imagen').submit(function(e){
-        e.preventDefault(); // Prevenir el comportamiento por defecto de envío del formulario
-
-        // Crear un objeto FormData con los datos del formulario
-        var formData = new FormData(this);
-
-        // Realizar la petición AJAX
-        $.ajax({
-            url: '_request/PerfilRequest.php', // URL del servidor donde se procesará el formulario
-            type: 'POST', // Método HTTP
-            data: formData, // Datos del formulario
-            contentType: false, // No establecer un tipo de contenido por defecto
-            processData: false, // No procesar los datos como cadena
-            success: function(response) {
-                // Función a ejecutar en caso de éxito
-                console.log('Imagen subida con éxito:', response);
-            },
-            error: function(xhr, status, error) {
-                // Función a ejecutar en caso de error
-                console.log('Error al subir la imagen:', error);
-            }
-        });
-    });
-});*/
-
+function cargarImagen() {
+    $('#seleccionar_imagen').click();
+}
 
 console.log('perfil.!')
